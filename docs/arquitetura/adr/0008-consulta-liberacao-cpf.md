@@ -34,6 +34,8 @@ O rascunho de escopo previa `GET /api/liberacao?cpf=...`. Parâmetros de URL cos
 - Chave HMAC no **Secret Manager** em nuvem e em `.env` local (valor de desenvolvimento, nunca o de produção).
 - Toda consulta grava `consultasLiberacao` e auditoria. `POST /api/acessos` registra entrada ou barramento a partir do `consultaId` (RN-11).
 - CPF de outro tenant resulta em `NAO_CADASTRADO`, sem dado algum do outro tenant (H04.CA3).
+- **A portaria não vê nenhum dado de documento** (ficha do Habilita; feedback do CP1, item 3). A resposta traz só `resultado` (`LIBERADO`, `BLOQUEADO` ou `NAO_CADASTRADO`), nome e CPF mascarado do trabalhador, uma **orientação genérica** e o prazo para registrar o acesso. Exemplo para `BLOQUEADO`: "Acesso não liberado. Oriente o trabalhador a procurar o SST da contratante". **Não** devolve tipo de documento, motivo, vencimento, semáforo ou contrato: dizer "NR-35 vencido" já revelaria parte do conteúdo. O detalhe das pendências fica nas telas do `admin_contratante` e do `analista_sst`.
+- Quem consulta: `porteiro`, `admin_contratante` e `analista_sst` (matriz da ADR 0002). Para os dois últimos, a resposta da rota é a mesma; o detalhe eles veem na tela do trabalhador.
 - **Rate limit** na rota de consulta por usuário (proposta: 30 consultas por minuto) para dificultar varredura de CPFs.
 
 ## 4. Consequências
@@ -55,9 +57,11 @@ O rascunho de escopo previa `GET /api/liberacao?cpf=...`. Parâmetros de URL cos
 - [ ] Teste que inspeciona os logs de uma consulta e falha se encontrar 11 dígitos seguidos.
 - [ ] Teste de isolamento T-ISO-04 (CPF existente só no tenant B consultado pelo porteiro do tenant A).
 - [ ] Teste de rate limit (31ª consulta no mesmo minuto recebe 429).
+- [ ] Teste de contrato: a resposta de `BLOQUEADO` não contém `pendencias`, `contratos`, `semaforo`, tipo de documento nem datas de validade.
 
 ## Histórico de versões
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Consulta de liberação por CPF com HMAC e POST (C15). Status: proposto. |
+| 1.1 | 26/10/2026 | @osamuelleite | Feedback do CP1 (item 3): a portaria recebe só o resultado e uma orientação genérica, sem pendências nem dados de documento; papéis atualizados para os 4 da ficha. |

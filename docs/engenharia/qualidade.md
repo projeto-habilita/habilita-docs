@@ -81,7 +81,7 @@ A validação acontece em **três camadas**, cada uma com um papel:
 4. **Texto normalizado** antes de validar (ex.: remover espaços nas pontas do motivo, RN-03; deixar só os dígitos do CPF).
 5. **Modelo de resposta** (`response_model`) em toda rota: a API devolve só os campos declarados. `cpfHash` e o caminho interno do arquivo nunca saem, mesmo que existam no objeto.
 6. **Erros de validação** convertidos em Problem Details (RFC 9457) com a lista de campos inválidos, sem expor a mensagem interna do Pydantic.
-7. **Upload** validado fora do Pydantic: tamanho máximo de 10 MiB e tipo real pela assinatura de bytes (ADR 0006).
+7. **Upload** validado fora do Pydantic: tamanho máximo de 5 MB (5.000.000 bytes) e tipo real (PDF ou JPG) pela assinatura de bytes (ADR 0006).
 
 **Contrato primeiro:** o `openapi.yaml` é a fonte. Um teste no CI compara o OpenAPI gerado pelo FastAPI com o arquivo da raiz e falha em caso de divergência; o Schemathesis gera requisições a partir do contrato e verifica se a API responde conforme.
 

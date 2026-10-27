@@ -1,8 +1,8 @@
 site_name: Habilita
 site_description: Documentação em dia. Acesso sob controle. — Ciclo B2B AI LAB / MAKERS 2026
-site_url: https://osamuelleite.github.io/habilita-docs/
-repo_url: https://github.com/osamuelleite/habilita-docs
-repo_name: osamuelleite/habilita-docs
+site_url: https://projeto-habilita.github.io/habilita-docs/
+repo_url: https://github.com/projeto-habilita/habilita-docs
+repo_name: projeto-habilita/habilita-docs
 edit_uri: edit/main/docs/
 docs_dir: docs
 strict: true
@@ -97,10 +97,14 @@ nav:
           - "0008 — Consulta de liberação por CPF": arquitetura/adr/0008-consulta-liberacao-cpf.md
           - "0009 — Auditoria append-only": arquitetura/adr/0009-auditoria-append-only.md
           - "0010 — Plano Custo Zero": arquitetura/adr/0010-plano-custo-zero.md
+          - "0011 — Divergências em relação ao Caderno": arquitetura/adr/0011-divergencias-caderno.md
   - Engenharia:
       - engenharia/index.md
       - Primeiros passos: engenharia/primeiros-passos.md
       - Checklist do Checkpoint 1: engenharia/checkpoint-1.md
+      - Configuração do GitHub: engenharia/configuracao-github.md
+      - Controle semanal: engenharia/controle-semanal.md
+      - Ensaio do clone do zero: engenharia/ensaio-clone-do-zero.md
       - Qualidade, tipagem e validação: engenharia/qualidade.md
       - Definition of Done: engenharia/definition-of-done.md
       - Ambiente local: engenharia/ambiente-local.md
@@ -110,6 +114,7 @@ nav:
   - Testes:
       - testes/index.md
       - Estratégia de testes: testes/estrategia.md
+      - Rastreabilidade (caminho do Caderno): rastreabilidade.md
       - Matriz de rastreabilidade: testes/matriz.md
       - Relatórios:
           - Visão geral: testes/relatorios/index.md

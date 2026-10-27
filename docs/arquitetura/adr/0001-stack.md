@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Status | **Proposto** — linguagem da API decidida pela equipe em 14/10/2026 (Python + FastAPI); aprovar a ADR em PR até o Checkpoint 1 (18/10/2026) |
+| Status | **Aceito** — aprovado em PR (Tech Lead + 1 integrante) na Sprint 4, conforme o feedback do Checkpoint 1. Linguagem decidida pela equipe em 14/10/2026 |
 | Data | 14/10/2026 |
 | Decisores | Tech Lead + equipe de desenvolvimento |
 | Consultados | PO, Tutores AI LAB / MAKERS |
@@ -36,10 +36,7 @@ As outras camadas seguem a base obrigatória do ciclo (GCP + Firebase) e não ti
 
 ## 3. Decisão
 
-**API em Python 3.12 + FastAPI**, decidida pela equipe em 14/10/2026. A favor, além da escolha da equipe: validação de dados e OpenAPI nativos do framework e ferramentas de teste do Caderno disponíveis em Python.
-
-!!! todo "Registrar no PR de aprovação"
-    O motivo principal da equipe para a escolha (por exemplo, familiaridade com Python), em uma frase.
+**API em Python 3.12 + FastAPI**, decidida pela equipe em 14/10/2026. **Motivo principal da equipe:** a maioria do time já domina Python, o que reduz o risco de prazo num ciclo de 9 semanas; o FastAPI entrega validação (Pydantic) e contrato OpenAPI nativos, que atendem diretamente os itens de segurança e de contrato dos gates; e o ecossistema de dados e IA do Python acompanha a ênfase do curso e a evolução prevista do produto.
 
 | Camada | Tecnologia | Justificativa | Detalhe |
 |---|---|---|---|
@@ -94,8 +91,8 @@ As outras camadas seguem a base obrigatória do ciclo (GCP + Firebase) e não ti
 ## 6. Validação da decisão
 
 - [x] Linguagem da API decidida pela equipe (14/10/2026).
-- [ ] Esqueleto sobe com `docker compose up` (API FastAPI, web, emuladores Auth/Firestore/Storage) até 18/10.
-- [ ] CI com Ruff, mypy e build verdes até 18/10.
+- [x] Esqueleto sobe com `docker compose up` (API FastAPI, web, emuladores Auth/Firestore/Storage) até 18/10. Evidência: job `compose-smoke` do CI em [projeto-habilita/Habilita](https://github.com/projeto-habilita/Habilita/actions/workflows/ci.yml), introduzido no PR #2 e verificado pelo tutor no Checkpoint 1.
+- [x] CI com Ruff, mypy e build verdes até 18/10. Evidência: job consolidado `ci-ok` (PR #5 do repositório de código).
 - [ ] Teste de conformidade da API com o `openapi.yaml` ativo no CI até o CP2.
 
 ## Histórico de versões
@@ -104,3 +101,4 @@ As outras camadas seguem a base obrigatória do ciclo (GCP + Firebase) e não ti
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: tema e formato do ADR. Do Tech Lead: stack justificada, com a decisão de linguagem incorporada (C8). |
 | 1.1 | 31/10/2026 | @pedrolmelo | Nota de substituição parcial pela ADR 0010 (Plano Custo Zero). |
+| 1.2 | 03/11/2026 | @osamuelleite | Feedback do CP1 (item 7): motivo da equipe registrado; caixas de compose e CI marcadas com evidência; status Aceito. |

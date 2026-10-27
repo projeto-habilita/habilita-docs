@@ -86,7 +86,7 @@ paths:
       operationId: obterPerfil
       summary: Perfil do usuário autenticado
       description: H07
-      x-papeis: [gestor, terceirizada, porteiro]
+      x-papeis: [admin_contratante, analista_sst, terceirizada, porteiro]
       responses:
         '200':
           description: Perfil
@@ -101,7 +101,7 @@ paths:
       tags: [Cadastros]
       operationId: listarTerceirizadas
       summary: Listar terceirizadas do tenant
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante, analista_sst]
       parameters:
         - $ref: '#/components/parameters/Limite'
         - $ref: '#/components/parameters/Cursor'
@@ -125,7 +125,7 @@ paths:
       operationId: criarTerceirizada
       summary: Cadastrar terceirizada
       description: H08
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante]
       requestBody:
         required: true
         content:
@@ -147,7 +147,7 @@ paths:
       tags: [Cadastros]
       operationId: listarTiposDocumento
       summary: Listar tipos de documento do tenant
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
       responses:
         '200':
           description: Tipos de documento
@@ -167,7 +167,7 @@ paths:
       operationId: criarTipoDocumento
       summary: Cadastrar tipo de documento com validade
       description: H09
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante]
       requestBody:
         required: true
         content:
@@ -189,7 +189,7 @@ paths:
       operationId: listarContratos
       summary: Listar contratos
       description: Para `terceirizada`, apenas os contratos da própria empresa.
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
       parameters:
         - $ref: '#/components/parameters/Limite'
         - $ref: '#/components/parameters/Cursor'
@@ -213,7 +213,7 @@ paths:
       operationId: criarContrato
       summary: Criar contrato
       description: H01
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante]
       requestBody:
         required: true
         content:
@@ -236,7 +236,7 @@ paths:
       tags: [Cadastros]
       operationId: obterContrato
       summary: Detalhar contrato
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
       responses:
         '200':
           description: Contrato
@@ -255,7 +255,7 @@ paths:
       operationId: definirMatrizExigencias
       summary: Substituir a matriz de exigências do contrato
       description: H01. Dispara recálculo das alocações do contrato.
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante]
       requestBody:
         required: true
         content:
@@ -290,7 +290,7 @@ paths:
       operationId: alocarTrabalhador
       summary: Vincular trabalhador ao contrato
       description: H10 e H11 (reuso automático de documentos válidos).
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, terceirizada]
       requestBody:
         required: true
         content:
@@ -320,8 +320,11 @@ paths:
       tags: [Conformidade]
       operationId: obterConformidadeContrato
       summary: Semáforo do contrato e de cada trabalhador
-      description: H16 e H23
-      x-papeis: [gestor, terceirizada]
+      description: |
+        H16 e H23. `semaforo`, `totais` e `vencendoEm30Dias` vêm de **uma leitura** de
+        `contagens/{contratoId}` (modelo de dados). A lista de trabalhadores é paginada (≤ 50 por página);
+        a rota nunca lê os 500 trabalhadores de uma vez. Meta: p95 ≤ 2 s com 500 trabalhadores de seed.
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
       parameters:
         - $ref: '#/components/parameters/Limite'
         - $ref: '#/components/parameters/Cursor'
@@ -339,13 +342,42 @@ paths:
         '403': { $ref: '#/components/responses/Proibido' }
         '404': { $ref: '#/components/responses/NaoEncontrado' }
 
+  /painel/contratos:
+    get:
+      tags: [Conformidade]
+      operationId: listarPainelContratos
+      summary: Dashboard de conformidade (todos os contratos do tenant)
+      description: |
+        H23. Lê **somente** `contagens/{contratoId}`: um documento por contrato, nenhuma leitura de
+        trabalhador ou documento. Paginado por cursor. Meta da ficha: tenant de seed com 500 trabalhadores
+        responde em p95 ≤ 2 s.
+      x-papeis: [admin_contratante, analista_sst]
+      parameters:
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Página de contagens por contrato
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagina'
+                  - type: object
+                    properties:
+                      itens:
+                        type: array
+                        items: { $ref: '#/components/schemas/ContagemContrato' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
   /trabalhadores:
     get:
       tags: [Trabalhadores]
       operationId: listarTrabalhadores
       summary: Listar trabalhadores
       description: Para `terceirizada`, apenas os da própria empresa.
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
       parameters:
         - $ref: '#/components/parameters/Limite'
         - $ref: '#/components/parameters/Cursor'
@@ -371,7 +403,7 @@ paths:
       description: |
         H02. O CPF é recebido, validado e convertido em HMAC; nunca é persistido nem devolvido completo (ADR 0008).
         Para `terceirizada`, `terceirizadaId` é ignorado e substituído pelo da claim.
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, terceirizada]
       requestBody:
         required: true
         content:
@@ -395,7 +427,7 @@ paths:
       tags: [Trabalhadores]
       operationId: obterTrabalhador
       summary: Detalhar trabalhador com documentos e semáforo por contrato
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
       responses:
         '200':
           description: Trabalhador
@@ -414,9 +446,10 @@ paths:
       operationId: enviarDocumento
       summary: Enviar documento (upload)
       description: |
-        H02. Multipart. Arquivo PDF, JPEG ou PNG com até 10 MiB (10.485.760 bytes),
-        validado pela assinatura de bytes (ADR 0006).
-      x-papeis: [terceirizada, gestor]
+        H02. Multipart. Arquivo **PDF ou JPG com até 5 MB (5.000.000 bytes)**, validado pela
+        assinatura de bytes (ADR 0006). Imagens são comprimidas no navegador antes do envio
+        (máx. 2000 px, JPEG 0,8); a API valida de novo e gera a miniatura dos JPG.
+      x-papeis: [terceirizada, admin_contratante]
       requestBody:
         required: true
         content:
@@ -428,7 +461,7 @@ paths:
                 arquivo:
                   type: string
                   contentMediaType: application/octet-stream
-                  description: PDF, JPEG ou PNG, até 10 MiB
+                  description: PDF ou JPG, até 5.000.000 bytes
                 tipoDocumentoId: { $ref: '#/components/schemas/Id' }
                 validoAte:
                   type: string
@@ -440,7 +473,7 @@ paths:
                   description: Opcional. Não pode estar no futuro; `validoAte` não pode ser anterior a ela
             encoding:
               arquivo:
-                contentType: application/pdf, image/jpeg, image/png
+                contentType: application/pdf, image/jpeg
       responses:
         '201':
           description: Documento criado como PENDENTE
@@ -460,7 +493,7 @@ paths:
       operationId: listarDocumentos
       summary: Listar documentos (fila de revisão)
       description: H12. Ordenação por `enviadoEm` crescente quando `status=PENDENTE`.
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante, analista_sst]
       parameters:
         - name: status
           in: query
@@ -491,7 +524,7 @@ paths:
       tags: [Documentos]
       operationId: obterDocumento
       summary: Detalhar documento
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
       responses:
         '200':
           description: Documento
@@ -512,7 +545,20 @@ paths:
       description: |
         H12.CA3. POST porque gera um artefato com validade e registro de auditoria.
         URL assinada de leitura válida por 300 segundos (ADR 0006).
-      x-papeis: [gestor, terceirizada]
+      x-papeis: [admin_contratante, analista_sst, terceirizada]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                variante:
+                  type: string
+                  enum: [original, miniatura]
+                  default: original
+                  description: '`miniatura` só existe para JPG; para PDF responde 404'
       responses:
         '200':
           description: Link temporário
@@ -527,6 +573,11 @@ paths:
         '401': { $ref: '#/components/responses/NaoAutenticado' }
         '403': { $ref: '#/components/responses/Proibido' }
         '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '410':
+          description: Arquivo já expurgado pelo lifecycle de 90 dias; o registro e a trilha continuam disponíveis (ADR 0006 §3.4)
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problema' }
 
   /documentos/{documentoId}/aprovacao:
     parameters:
@@ -536,9 +587,9 @@ paths:
       operationId: aprovarDocumento
       summary: Aprovar documento
       description: |
-        H13. O gestor confere a validade informada no envio e pode corrigi-la enviando `validoAte` (RN-09).
+        H13. O analista de SST (ou o admin do contratante) confere a validade informada no envio e pode corrigi-la enviando `validoAte` (RN-09).
         Sem corpo, mantém a data informada pela terceirizada.
-      x-papeis: [gestor]
+      x-papeis: [analista_sst, admin_contratante]
       requestBody:
         required: false
         content:
@@ -568,7 +619,7 @@ paths:
       operationId: rejeitarDocumento
       summary: Rejeitar documento com motivo obrigatório
       description: H03. Motivo com 10 a 500 caracteres após remover espaços nas pontas (RN-03).
-      x-papeis: [gestor]
+      x-papeis: [analista_sst, admin_contratante]
       requestBody:
         required: true
         content:
@@ -600,7 +651,7 @@ paths:
       operationId: listarAlertas
       summary: Listar alertas de vencimento
       description: H05
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante, analista_sst]
       parameters:
         - name: naoLidos
           in: query
@@ -635,7 +686,7 @@ paths:
       operationId: marcarAlertaLido
       summary: Marcar alerta como lido
       description: H05.CA4. Idempotente.
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante, analista_sst]
       responses:
         '204':
           description: Marcado como lido
@@ -651,7 +702,9 @@ paths:
       description: |
         H04. CPF no corpo, nunca na URL (ADR 0008). Toda consulta é registrada.
         Limite de 30 consultas por minuto por usuário.
-      x-papeis: [porteiro, gestor]
+        **A resposta não traz nenhum dado de documento** (tipo, motivo, validade, semáforo ou contrato):
+        só o resultado e uma orientação genérica. O detalhe fica nas telas do admin e do analista.
+      x-papeis: [porteiro, admin_contratante, analista_sst]
       requestBody:
         required: true
         content:
@@ -677,15 +730,20 @@ paths:
                     consultaId: cns_01JA0X9F
                     resultado: LIBERADO
                     trabalhador: { id: trb_01J9ZK2A, nome: Trabalhador Fictício, cpfMascarado: '***.456.789-**' }
-                    contratosAptos: [{ id: ctr_01J9Z, identificador: CT-2026-014, semaforo: AMARELO }]
-                    pendencias: []
+                    orientacao: Acesso liberado. Registre a entrada.
+                    expiraEm: '2026-11-03T12:10:00Z'
+                bloqueado:
+                  value:
+                    consultaId: cns_01JA0X9K
+                    resultado: BLOQUEADO
+                    trabalhador: { id: trb_01J9ZK3B, nome: Outro Trabalhador Fictício, cpfMascarado: '***.111.222-**' }
+                    orientacao: Acesso não liberado. Oriente o trabalhador a procurar o SST da contratante.
                     expiraEm: '2026-11-03T12:10:00Z'
                 naoCadastrado:
                   value:
                     consultaId: cns_01JA0XA2
                     resultado: NAO_CADASTRADO
-                    contratosAptos: []
-                    pendencias: []
+                    orientacao: CPF não cadastrado nesta empresa. Oriente o trabalhador a procurar o SST da contratante.
                     expiraEm: '2026-11-03T12:10:00Z'
         '400': { $ref: '#/components/responses/RequisicaoInvalida' }
         '401': { $ref: '#/components/responses/NaoAutenticado' }
@@ -729,7 +787,7 @@ paths:
       operationId: listarAuditoria
       summary: Consultar trilha de auditoria
       description: H21. Período máximo de 31 dias por consulta. Não existem rotas de alteração ou exclusão.
-      x-papeis: [gestor]
+      x-papeis: [admin_contratante]
       parameters:
         - name: de
           in: query
@@ -840,7 +898,8 @@ components:
       pattern: '^[A-Za-z0-9_-]{1,40}$'
     Papel:
       type: string
-      enum: [gestor, terceirizada, porteiro]
+      enum: [admin_contratante, analista_sst, terceirizada, porteiro]
+      description: Os 4 papéis da ficha (ADR 0002). `terceirizada` = prestadora; `porteiro` = portaria.
     Semaforo:
       type: string
       enum: [VERDE, AMARELO, VERMELHO]
@@ -937,7 +996,7 @@ components:
           writeOnly: true
         terceirizadaId:
           $ref: '#/components/schemas/Id'
-          description: Obrigatório para gestor; ignorado para terceirizada
+          description: Obrigatório para admin_contratante; ignorado para terceirizada
     Trabalhador:
       type: object
       required: [id, terceirizadaId, nome, cpfMascarado, ativo]
@@ -983,6 +1042,27 @@ components:
           type: [string, 'null']
           format: date
         calculadoEm: { type: string, format: date-time }
+    ContagemContrato:
+      type: object
+      description: 'Espelho de tenants/{tenantId}/contagens/{contratoId}, mantido pelo recálculo (ADR 0007)'
+      required: [contratoId, identificador, semaforo, totais, totalTrabalhadores, atualizadoEm]
+      properties:
+        contratoId: { $ref: '#/components/schemas/Id' }
+        identificador: { type: string }
+        semaforo:
+          oneOf:
+            - $ref: '#/components/schemas/Semaforo'
+            - type: 'null'
+        totais:
+          type: object
+          required: [VERDE, AMARELO, VERMELHO]
+          properties:
+            VERDE: { type: integer, minimum: 0 }
+            AMARELO: { type: integer, minimum: 0 }
+            VERMELHO: { type: integer, minimum: 0 }
+        totalTrabalhadores: { type: integer, minimum: 0 }
+        vencendoEm30Dias: { type: integer, minimum: 0 }
+        atualizadoEm: { type: string, format: date-time }
     ConformidadeContrato:
       type: object
       required: [contratoId, semaforo, totais, trabalhadores]
@@ -1001,6 +1081,8 @@ components:
             AMARELO: { type: integer, minimum: 0 }
             VERMELHO: { type: integer, minimum: 0 }
         vencendoEm30Dias: { type: integer, minimum: 0 }
+        totalTrabalhadores: { type: integer, minimum: 0, description: 'De contagens/{contratoId}' }
+        contagensAtualizadasEm: { type: string, format: date-time }
         trabalhadores:
           type: array
           items:
@@ -1034,8 +1116,16 @@ components:
           type: object
           description: Metadados apenas; o caminho interno não é exposto
           properties:
-            contentType: { type: string, enum: [application/pdf, image/jpeg, image/png] }
-            tamanhoBytes: { type: integer, minimum: 1, maximum: 10485760 }
+            contentType: { type: string, enum: [application/pdf, image/jpeg] }
+            tamanhoBytes: { type: integer, minimum: 1, maximum: 5000000 }
+            temMiniatura: { type: boolean, description: 'true para JPG; PDF não tem miniatura no MVP (ADR 0006 §3.3)' }
+            expurgoPrevistoEm:
+              type: [string, 'null']
+              format: date
+              description: Data em que o arquivo será apagado pelo lifecycle de 90 dias (ADR 0006 §3.4); nulo enquanto o arquivo está em uso
+            expurgadoEm:
+              type: [string, 'null']
+              format: date-time
             sha256: { type: string, pattern: '^[a-f0-9]{64}$' }
         enviadoEm: { type: string, format: date-time }
         revisadoEm:
@@ -1058,28 +1148,22 @@ components:
           format: date-time
     ResultadoLiberacao:
       type: object
-      required: [consultaId, resultado, contratosAptos, pendencias, expiraEm]
+      description: Resposta mínima para a portaria (ADR 0008). Proibido incluir pendências, tipos de documento, datas, semáforo ou contratos.
+      required: [consultaId, resultado, orientacao, expiraEm]
+      additionalProperties: false
       properties:
         consultaId: { $ref: '#/components/schemas/Id' }
         resultado: { type: string, enum: [LIBERADO, BLOQUEADO, NAO_CADASTRADO] }
         trabalhador:
           type: object
+          additionalProperties: false
           properties:
             id: { $ref: '#/components/schemas/Id' }
             nome: { type: string }
             cpfMascarado: { type: string }
-        contratosAptos:
-          type: array
-          items:
-            type: object
-            required: [id, identificador, semaforo]
-            properties:
-              id: { $ref: '#/components/schemas/Id' }
-              identificador: { type: string }
-              semaforo: { $ref: '#/components/schemas/Semaforo' }
-        pendencias:
-          type: array
-          items: { $ref: '#/components/schemas/Pendencia' }
+        orientacao:
+          type: string
+          description: Texto genérico e fixo por resultado (ex. "procure o SST"); nunca cita documento
         expiraEm:
           type: string
           format: date-time
@@ -1166,12 +1250,12 @@ components:
         application/problem+json:
           schema: { $ref: '#/components/schemas/Problema' }
     ArquivoGrande:
-      description: Arquivo maior que 10 MiB
+      description: 'Arquivo maior que 5 MB (5.000.000 bytes). Mensagem: "O arquivo passou de 5 MB. Tire a foto de novo ou reduza o PDF".'
       content:
         application/problem+json:
           schema: { $ref: '#/components/schemas/Problema' }
     TipoNaoSuportado:
-      description: Conteúdo do arquivo não é PDF, JPEG ou PNG
+      description: 'Conteúdo do arquivo não é PDF nem JPG (assinatura de bytes). Mensagem: "Envie um PDF ou uma foto em JPG".'
       content:
         application/problem+json:
           schema: { $ref: '#/components/schemas/Problema' }

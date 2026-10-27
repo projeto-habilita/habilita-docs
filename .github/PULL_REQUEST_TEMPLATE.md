@@ -33,6 +33,7 @@
 - [ ] `openapi.yaml` atualizado (se o contrato mudou)
 - [ ] Documentação atualizada no mesmo PR (página em `docs/`, ADR, modelo de dados) e `mkdocs build --strict` sem erro
 - [ ] Nenhum recurso novo no GCP sem ADR ou aprovação do Tech Lead
+- [ ] Valor diferente do Caderno ou da ficha? Registrado na [ADR 0011](docs/arquitetura/adr/0011-divergencias-caderno.md) no mesmo PR
 - [ ] Dependência nova justificada abaixo (nome conferido no registro oficial)
 
 ## Dependências novas
@@ -47,3 +48,5 @@
 - [ ] Rotas que usam SDK síncrono (`firebase-admin`) declaradas com `def`, não `async def`
 - [ ] Rate limit aplicado em rota nova de escrita ou de consulta sensível
 - [ ] Testes cobrem bordas, não só o caminho feliz
+- [ ] Nenhuma divergência do Caderno sem linha na ADR 0011
+- [ ] São 2 aprovações, incluindo um dono do CODEOWNERS; o autor não conta

@@ -4,7 +4,7 @@
 |---|---|
 | Status | Rascunho |
 | Responsável | Tech Lead (configuração no GitHub: DevOps) |
-| Última atualização | 14/10/2026 |
+| Última atualização | 26/10/2026 |
 
 ## Regras de documentação (docs-as-code)
 
@@ -32,12 +32,14 @@ gitGraph
 
 **Por que não Gitflow:** Gitflow (branches `develop`, `release` e `hotfix`) serve a produtos com versões lançadas em ciclos e várias versões em produção. O Habilita tem uma única versão em produção, deploy contínuo após merge (Caderno CP3) e preview por PR. Branches longas só atrasariam a integração e aumentariam conflitos em 9 semanas.
 
-## Regras da `main` (proteção de branch — Checkpoint 1)
+## Regras da `main` (proteção de branch, nos dois repositórios)
 
-- [ ] Push direto bloqueado para todos, inclusive administradores.
-- [ ] Merge só por PR com **1 aprovação** de alguém diferente do autor.
-- [ ] Aprovação anulada quando há novo commit.
-- [ ] CI obrigatório verde (lint, build e `mkdocs build --strict` no CP1; testes a partir do CP2).
+Valem para [projeto-habilita/habilita-docs](https://github.com/projeto-habilita/habilita-docs) e para [projeto-habilita/Habilita](https://github.com/projeto-habilita/Habilita). Passo a passo e prints em [Configuração do GitHub](configuracao-github.md).
+
+- [ ] Push direto bloqueado para todos, **inclusive administradores** (sem bypass).
+- [ ] Merge só por PR com **2 aprovações** de pessoas diferentes do autor, incluindo um dono do CODEOWNERS.
+- [ ] Aprovação anulada quando há novo commit; o último push precisa ser aprovado por outra pessoa.
+- [ ] Check obrigatório verde: **`ci-ok`** no código (lint, build, testes, compose) e **`build`** nos docs (`mkdocs build --strict`).
 - [ ] Branch atualizada com a `main` antes do merge.
 - [ ] Merge por **squash** (um commit por história na `main`).
 - [ ] Conversas do PR resolvidas antes do merge.
@@ -162,3 +164,4 @@ A decisão de ativar essas travas estritas no GitHub ou de ajustar o texto da do
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Fluxo Git, branches, PR e proteção da main. |
 | 1.1 | 31/10/2026 | @pedrolmelo | Registro das evidências de proteção da main para o Checkpoint 2 (DO-07) e conferência com as regras da equipe. |
+| 1.2 | 03/11/2026 | @osamuelleite | Proteção da `main` com 2 aprovações, CODEOWNERS e checks `ci-ok`/`build`, nos dois repositórios da org `projeto-habilita`. |

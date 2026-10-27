@@ -30,9 +30,9 @@
 | ID | Categoria | Ameaça | Controle | Verificação | Gate |
 |---|---|---|---|---|---|
 | **AM-01** | Information disclosure | Usuário do tenant A lê dados do tenant B (ID adivinhado, filtro esquecido, *collection group*) | Tenant no caminho; tenant só da claim; 404 fora do escopo; *collection group* restrito ao job (ADR 0002) | T-ISO-01 a 05 | CP1 (escrito), CP2 (passando) |
-| **AM-02** | Elevation of privilege | Terceirizada ou porteiro executa ação de gestor; terceirizada X vê dados da Y | RBAC por rota (`x-papeis`) + escopo por `terceirizadaId` (ADR 0002) | Matriz de autorização (100% das rotas) | CP2 |
+| **AM-02** | Elevation of privilege | Terceirizada ou porteiro executa ação do admin ou do analista; analista edita a matriz; terceirizada X vê dados da Y | RBAC por rota (`x-papeis`) + escopo por `terceirizadaId` (ADR 0002) | Matriz de autorização (100% das rotas) | CP2 |
 | **AM-03** | Information disclosure | CPF vaza por URL, log, resposta ou banco | POST com CPF no corpo; HMAC + máscara; logs sem corpo dessa rota (ADR 0008) | Teste de log sem 11 dígitos seguidos | CP2 |
-| **AM-04** | Tampering / Elevation | Upload de arquivo malicioso (HTML ou script disfarçado de PDF) servido a outro usuário | Validação por assinatura de bytes; só PDF/JPEG/PNG; download como anexo; nome original fora do caminho (ADR 0006) | Testes de arquivo com extensão falsa | CP2 |
+| **AM-04** | Tampering / Elevation | Upload de arquivo malicioso (HTML ou script disfarçado de PDF) servido a outro usuário | Validação por assinatura de bytes; só PDF/JPG; download como anexo; nome original fora do caminho (ADR 0006) | Testes de arquivo com extensão falsa | CP2 |
 | **AM-05** | Information disclosure | Link de documento compartilhado ou reaproveitado | URL assinada de 5 min, gerada só após autorização; bucket privado; Rules deny-all | Teste de URL expirada | CP2 |
 | **AM-06** | Information disclosure / DoS | Varredura de CPFs na portaria; força bruta no login | Rate limit na consulta (30/min por usuário); proteção de força bruta do Firebase Auth; auditoria de consultas | Teste de 429 | CP2 |
 | **AM-07** | Spoofing | Chamada forjada à rota do job | Token OIDC validado (emissor, audiência, conta de serviço) | Teste de 401/403 sem OIDC | CP3 |
@@ -53,7 +53,7 @@
 | E-mail dos usuários do sistema | Usuários | Firebase Auth | Login | Gerenciado pelo Firebase Auth | Administração (seed) |
 | Registros de consulta e acesso | Trabalhador e porteiro | Firestore | Controle de acesso e auditoria | Append-only, sem CPF | Gestor |
 
-**Princípios aplicados:** finalidade (só verificar aptidão), necessidade (sem endereço, telefone, foto, data de nascimento), segurança (controles acima), não discriminação (o sistema não interpreta o conteúdo do ASO, apenas registra o documento e a validade aprovada pelo gestor).
+**Princípios aplicados:** finalidade (só verificar aptidão), necessidade (sem endereço, telefone, foto, data de nascimento), segurança (controles acima), não discriminação (o sistema não interpreta o conteúdo do ASO, apenas registra o documento e a validade aprovada pelo analista de SST).
 
 **Dados de teste e demo:** exclusivamente fictícios. CPFs de teste gerados com dígito verificador válido por algoritmo, nunca coletados de pessoas reais. Documentos de exemplo são PDFs gerados com o texto "DOCUMENTO FICTÍCIO".
 
@@ -78,12 +78,12 @@ flowchart TB
 | | Mesma origem para web e API | Rewrite `/api/**` → Cloud Run; sem CORS em produção (em desenvolvimento, CORS só para `localhost`) | Chamadas de outros sites |
 | **Borda da API (middlewares FastAPI)** | Autenticação | `firebase-admin` verifica o ID token (assinatura, expiração, emissor) em toda rota protegida | AM-02 |
 | | **Rate limit** | Ver seção 5.1 | AM-06, AM-12 |
-| | Limite de tamanho do corpo | JSON até 64 KiB; upload até 10 MiB, verificado em *streaming* antes de ler tudo (o Cloud Run aceita até 32 MiB por requisição HTTP/1) | AM-12 |
+| | Limite de tamanho do corpo | JSON até 64 KiB; upload até 5 MB (5.000.000 bytes), verificado em *streaming* antes de ler tudo (o Cloud Run aceita até 32 MiB por requisição HTTP/1) | AM-12 |
 | | Rastreabilidade | `X-Request-Id` em toda resposta e em todo log | AM-08 |
 | | Respostas não armazenáveis | `Cache-Control: no-store` em respostas com dado pessoal | AM-03 |
 | | Timeouts | Timeout por requisição no Cloud Run (proposta: 30 s) e em chamadas a serviços externos | AM-12 |
 | **Validação (Pydantic)** | Tipos, formatos, tamanhos, `extra="forbid"` | Ver [Qualidade, seção 3](../engenharia/qualidade.md) | AM-09 |
-| | Upload pelo conteúdo real | Assinatura de bytes de PDF, JPEG e PNG (ADR 0006) | AM-04 |
+| | Upload pelo conteúdo real | Assinatura de bytes de PDF e JPG; imagens decodificadas pelo Pillow com limite de pixels (ADR 0006) | AM-04 |
 | **Autorização** | Papel por rota + escopo do recurso | Dependência do FastAPI que lê `x-papeis` e as claims; 403 ou 404 (ADR 0002) | AM-01, AM-02 |
 | **Domínio** | Regras de estado | Ex.: entrada só com consulta `LIBERADO` de até 10 min (RN-11) | Fraude na portaria |
 | **Dados** | Rules deny-all; CPF só como HMAC; bucket privado; URL assinada de 5 min | ADR 0002, 0006, 0008 | AM-01, AM-03, AM-05 |
@@ -142,7 +142,8 @@ Base: checklist de 24 pontos para sistemas feitos com IA, adaptado para Firebase
 - [ ] Cabeçalhos de segurança no Hosting: `Content-Security-Policy`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `frame-ancestors 'none'` (ou `X-Frame-Options: DENY`), `Strict-Transport-Security`. **(CP3)**
 - [ ] Rate limit na consulta de portaria e nas rotas de escrita. **(CP2)**
 - [ ] Proteção de login contra força bruta (recursos do Firebase Auth). **(CP3)**
-- [ ] Upload restrito: 10 MiB, PDF/JPEG/PNG por assinatura de bytes. **(CP2)**
+- [ ] Upload restrito: 5 MB, PDF/JPG por assinatura de bytes. **(CP2)**
+- [ ] Portaria sem nenhum dado de documento na resposta (RN-15). **(CP2)**
 - [ ] Respostas enxutas: nunca devolver campos que a tela não usa (ex.: caminho interno do arquivo, `cpfHash`).
 - [ ] Erros ao cliente em Problem Details, sem stack trace; detalhe só no log interno, sem dados pessoais.
 

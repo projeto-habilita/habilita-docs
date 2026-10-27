@@ -24,7 +24,7 @@ O produto se apresenta como "trilha de auditoria de decisões e acessos". Em um 
 - Coleção `tenants/{t}/auditoria/{id}` **somente inserção**: o repositório de auditoria expõe apenas `registrar()`; não há métodos de atualização ou exclusão nem rotas para isso.
 - O registro é gravado **no mesmo lote atômico** da operação de negócio. Se a auditoria falha, a operação falha.
 - Campos: `ator` (uid), `papel`, `acao` (ex.: `DOCUMENTO_APROVADO`), `recurso` (tipo e id), `detalhes` (sem dados pessoais além de ids), `dataHora` (UTC), `requestId`.
-- Leitura pelo gestor via `GET /api/auditoria`, paginada (H21).
+- Leitura pelo `admin_contratante` via `GET /api/auditoria`, paginada (H21).
 
 ## 4. Consequências
 

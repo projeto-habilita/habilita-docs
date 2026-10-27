@@ -31,7 +31,9 @@ Documentos mudam de situação (válido → a vencer → vencido) apenas com a p
    - nenhuma escrita usa contador ou acumulação.
 5. **Controle de execução:** documento `execucoesJob/{dataReferencia}` com status (`EM_ANDAMENTO`, `CONCLUIDO`, `FALHOU`) e contagens. Uma nova execução para a mesma data **reprocessa tudo** (é seguro, por ser idempotente) e atualiza o registro.
 6. **Recálculo por evento:** aprovação, rejeição, vínculo e alteração de matriz recalculam imediatamente as alocações afetadas usando as mesmas funções (RN-13).
-7. **Proteção de custo:** processamento em lotes, apenas documentos `APROVADO`, com limite máximo de documentos por execução configurável (alerta se atingido).
+7. **Contagens do dashboard (`contagens/{contratoId}`):** o job diário **recalcula do zero** as contagens de cada contrato a partir das alocações e grava com `set`, o que também corrige qualquer desvio. No recálculo por evento, a mesma transação que grava a alocação lê a cor antiga e o documento de contagens e grava o valor novo já calculado (também com `set`, sem `increment`). Se a cor não mudou, nada é escrito. A regra "nenhuma escrita usa contador" continua valendo.
+8. **Marcação de expurgo:** o job grava o `customTime` dos arquivos que deixaram de ser necessários (vencidos e sem vínculo ativo), conforme a ADR 0006 §3.4. A marcação é idempotente: mesma data de referência, mesmo `customTime`.
+9. **Proteção de custo:** processamento em lotes, apenas documentos `APROVADO`, com limite máximo de documentos por execução configurável (alerta se atingido).
 
 ## 4. Consequências
 
@@ -59,3 +61,4 @@ Documentos mudam de situação (válido → a vencer → vencido) apenas com a p
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Recálculo diário idempotente de vencimentos. Status: proposto. |
 | 1.1 | 31/10/2026 | @pedrolmelo | Nota de substituição parcial pela ADR 0010 (Plano Custo Zero). |
+| 1.2 | 03/11/2026 | @osamuelleite | Contagens do dashboard (`contagens/{contratoId}`) recalculadas sem incremento; marcação de expurgo da ADR 0006 (feedback do CP1, item 3). |

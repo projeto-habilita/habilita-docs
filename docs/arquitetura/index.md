@@ -22,14 +22,14 @@
 
 ```mermaid
 flowchart TB
-    gestor["👤 Gestor de SST/Facilities<br/>(contratante)"]
+    gestor["👤 Admin do contratante e analista de SST<br/>(contratante)"]
     terc["👤 Responsável da terceirizada"]
     porteiro["👤 Porteiro"]
     habilita[["Habilita<br/>Plataforma de conformidade documental de SST"]]
     firebaseAuth["Firebase Authentication<br/>(identidade)"]
     email["Serviço de e-mail<br/>(Could · H17)"]
 
-    gestor -- "configura contratos, aprova documentos,<br/>acompanha semáforo e alertas" --> habilita
+    gestor -- "admin: contratos e matriz · analista: aprova documentos,<br/>acompanha semáforo e alertas" --> habilita
     terc -- "cadastra trabalhadores,<br/>envia documentos" --> habilita
     porteiro -- "consulta liberação por CPF,<br/>registra acesso" --> habilita
     habilita -- "valida tokens e claims" --> firebaseAuth
@@ -128,7 +128,7 @@ sequenceDiagram
     participant A as API
     participant S as Cloud Storage
     participant F as Firestore
-    T->>A: POST /api/trabalhadores/{id}/documentos (multipart, ≤ 10 MiB, validoAte)
+    T->>A: POST /api/trabalhadores/{id}/documentos (multipart, PDF/JPG ≤ 5 MB, validoAte)
     A->>A: autoriza (RN-02), valida tamanho e assinatura de bytes
     A->>S: grava arquivo em caminho privado + SHA-256
     A->>F: cria documento PENDENTE + auditoria
