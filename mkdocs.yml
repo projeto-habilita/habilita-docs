@@ -110,6 +110,7 @@ nav:
       - testes/index.md
       - Estratégia de testes: testes/estrategia.md
       - Matriz de rastreabilidade: testes/matriz.md
+      - Rastreabilidade (caminho do Caderno): rastreabilidade.md
       - Relatórios:
           - Visão geral: testes/relatorios/index.md
           - "Checkpoint 1 — QA e Isolamento": testes/relatorios/cp1-checklist-qa.md

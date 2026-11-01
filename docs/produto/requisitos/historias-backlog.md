@@ -13,7 +13,7 @@
 | ID | História | MoSCoW | RF | Critério de aceite |
 |---|---|---|---|---|
 | H01 | Como gestor(a) de SST, quero definir os documentos exigidos por contrato, para padronizar a conferência | Must | RF01 | Contrato com `dataInicio ≤ dataFim`; matriz de 1 a 20 tipos; semáforo recalculado em até 60 s — ver [H01](#h01) |
-| H02 | Como terceirizada, quero enviar os documentos dos meus trabalhadores, para que sejam liberados | Must | RF02, RF03 | CPF válido e único por cliente; PDF/JPEG/PNG até 10 MiB; validade obrigatória; 413/415 fora disso — ver [H02](#h02) |
+| H02 | Como terceirizada, quero enviar os documentos dos meus trabalhadores, para que sejam liberados | Must | RF02, RF03 | CPF válido e único por cliente; PDF/JPG até 5 MB; validade obrigatória; 413/415 fora disso — ver [H02](#h02) |
 | H03 | Como gestor(a), quero rejeitar um documento informando o motivo, para que a terceirizada corrija | Must | RF04 | Motivo de 10 a 500 caracteres; sem motivo → 400 e documento continua pendente — ver [H03](#h03) |
 | H04 | Como porteiro(a), quero consultar se o trabalhador está liberado, para autorizar a entrada | Must | RF09 | LIBERADO / BLOQUEADO / NAO_CADASTRADO; p95 ≤ 800 ms; CPF fora da URL; toda consulta auditada — ver [H04](#h04) |
 | H05 | Como gestor(a), quero ser avisado(a) de vencimentos próximos, para agir antes do bloqueio | Should | RF07 | 1 alerta por documento e faixa (30 dias, vencido); sem duplicar em reexecuções — ver [H05](#h05) |
@@ -73,12 +73,13 @@ Inclui cadastrar o trabalhador e enviar cada documento com a data de validade (R
 - **CA2** Dado um CPF inválido (incluindo sequências repetidas como `111.111.111-11`), quando salvo, então a API responde 400.
 - **CA3** Dado um CPF já cadastrado no mesmo tenant, quando salvo, então a API responde 409.
 - **CA4** O CPF completo não é persistido; é guardado apenas o hash HMAC e a versão mascarada (ver [ADR 0008](../../arquitetura/adr/0008-consulta-liberacao-cpf.md)).
-- **CA5** Dado um arquivo PDF, JPEG ou PNG com até 10 MiB (10.485.760 bytes), quando envio, então o documento é criado com status `PENDENTE` (201).
-- **CA6** Dado um arquivo com 10.485.761 bytes ou mais, quando envio, então a API responde 413.
-- **CA7** Dado um arquivo cujo conteúdo real (assinatura de bytes) não é PDF, JPEG ou PNG, mesmo com extensão `.pdf`, quando envio, então a API responde 415.
+- **CA5** Dado um arquivo PDF ou JPG com até 5 MB (5.000.000 bytes), quando envio, então o documento é criado com status `PENDENTE` (201).
+- **CA6** Dado um arquivo com 5.000.001 bytes ou mais, quando envio, então a API responde 413.
+- **CA7** Dado um arquivo cujo conteúdo real (assinatura de bytes) não é PDF ou JPG, mesmo com extensão `.pdf`, quando envio, então a API responde 415.
 - **CA8** Dado uma `dataEmissao` no futuro, quando envio, então a API responde 400.
 - **CA9** O arquivo fica em bucket privado; nenhum usuário consegue baixá-lo sem passar pela API (ver H12.CA3).
 - **CA10** Dado um envio sem `validoAte`, ou com `validoAte` anterior à `dataEmissao`, quando envio, então a API responde 400 (RN-09).
+- **CA11** Dado um arquivo recusado por tamanho (413) ou por tipo (415), quando envio, então a tela mostra uma mensagem que diz o limite: "Envie um PDF ou JPG de até 5 MB".
 
 ### H03 · Rejeitar documento com motivo obrigatório — **Must** { #h03 }
 
@@ -94,7 +95,7 @@ Inclui cadastrar o trabalhador e enviar cada documento com a data de validade (R
 *Como porteiro(a), quero consultar se o trabalhador está liberado, para autorizar a entrada.* (RF09)
 
 - **CA1** Dado um trabalhador verde ou amarelo em pelo menos um contrato vigente do meu tenant, quando consulto o CPF, então a resposta é `LIBERADO`, com o nome do trabalhador e os contratos em que está apto (sem foto; ver *Won't*).
-- **CA2** Dado um trabalhador vermelho em todos os contratos vigentes, então a resposta é `BLOQUEADO` com a lista das pendências por contrato (tipo de documento e motivo: ausente ou vencido).
+- **CA2** Dado um trabalhador vermelho em todos os contratos vigentes, então a resposta é `BLOQUEADO` com a orientação "Procure o SST", sem tipo de documento, motivo ou contrato. O detalhe das pendências aparece só para o gestor.
 - **CA3** Dado um CPF não cadastrado no meu tenant (inclusive se existir em outro tenant), então a resposta é `NAO_CADASTRADO`, sem nenhum dado do outro tenant.
 - **CA4** O CPF é enviado no corpo da requisição, nunca na URL (ver [ADR 0008](../../arquitetura/adr/0008-consulta-liberacao-cpf.md)).
 - **CA5** A consulta responde em p95 ≤ 800 ms com 1.000 trabalhadores no tenant (RNF04).
@@ -262,7 +263,7 @@ OCR, eSocial, ICP-Brasil, app nativo, pagamentos. Lista completa e motivos em [W
 *Como* gestor, *quero* ver, por contrato, quantos trabalhadores estão em cada cor e quantos documentos vencem nos próximos 30 dias, *para* priorizar ações.
 
 - **CA1** Dado um contrato, quando abro o painel, então os totais por cor batem com a lista de trabalhadores do contrato.
-- **CA2** O painel carrega em até 2 segundos (p95) com 200 trabalhadores no contrato.
+- **CA2** O painel carrega em até 2 segundos (p95) com 500 trabalhadores de seed no contrato, lendo apenas o documento `contagens/{contratoId}`.
 
 ---
 
@@ -287,3 +288,4 @@ OCR, eSocial, ICP-Brasil, app nativo, pagamentos. Lista completa e motivos em [W
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: histórias H01 a H06, com texto e prioridade mantidos. Do Tech Lead: histórias H07 a H23 propostas, critérios de aceite Dado/Quando/Então e lista Won't detalhada (C4, C9). |
+| 1.1 | 01/11/2026 | @Lelafeta | Alinhamento de limites de upload (5 MB PDF/JPG), resposta da portaria e carga do painel ao Caderno. |

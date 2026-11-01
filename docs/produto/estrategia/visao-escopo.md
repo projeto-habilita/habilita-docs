@@ -53,7 +53,7 @@ Ver [É / Não É / Faz / Não Faz](e-nao-e.md) e [Jornadas](jornadas.md).
 
 ## Privacidade e LGPD
 
-**Frase-resumo:** o Habilita guarda dados pessoais de trabalhadores terceirizados (nome, CPF em forma protegida e documentos de SST, incluindo o ASO, que contém informação de saúde) exclusivamente para verificar a aptidão para o trabalho exigida da contratante, pelo tempo de vigência do contrato acrescido do prazo de retenção definido pelo cliente, e nunca os expõe a outro cliente.
+**Frase-resumo:** o Habilita guarda dados pessoais de trabalhadores terceirizados (nome, CPF em forma protegida e documentos de SST, incluindo o ASO, que contém informação de saúde) exclusivamente para verificar a aptidão para o trabalho exigida da contratante, pelo tempo de vigência do contrato acrescido de 90 dias, com expurgo automático (padrão até a orientação jurídica), e nunca os expõe a outro cliente.
 
 | Ponto | Decisão no MVP |
 |---|---|
@@ -61,7 +61,7 @@ Ver [É / Não É / Faz / Não Faz](e-nao-e.md) e [Jornadas](jornadas.md).
 | Dado pessoal sensível | O ASO registra aptidão (dado de saúde): acesso só por papéis autorizados, download por link temporário, nunca em logs. |
 | Base legal provável | Cumprimento de obrigação legal ou regulatória pela controladora. **A confirmar** com orientação jurídica do lab ou do cliente. |
 | Minimização | CPF guardado como hash com chave secreta (HMAC) mais versão mascarada; sem endereço, telefone, foto ou dados de saúde além do arquivo enviado. |
-| Retenção | Prazo definido por cliente. **Em aberto** (questão Q4). |
+| Retenção | 90 dias após o fim do contrato, com expurgo automático. Padrão até a orientação jurídica (Q4, 15/11). |
 | Dados de demonstração | Somente dados fictícios (RNF09). |
 
 Detalhes e controles em [Segurança](../../seguranca/index.md).
@@ -100,3 +100,4 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página, frase de visão, público, problema e proposta. Do Tech Lead: frase e tabela de LGPD (C14), riscos e questões Q1 a Q6 para decisão da PO. |
+| 1.1 | 01/11/2026 | @Lelafeta | Definição padrão de retenção de 90 dias com expurgo automático pós-contrato. |

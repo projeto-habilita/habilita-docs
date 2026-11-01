@@ -53,7 +53,7 @@ Todas são **hipóteses** até as entrevistas. A última coluna liga cada causa 
 | **Mão de obra** | Ninguém responsável por conferir | Rascunho PO ★ (Pessoas) | Fila única de pendentes com aprovador registrado (J3) | P6 |
 | | Alta rotatividade de terceirizados | Tech Lead | Cadastro rápido e reuso de documentos | P2 |
 | | Gestor de SST sobrecarregado | Tech Lead | Alertas automáticos; menos conferência repetida | P3, P6 |
-| **Material** | Documentos em formatos variados e ilegíveis | Tech Lead | Upload restrito a PDF, JPEG e PNG, com aprovação humana | P6 |
+| **Material** | Documentos em formatos variados e ilegíveis | Tech Lead | Upload restrito a PDF e JPG até 5 MB, com aprovação humana | P6 |
 | | Mesmo documento reenviado para cada contrato | Tech Lead | Reuso automático entre contratos | P5 |
 | **Medida** | Vencimentos não controlados | Rascunho PO ★ (Dados) | Recálculo diário idempotente (J4) | P4 |
 | | Sem indicador de conformidade | Tech Lead | Semáforo por trabalhador e contrato | P8 |
@@ -74,3 +74,4 @@ Todas são **hipóteses** até as entrevistas. A última coluna liga cada causa 
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: efeito e 5 causas de exemplo (marcadas com ★). Do Tech Lead: organização nos 6M exigidos pelo guia (C1) e demais causas ligadas ao roteiro de entrevista. |
 | 1.1 | 18/10/2026 | @Lelafeta | Diagrama trocado para o formato espinha de peixe (Mermaid `ishikawa-beta`) e imagem `ishikawa.png` adicionada. Item do gate marcado como concluído. |
+| 1.2 | 01/11/2026 | @Lelafeta | Alinhamento do formato e limite de upload (PDF e JPG até 5 MB) ao Caderno. |
