@@ -28,7 +28,7 @@ E também, conforme o Caderno B2B (seção 1.6):
 - [ ] Nenhum segredo (senha, chave, token) no código ou no histórico.
 - [ ] Telas com estados de carregando, vazio, erro e sucesso.
 - [ ] Logs sem dados pessoais (sem CPF, nome, e-mail, conteúdo de documento, token).
-- [ ] Nenhum recurso novo no GCP sem ADR ou aprovação do Tech Lead.
+- [ ] Nenhum recurso novo em nuvem sem ADR ou aprovação do Tech Lead.
 - [ ] Teste de autorização para toda rota nova ou alterada (sem token, papel errado, tenant errado).
 - [ ] Entrada e saída tipadas com Pydantic (`extra="forbid"`), mypy e `tsc` sem erros ([Qualidade](qualidade.md)).
 
@@ -41,3 +41,4 @@ Um gate só passa quando a evidência é **reproduzível por outra pessoa da equ
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: itens da DoD. Do Tech Lead: itens obrigatórios do Caderno (seção 1.6) e Definition of Ready (C12). |
+| 1.1 | 31/10/2026 | @pedrolmelo | Ajuste do critério de novos recursos em nuvem para abranger serviços fora do GCP (Plano Custo Zero). |
