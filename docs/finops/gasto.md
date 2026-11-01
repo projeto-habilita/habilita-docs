@@ -65,3 +65,4 @@ Caso ocorra qualquer cobrança ou desvio inesperado que resulte em gasto superio
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 31/10/2026 | @pedrolmelo | Versão inicial: registro de gasto US$ 0,00 no Checkpoint 2, declaração do DevOps e evidência do plano Spark. |
+

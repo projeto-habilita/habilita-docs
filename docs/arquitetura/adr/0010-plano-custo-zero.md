@@ -158,3 +158,4 @@ Caso a equipe receba um voucher institucional do Google Cloud Platform durante o
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 31/10/2026 | @pedrolmelo | Versão inicial: proposta do Plano Custo Zero com substituição de Cloud Run, Cloud Storage, Cloud Scheduler por serviços gratuitos sem cartão. |
+

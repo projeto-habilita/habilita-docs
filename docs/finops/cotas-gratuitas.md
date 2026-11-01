@@ -33,3 +33,4 @@ Esta página detalha, em linguagem acessível para o PO e gestores do produto, q
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 31/10/2026 | @pedrolmelo | Criação da página de cotas gratuitas orientada ao PO e à equipe, em substituição à calculadora do GCP. |
+
