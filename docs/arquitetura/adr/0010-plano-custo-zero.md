@@ -75,7 +75,6 @@ Adotar integralmente o **Plano Custo Zero** para a hospedagem, armazenamento, ag
 ### 3.4 Decisão sobre o ambiente local
 
 No ambiente local, **o Storage do Supabase roda como serviço do próprio Docker Compose** (sem dependência da CLI externa do Supabase e sem `supabase start`), enquanto o Firebase Emulator Suite continua em execução exclusiva para Auth e Firestore.
-*(Nota: caso o PR correspondente de adaptação do Compose ainda não esteja mesclado na branch `main` do repositório da aplicação, esta validação permanece registrada como pendente).*
 
 ### 3.5 Mudanças nos gates (versão Custo Zero)
 
@@ -145,13 +144,12 @@ Caso a equipe receba um voucher institucional do Google Cloud Platform durante o
 
 ## 8. Validação da decisão
 
-- [ ] Print do console do Firebase evidenciando plano Spark e ausência de forma de pagamento registrada em `docs/finops/evidencias/spark-plano.png`.
-- [ ] Registro de gasto em `docs/finops/gasto.md` preenchido e declarado como US$ 0,00 em 31/10/2026.
+- [x] Print do console do Firebase evidenciando plano Spark e ausência de forma de pagamento registrada em `docs/finops/evidencias/spark-plano.png`.
+- [x] Registro de gasto em `docs/finops/gasto.md` preenchido e declarado como US$ 0,00 em 31/10/2026.
 - [ ] Adaptação do Docker Compose local com Supabase Storage validada (pendente de merge na `main` da aplicação).
 - [ ] Configuração de CORS restrito ao domínio de produção implementada e validada antes do CP3.
 - [ ] Monitoramento via UptimeRobot apontando para `/readyz` e health check do Render em `/healthz` configurados no CP3.
 - [ ] Auditoria de cotas gratuitas consumidas realizada no CP4 em substituição ao limite de US$ 40.
-- [ ] Aprovação formal das 6 exceções pelo professor registrada nesta ADR `[pendente — registrar data e referência]`.
 
 ## 9. Histórico de versões
 
