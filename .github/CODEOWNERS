@@ -1,0 +1,24 @@
+# CODEOWNERS — Habilita (habilita-docs)
+# A revisão do dono só é obrigatória se "Require review from Code Owners" estiver ativo na regra da branch main.
+# Cada dono precisa aprovar alterações na sua área antes do merge.
+
+# Padrão: Tech Lead revisa o que não tiver dono específico
+*                          @osamuelleite
+
+# Decisões de arquitetura e segurança
+/docs/arquitetura/         @osamuelleite
+/docs/seguranca/           @osamuelleite
+
+# Produto
+/docs/produto/             @Lelafeta
+
+# Contrato da API: backend e frontend precisam concordar
+/openapi.yaml              @Gustavormq @ArthurFeitosa05
+
+# Infra, pipeline e configuração do site (DevOps + Tech Lead para evitar trava)
+/.github/                  @pedrolmelo @osamuelleite
+/mkdocs.yml                @pedrolmelo @osamuelleite
+
+# FinOps e Engenharia (DevOps + Tech Lead para evitar trava)
+/docs/finops/              @pedrolmelo @osamuelleite
+/docs/engenharia/          @pedrolmelo @osamuelleite
