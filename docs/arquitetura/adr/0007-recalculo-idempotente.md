@@ -6,7 +6,9 @@
 | Data | 14/10/2026 |
 | Decisores | Tech Lead, Backend |
 | Consultados | PO |
-| Relacionados | H15, H05, RN-04, RN-12, RN-13 |
+| Relacionados | H15, H05, RN-04, RN-12, RN-13, [ADR 0010](0010-plano-custo-zero.md) (Plano Custo Zero) |
+
+> **Atenção:** os itens de hospedagem/armazenamento/agendamento/custo desta ADR estão sendo substituídos pela [ADR 0010](0010-plano-custo-zero.md) (Proposto).
 
 ## 1. Contexto
 
@@ -56,3 +58,4 @@ Documentos mudam de situação (válido → a vencer → vencido) apenas com a p
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Recálculo diário idempotente de vencimentos. Status: proposto. |
+| 1.1 | 31/10/2026 | @pedrolmelo | Nota de substituição parcial pela ADR 0010 (Plano Custo Zero). |
