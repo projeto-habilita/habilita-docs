@@ -8,36 +8,9 @@
     **Prazo:** CP1 · 18/10
 
 !!! note "Origem das histórias"
-    **H01 a H06** são da PO (texto e prioridade mantidos). **H07 a H23** foram propostas pelo Tech Lead para cobrir as 5 jornadas e os requisitos funcionais por completo; a PO valida a prioridade. Critérios de aceite detalhados abaixo da tabela, no formato Dado / Quando / Então.
+    **H01 a H05** são da PO (texto e prioridade mantidos). H01 a H23 validadas pela PO em 02/11/2026. Critérios de aceite detalhados abaixo da tabela, no formato Dado / Quando / Então.
 
-| ID | História | MoSCoW | RF | Critério de aceite |
-|---|---|---|---|---|
-| H01 | Como gestor(a) de SST, quero definir os documentos exigidos por contrato, para padronizar a conferência | Must | RF01 | Contrato com `dataInicio ≤ dataFim`; matriz de 1 a 20 tipos; semáforo recalculado em até 60 s — ver [H01](#h01) |
-| H02 | Como terceirizada, quero enviar os documentos dos meus trabalhadores, para que sejam liberados | Must | RF02, RF03 | CPF válido e único por cliente; PDF/JPG até 5 MB; validade obrigatória; 413/415 fora disso — ver [H02](#h02) |
-| H03 | Como gestor(a), quero rejeitar um documento informando o motivo, para que a terceirizada corrija | Must | RF04 | Motivo de 10 a 500 caracteres; sem motivo → 400 e documento continua pendente — ver [H03](#h03) |
-| H04 | Como porteiro(a), quero consultar se o trabalhador está liberado, para autorizar a entrada | Must | RF09 | LIBERADO / BLOQUEADO / NAO_CADASTRADO; p95 ≤ 800 ms; CPF fora da URL; toda consulta auditada — ver [H04](#h04) |
-| H05 | Como gestor(a), quero ser avisado(a) de vencimentos próximos, para agir antes do bloqueio | Must | RF07 | 1 alerta por documento e faixa (30 dias, vencido); sem duplicar em reexecuções — ver [H05](#h05) |
-| H06 | | Won't | — | OCR, eSocial, ICP-Brasil, app nativo, pagamentos (lista completa em [Won't](#wont)) |
-| H07 | Como usuário cadastrado (gestor, terceirizada ou porteiro), quero entrar com e-mail e senha e ver apenas as telas do meu papel, para trabalhar sem acessar o que não me cabe. | Must | — (RNF01) | ver [H07](#h07) |
-| H08 | Como gestor, quero cadastrar as empresas terceirizadas com quem tenho contrato, para vinculá-las aos contratos. | Must | RF01 | ver [H08](#h08) |
-| H09 | Como gestor, quero cadastrar os tipos de documento que exijo (ex.: ASO, NR-35) com o prazo de validade padrão, para que o sistema calcule os vencimentos. | Must | RF01 | ver [H09](#h09) |
-| H10 | Como responsável da terceirizada, quero vincular um trabalhador a um contrato da minha empresa, para que ele possa ser liberado nesse contrato. | Must | RF02 | ver [H10](#h10) |
-| H11 | Como responsável da terceirizada, quero que um documento já aprovado e válido conte automaticamente para qualquer contrato do mesmo cliente que o exija, para não reenviar o mesmo arquivo. | Must | RF08 | ver [H11](#h11) |
-| H12 | Como gestor, quero ver todos os documentos pendentes e abrir cada arquivo, para decidir sobre eles. | Must | RF04 | ver [H12](#h12) |
-| H13 | Como gestor, quero aprovar um documento confirmando sua data de validade, para que ele conte no semáforo. | Must | RF04 | ver [H13](#h13) |
-| H14 | Como responsável da terceirizada, quero ver por que um documento foi rejeitado e enviar um novo, para regularizar o trabalhador. | Must | RF03, RF04 | ver [H14](#h14) |
-| H15 | Como gestor, quero que o sistema recalcule sozinho a situação de todos os documentos todo dia, para não depender de ninguém lembrar. | Must | RF05 | ver [H15](#h15) |
-| H16 | Como gestor, quero ver o semáforo de cada trabalhador em cada contrato, para saber quem está apto. | Must | RF06 | ver [H16](#h16) |
-| H17 | Como gestor, quero receber um resumo diário dos alertas por e-mail, para não precisar abrir o sistema. | Could | RF07 | ver [H17](#h17) |
-| H18 | Como porteiro, quero confirmar se o trabalhador entrou ou foi barrado, para que fique registrado quem acessou o local. | Must | RF09 | ver [H18](#h18) |
-| H19 | Como gestor de um cliente, quero ter a garantia de que nenhum outro cliente vê meus dados, para confiar meus documentos ao Habilita. | Must | — (RNF01) | ver [H19](#h19) |
-| H20 | Como gestor, quero que toda decisão e todo acesso fiquem registrados de forma imutável, para responder a uma auditoria ou a um incidente. | Must | RF10 | ver [H20](#h20) |
-| H21 | Como gestor, quero filtrar a trilha por período, ação e recurso, para investigar uma decisão. | Should | RF10 | ver [H21](#h21) |
-| H22 | Como gestor, quero exportar o semáforo de um contrato em CSV, para anexar a relatórios. | Could | RF06 | ver [H22](#h22) |
-| H23 | Como gestor, quero ver, por contrato, quantos trabalhadores estão em cada cor e quantos documentos vencem nos próximos 30 dias, para priorizar ações. | Must | RF06 | ver [H23](#h23) |
-
-!!! note "Legenda MoSCoW"
-    **Must** = sem isso não há MVP · **Should** = importante · **Could** = se der tempo · **Won't** = fora deste ciclo.
+A tabela do backlog, com as prioridades, está em [Backlog](../../backlog/index.md). Abaixo, os critérios de aceite de cada história.
 
 ## Regras de escrita dos critérios
 
@@ -107,11 +80,7 @@ Inclui cadastrar o trabalhador e enviar cada documento com a data de validade (R
 - **CA3** Dado o mesmo documento na mesma faixa, quando o job roda em dias seguintes, então nenhum alerta novo é criado.
 - **CA4** Dado um alerta, quando o marco como lido, então ele sai da lista de não lidos e o registro permanece.
 
-### H06 · Won't { #h06 }
-
-OCR, eSocial, ICP-Brasil, app nativo, pagamentos. Lista completa e motivos em [Won't](#wont).
-
-## Histórias propostas pelo Tech Lead
+## Histórias H07 a H23
 
 ### H07 · Entrar no sistema com o meu papel — **Must** { #h07 }
 
@@ -144,7 +113,7 @@ OCR, eSocial, ICP-Brasil, app nativo, pagamentos. Lista completa e motivos em [W
 
 *Como* responsável da terceirizada, *quero* vincular um trabalhador a um contrato da minha empresa, *para* que ele possa ser liberado nesse contrato.
 
-- **CA1** Dado um trabalhador e um contrato da mesma terceirizada, quando vinculo, então o vínculo é criado (201) e o semáforo do trabalhador no contrato é calculado imediatamente.
+- **CA1** Dado um trabalhador e um contrato da mesma terceirizada, quando vinculo, então o vínculo é criado (201) e o semáforo do trabalhador no contrato é calculado em até 60 segundos.
 - **CA2** Dado um contrato de outra terceirizada, quando tento vincular, então a API responde 404.
 - **CA3** Dado um vínculo já existente, quando tento vincular de novo, então a API responde 409.
 
@@ -289,3 +258,4 @@ Implementação após o Checkpoint 2.
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: histórias H01 a H06, com texto e prioridade mantidos. Do Tech Lead: histórias H07 a H23 propostas, critérios de aceite Dado/Quando/Então e lista Won't detalhada (C4, C9). |
 | 1.1 | 01/11/2026 | @Lelafeta | Alinhamento de limites de upload (5 MB PDF/JPG), resposta da portaria e carga do painel ao Caderno. |
 | 1.2 | 01/11/2026 | @Lelafeta | Promoção de H05, H14 e H23 a Must, remoção do aviso Q5 e ajuste no item de reuso da lista Won't. |
+| 1.3 | 02/11/2026 | @Lelafeta | Movimentação da tabela do backlog para /docs/backlog, validação de H07 a H23 pela PO, remoção de H06 e ajuste de H10.CA1. |
