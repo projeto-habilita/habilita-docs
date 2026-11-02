@@ -9,8 +9,8 @@
 
 | Item | Conteúdo |
 |---|---|
-| Hipótese de defensibilidade | Reaproveitar documentos válidos entre contratos reduz retrabalho. Cada documento aprovado passa a valer para todos os contratos do cliente que o exigem; quanto mais contratos, menos trabalho a cada novo contrato, e trocar de ferramenta significa recomeçar do zero |
-| Métrica da demo | **A decidir pela PO (Q6).** Opção A (exemplo da PO): tempo para liberar um trabalhador na portaria. Opção B (proposta do Tech Lead): taxa de reuso na habilitação — ver abaixo |
+| Hipótese de defensibilidade | Reaproveitar documentos válidos entre contratos reduz retrabalho. Cada documento aprovado passa a valer para todos os contratos do cliente que o exigem; quanto mais contratos, menos trabalho a cada novo contrato, e trocar de ferramenta significa recomeçar do zero. O MVP prova o reuso dentro de um mesmo cliente; o efeito de rede entre contratantes é a evolução (ver Won't no Backlog). |
+| Métrica da demo | **Opção B, principal (Q6, decidida em 01/11/2026):** taxa de reuso na habilitação. **Opção A, complementar:** tempo para liberar um trabalhador na portaria. Ver abaixo. |
 | Valor atual (sem o Habilita) | A medir nas entrevistas (pergunta P5 e P7 do roteiro) |
 | Meta com o Habilita | Opção A: p95 ≤ 800 ms na consulta. Opção B: ≥ 70% das exigências atendidas por reuso e semáforo verde em até 2 minutos |
 
@@ -45,3 +45,4 @@ As funcionalidades isoladas (upload, semáforo, alerta) são copiáveis; a defes
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e métrica de exemplo (tempo de liberação na portaria, Opção A). Do Tech Lead: hipótese de reuso e métrica Opção B, para decisão da PO (C3). |
 | 1.1 | 18/10/2026 | @Lelafeta | Detalhamento da Opção A (tempo de liberação na portaria) com justificativa da PO, metas mensuráveis, cena da demo e limites. |
+| 1.2 | 01/11/2026 | @Lelafeta | Registro da Opção B como métrica principal da demo e complementação da hipótese de defensibilidade. |
