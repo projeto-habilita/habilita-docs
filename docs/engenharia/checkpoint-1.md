@@ -3,18 +3,18 @@
 | Campo | Valor |
 |---|---|
 | Responsável pela conferência | PO (cobra) e Tech Lead (itens técnicos) |
-| Última atualização | 14/10/2026 |
+| Última atualização | 02/11/2026 |
 
 ## Produto e negócio (PO)
 
 | Item | Status | Evidência |
 |---|---|---|
-| Visão do produto com frase de LGPD | [Visão e Escopo](../produto/estrategia/visao-escopo.md) |
-| Ishikawa (6M, um grupo por causa no mínimo) | diagrama e tabela · imagem espinha de peixe | [Ishikawa](../produto/estrategia/ishikawa.md) |
-| Backlog MoSCoW com pelo menos um Won't | PO valida H07 a H23 e a prioridade de H05 | [Backlog](../produto/requisitos/historias-backlog.md) |
-| Critérios de aceite mensuráveis | [Requisitos Funcionais](../produto/requisitos/funcionais.md) e [Backlog](../produto/requisitos/historias-backlog.md) |
-| 2 entrevistas ou evidências rotuladas | entrevistas · evidências secundárias | [Entrevistas e Evidências](../produto/estrategia/entrevistas.md) |
-| Hipótese de defensibilidade + métrica da demo | hipótese · PO escolhe a métrica (Q6) | [Defensibilidade](../produto/estrategia/defensibilidade.md) |
+| Visão do produto com frase de LGPD | em revisão (PRs das rodadas 1 e 2) | [Visão e Escopo](../produto/estrategia/visao-escopo.md) |
+| Ishikawa (6M, um grupo por causa no mínimo) | feito (imagem neste PR) | [Ishikawa](../produto/estrategia/ishikawa.md) |
+| Backlog MoSCoW com pelo menos um Won't | em revisão (PR da rodada 3) | [Backlog](../produto/requisitos/historias-backlog.md) |
+| Critérios de aceite mensuráveis | em revisão (PRs das rodadas 1 e 3) | [Requisitos Funcionais](../produto/requisitos/funcionais.md) e [Backlog](../produto/requisitos/historias-backlog.md) |
+| 2 entrevistas ou evidências rotuladas | pendente | [Entrevistas e Evidências](../produto/estrategia/entrevistas.md) |
+| Hipótese de defensibilidade + métrica da demo | em revisão (PR da rodada 2) | [Defensibilidade](../produto/estrategia/defensibilidade.md) |
 
 ## Arquitetura (Tech Lead)
 
@@ -62,3 +62,4 @@
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead na conciliação. Checklist do Checkpoint 1 com status e evidência de cada item. |
 | 1.1 | 18/10/2026 | @Lelafeta | Remoção da legenda e de emojis dos itens do checklist, com simplificação dos textos de status. |
+| 1.2 | 02/11/2026 | @Lelafeta | Atualização da data e da coluna Status na tabela de Produto e negócio (PO). |
