@@ -83,6 +83,8 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | Regras de validade variam muito entre clientes | Alta | Médio | Validade informada por documento e prazo padrão configurável por tipo |
 | Porteiro sem tempo ou treino para usar o sistema | Média | Alto | Tela de um campo com resposta em cor; p95 ≤ 800 ms |
 | Documento falso aprovado por engano | Média | Alto | Verificar autenticidade está fora do MVP; aprovação humana obrigatória e trilha de quem aprovou |
+| Prazo apertado: jornadas J1 a J3 começaram tarde | Alta | Alto | Mesclar a branch do backend e adiar painel e compressão de imagem |
+| Entrevistas reais ainda não realizadas | Média | Médio | Convidar 3 ou 4 pessoas; manter as personas rotuladas como hipótese |
 
 ## Questões em aberto
 
@@ -102,3 +104,4 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página, frase de visão, público, problema e proposta. Do Tech Lead: frase e tabela de LGPD (C14), riscos e questões Q1 a Q6 para decisão da PO. |
 | 1.1 | 01/11/2026 | @Lelafeta | Definição padrão de retenção de 90 dias com expurgo automático pós-contrato. |
 | 1.2 | 01/11/2026 | @Lelafeta | Registro das decisões da PO para as questões Q1, Q2, Q4, Q5 e Q6. |
+| 1.3 | 02/11/2026 | @Lelafeta | Inclusão dos riscos de prazo das jornadas J1 a J3 e de entrevistas reais pendentes na tabela de riscos de produto. |
