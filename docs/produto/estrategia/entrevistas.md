@@ -17,6 +17,7 @@
 | ES4 | Estudo DIEESE sobre terceirização | 18/10/2026 | Evidência secundária — **hipótese não validada** | Afastamentos por acidente de trabalho típico: 9,6% em atividades tipicamente terceirizadas contra 6,1% nas tipicamente contratantes ([Fundação Perseu Abramo/DIEESE](https://fpabramo.org.br/2017/03/28/notas-fpa-politica-social-407)) |
 | ES5 | NR-28 e preço público de concorrente | 18/10/2026 | Evidência secundária — **hipótese não validada** | Multas por descumprimento de NR variam pela gravidade (I1 a I4) e pelo nº de empregados ([CBIC, 27/04/2026](https://cbic.org.br/multas-por-descumprimento-das-normas-regulamentadoras-seguem-criterios-tecnicos-e-variam-conforme-gravidade-da-infracao/)); plataforma de gestão de terceiros custa R$ 900/mês com 3 usuários ([SoftExpert Store](https://store.softexpert.com/pt/gestao_terceiros/p)) |
 | ES6 | Avaliações públicas de concorrente | 18/10/2026 | Evidência secundária — **hipótese não validada** | Usuários do Tertium Online relatam burocracia com documentos de terceiros, muitas ligações e e-mails sem padrão, e redução do tempo operacional após automatizar; avaliadores são sócios ou proprietários ([B2B Stack](https://www.b2bstack.com.br/product/tertium-online)) |
+
 Detalhes e fontes de ES1 a ES3 em [Evidências secundárias](evidencias-secundarias.md).
 
 ## Como conduzir
@@ -57,3 +58,4 @@ Detalhes e fontes de ES1 a ES3 em [Evidências secundárias](evidencias-secundar
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e tabela de entrevistas. Do Tech Lead: evidências secundárias ES1 a ES3, perfis-alvo e hipóteses renomeadas para HP1 a HP5 (C10). |
 | 1.1 | 18/10/2026 | @Lelafeta | Inclusão dos registros de entrevista com personas sintéticas (E1 e E2) e adição de novas evidências secundárias (ES4 a ES6). |
+| 1.2 | 02/11/2026 | @Lelafeta | Correção de quebra de linha após a tabela de entrevistas e evidências. |
