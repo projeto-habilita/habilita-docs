@@ -2,6 +2,8 @@
 
 Backlog do Habilita com priorização MoSCoW. Os critérios de aceite detalhados de cada história estão em [Histórias de Usuário e Backlog](../produto/requisitos/historias-backlog.md).
 
+As histórias abaixo cobrem as 5 jornadas ponta a ponta do MVP — **J1** (criar contratos e a matriz de exigências), **J2** (cadastrar trabalhadores e enviar documentos), **J3** (aprovar ou rejeitar documentos, com motivo), **J4** (atualizar vencimentos, status e alertas) e **J5** (consultar a liberação e registrar o acesso na portaria) — detalhadas em [Mapeamento de Jornadas](../produto/estrategia/jornadas.md).
+
 | ID | História | MoSCoW | RF | Critério de aceite |
 |---|---|---|---|---|
 | H01 | Como gestor(a) de SST, quero definir os documentos exigidos por contrato, para padronizar a conferência | Must | RF01 | Contrato com `dataInicio ≤ dataFim`; matriz de 1 a 20 tipos; semáforo recalculado em até 60 s — ver [H01](../produto/requisitos/historias-backlog.md#h01) |
@@ -42,3 +44,4 @@ Backlog do Habilita com priorização MoSCoW. Os critérios de aceite detalhados
 |---|---|---|---|
 | 1.0 | 18/10/2026 | @Lelafeta | Versão inicial: página de índice do backlog com links para Histórias de Usuário e Requisitos Funcionais. |
 | 1.1 | 02/11/2026 | @Lelafeta | Inclusão da tabela do backlog MoSCoW e do registro de revisões semanais do backlog. |
+| 1.2 | 02/11/2026 | @Lelafeta | Inclusão do parágrafo no topo listando as jornadas J1 a J5 com link para o Mapeamento de Jornadas. |
