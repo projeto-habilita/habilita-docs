@@ -4,7 +4,7 @@
 |---|---|
 | Status | Rascunho |
 | Responsável | Tech Lead (regras de negócio validadas pelo PO) |
-| Última atualização | 14/10/2026 |
+| Última atualização | 02/11/2026 |
 | Decisões relacionadas | [ADR 0002](adr/0002-tenant-autorizacao.md), [ADR 0006](adr/0006-armazenamento-de-documentos.md), [ADR 0007](adr/0007-recalculo-idempotente.md), [ADR 0008](adr/0008-consulta-liberacao-cpf.md), [ADR 0009](adr/0009-auditoria-append-only.md) |
 
 ## Modelo de domínio
@@ -67,7 +67,7 @@ execucoesJob/{dataReferencia}              ← controle do job diário (fora dos
 ```
 
 **Arquivos** no Cloud Storage (bucket privado):
-`tenants/{tenantId}/trabalhadores/{trabalhadorId}/documentos/{documentoId}/{uuid}.{pdf|jpg|png}`
+`tenants/{tenantId}/trabalhadores/{trabalhadorId}/documentos/{documentoId}/{uuid}.{pdf|jpg}`
 
 ### Índices previstos
 
@@ -156,3 +156,4 @@ Estados de revisão são **finais**: aprovado ou rejeitado não volta para pende
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Modelo de dados por tenant e regras de negócio RN-01 a RN-12, ajustadas à validade informada no envio (C7). |
+| 1.1 | 02/11/2026 | @pedrolmelo | Remoção do formato PNG do caminho de armazenamento de documentos (PO-06). |
