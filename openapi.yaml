@@ -320,7 +320,7 @@ paths:
       tags: [Conformidade]
       operationId: obterConformidadeContrato
       summary: Semáforo do contrato e de cada trabalhador
-      description: H16 e H23
+      description: 'H16 e H23. Os campos `semaforo`, `totais` e `vencendoEm30Dias` são lidos do documento de contagens do contrato (ver Modelo de dados); a lista `trabalhadores` vem das alocações, paginada.'
       x-papeis: [gestor, terceirizada]
       parameters:
         - $ref: '#/components/parameters/Limite'
