@@ -6,7 +6,9 @@
 | Data | 14/10/2026 |
 | Decisores | Tech Lead, Backend |
 | Consultados | PO |
-| Relacionados | H02, H12, AM-04, AM-05, [Segurança](../../seguranca/index.md) |
+| Relacionados | H02, H12, AM-04, AM-05, [ADR 0010](0010-plano-custo-zero.md) (Plano Custo Zero), [Segurança](../../seguranca/index.md) |
+
+> **Atenção:** os itens de hospedagem/armazenamento/agendamento/custo desta ADR estão sendo substituídos pela [ADR 0010](0010-plano-custo-zero.md) (Proposto).
 
 ## 1. Contexto
 
@@ -59,3 +61,4 @@ Trabalhadores enviam PDFs e imagens de documentos de SST, alguns com dado de sa�
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Arquivos no Cloud Storage privado, com download por URL assinada. Status: proposto. |
+| 1.1 | 31/10/2026 | @pedrolmelo | Nota de substituição parcial pela ADR 0010 (Plano Custo Zero). |

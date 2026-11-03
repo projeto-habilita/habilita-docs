@@ -96,6 +96,7 @@ nav:
           - "0007 — Recálculo idempotente": arquitetura/adr/0007-recalculo-idempotente.md
           - "0008 — Consulta de liberação por CPF": arquitetura/adr/0008-consulta-liberacao-cpf.md
           - "0009 — Auditoria append-only": arquitetura/adr/0009-auditoria-append-only.md
+          - "0010 — Plano Custo Zero": arquitetura/adr/0010-plano-custo-zero.md
   - Engenharia:
       - engenharia/index.md
       - Primeiros passos: engenharia/primeiros-passos.md
@@ -117,5 +118,7 @@ nav:
       - operacao/index.md
   - FinOps:
       - finops/index.md
+      - "Registro de gasto (CP2)": finops/gasto.md
+      - "Cotas gratuitas (Guia PO)": finops/cotas-gratuitas.md
   - Demo Day:
       - demo/index.md

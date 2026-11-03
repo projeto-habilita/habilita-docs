@@ -6,7 +6,9 @@
 | Data | 14/10/2026 |
 | Decisores | Tech Lead + equipe de desenvolvimento |
 | Consultados | PO, Tutores AI LAB / MAKERS |
-| Relacionados | ADR 0002 (tenant e autorização), ADR 0003 (CI/CD), ADR 0004 (documentação), ADR 0005 (estilo arquitetural), [Qualidade e ferramentas](../../engenharia/qualidade.md), [Segurança](../../seguranca/index.md) |
+| Relacionados | ADR 0002 (tenant e autorização), ADR 0003 (CI/CD), ADR 0004 (documentação), ADR 0005 (estilo arquitetural), [ADR 0010](0010-plano-custo-zero.md) (Plano Custo Zero), [Qualidade e ferramentas](../../engenharia/qualidade.md), [Segurança](../../seguranca/index.md) |
+
+> **Atenção:** os itens de hospedagem/armazenamento/agendamento/custo desta ADR estão sendo substituídos pela [ADR 0010](0010-plano-custo-zero.md) (Proposto).
 
 ## 1. Contexto
 
@@ -101,3 +103,4 @@ As outras camadas seguem a base obrigatória do ciclo (GCP + Firebase) e não ti
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: tema e formato do ADR. Do Tech Lead: stack justificada, com a decisão de linguagem incorporada (C8). |
+| 1.1 | 31/10/2026 | @pedrolmelo | Nota de substituição parcial pela ADR 0010 (Plano Custo Zero). |
