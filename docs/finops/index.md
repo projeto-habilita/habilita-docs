@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Responsável | DevOps (aprovação: Tech Lead) |
-| Última atualização | 31/10/2026 |
+| Última atualização | 02/11/2026 |
 | Relacionados | [Registro de gasto (CP2)](gasto.md), [Cotas dos planos gratuitos](cotas-gratuitas.md), [ADR 0010](../arquitetura/adr/0010-plano-custo-zero.md) |
 
 ## Acompanhamento por gate
@@ -36,7 +36,7 @@ As evidências fotográficas e o passo a passo de conferência independente est�
 |---|---|
 | **Firebase Spark** | Firestore com listas paginadas (máx. 50); sem *listeners* em tempo real sem justificativa; semáforo materializado para evitar leituras repetidas; testes automatizados pesados, k6 e seed volumoso rodam exclusivamente no emulador local. No plano Spark, quando a cota diária (50 mil leituras) é atingida, o serviço pausa até o dia seguinte, sem qualquer cobrança financeira. |
 | **Render** | Web service gratuito com suspensão automática (*cold start*) após 15 min de inatividade; limitação a 1 único serviço por workspace para não exceder a franquia de 750 horas/mês gratuitas. |
-| **Supabase Storage** | Limite máximo de 5 MB por arquivo configurado na aplicação; bucket privado com download por URL assinada; sem duplicação de arquivos no reuso; seed de testes controlado (máx 3 documentos por trabalhador); workflow semanal de manutenção para evitar pausa por inatividade após 7 dias. |
+| **Supabase Storage** | Limite máximo de 5 MiB (5.242.880 bytes) por arquivo configurado na aplicação; bucket privado com download por URL assinada; sem duplicação de arquivos no reuso; seed de testes controlado (máx 3 documentos por trabalhador); workflow semanal de manutenção para evitar pausa por inatividade após 7 dias. |
 | **GitHub Actions** | Pipelines otimizados com cache de dependências; job de recálculo diário enxuto consumindo a cota de 2.000 min/mês (repositório privado) ou ilimitado (repositório público). |
 | **UptimeRobot** | 50 monitores gratuitos checando `/readyz` a cada 5 min com alertas por e-mail, sem cartão cadastrado. |
 | **Logging** | Logs estruturados e sem payloads grandes; nível `info` em produção; sem dados pessoais. |
@@ -68,3 +68,4 @@ Preencher a partir da Semana 3 (e consolidar na tabela por gate acima):
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Orçamento, limites por gate e alertas de 50/80/100%. |
 | 1.1 | 31/10/2026 | @pedrolmelo | Atualização para o Plano Custo Zero: limites de US$ 0 por gate, substituição de alertas por prova de plano gratuito, controles de cotas para Firebase Spark, Render, Supabase e Actions, e plano de corte baseado em cotas. |
+| 1.2 | 02/11/2026 | @pedrolmelo | Ajuste na menção ao limite de upload de documentos para 5 MiB (5.242.880 bytes). |
