@@ -2,12 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Status | **Proposto** (aprovar até o Checkpoint 2 — 01/11/2026) |
-| Data | 31/10/2026 |
+| Status | **Aceito** no merge do PR do Tech Lead (03/11/2026): plano definido pelo monitor; exceções ao Caderno pendentes de registro da aprovação do professor (seção 6) |
+| Data | 31/10/2026 · revisado em 03/11/2026 |
 | Decisores | Tech Lead, DevOps |
 | Consultados | PO e tutores AI Lab / Makers |
 | Relacionados | [ADR 0001](0001-stack.md), [ADR 0003](0003-ci-cd.md), [ADR 0006](0006-armazenamento-de-documentos.md), [ADR 0007](0007-recalculo-idempotente.md), [FinOps](../../finops/index.md), Registro de gasto (gasto.md) e Cotas gratuitas (cotas-gratuitas.md) |
-| Aprovação do professor | `[pendente — registrar data e referência]` |
+| Origem | Documento do monitor **"Plano Custo Zero — sem o voucher do GCP"** (@Pedro Henrique Pereira Santos, 14/10/2026), repassado à equipe pelo Tech Lead em 03/11/2026 |
+| Aprovação do professor | `[pendente — registrar data, quem aprovou e onde (e-mail, mensagem ou ata)]` |
 
 > **Atenção:** Esta ADR **substitui parcialmente** (no que diz respeito a hospedagem, armazenamento, agendamento e custo) as seguintes decisões: [ADR 0001](0001-stack.md) (stack principal), [ADR 0003](0003-ci-cd.md) (CI/CD e deploy), [ADR 0006](0006-armazenamento-de-documentos.md) (armazenamento de documentos) e [ADR 0007](0007-recalculo-idempotente.md) (recálculo idempotente).
 
@@ -57,7 +58,7 @@ Adotar integralmente o **Plano Custo Zero** para a hospedagem, armazenamento, ag
 | Peça original (GCP) | Substituto gratuito | Limite do plano gratuito |
 |---|---|---|
 | **Cloud Run (API)** | **Render** (web service gratuito) | 750 horas/mês por workspace; dorme após 15 min de inatividade e leva cerca de 1 min para acordar (cold start). |
-| **Cloud Storage** | **Supabase Storage** (plano gratuito) | 1 GB total armazenado, 5 GB de download/mês, arquivo de até 50 MB; o projeto pausa após 1 semana sem uso. Limite da aplicação fixado em 5 MB. |
+| **Cloud Storage** | **Supabase Storage** (plano gratuito) | 1 GB total armazenado, 5 GB de download/mês, arquivo de até 50 MB; o projeto pausa após 1 semana sem uso. Limite da aplicação fixado em 5 MB = **5.000.000 bytes** (ADR 0006). Expurgo de 90 dias feito pelo job diário, contado de quando o arquivo deixa de ser necessário (ADR 0006 §3.4; ADR 0011, I2). |
 | **Cloud Scheduler** | **GitHub Actions** (`schedule` cron) | 2.000 min/mês em repositório privado, ilimitado em público; workflow chama rota protegida da API. |
 | **Secret Manager** | **GitHub Secrets** e **variáveis de ambiente do Render** | Variáveis protegidas e mascaradas nativas das ferramentas. |
 | **Artifact Registry e retenção de 5 imagens** | **Build nativo do Render** a partir do Git | Rollback limitado aos 2 deploys anteriores; não há registro de imagens para limpar. |
@@ -150,10 +151,12 @@ Caso a equipe receba um voucher institucional do Google Cloud Platform durante o
 - [ ] Configuração de CORS restrito ao domínio de produção implementada e validada antes do CP3.
 - [ ] Monitoramento via UptimeRobot apontando para `/readyz` e health check do Render em `/healthz` configurados no CP3.
 - [ ] Auditoria de cotas gratuitas consumidas realizada no CP4 em substituição ao limite de US$ 40.
+- [ ] Aprovação do professor para as 6 exceções da seção 6 registrada no cabeçalho desta ADR.
+- [ ] Workflow do job diário (`job-diario.yml`) chamando a rota protegida com `JOB_TOKEN` (ADR 0007) no CP3.
 
 ## 9. Histórico de versões
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 31/10/2026 | @pedrolmelo | Versão inicial: proposta do Plano Custo Zero com substituição de Cloud Run, Cloud Storage, Cloud Scheduler por serviços gratuitos sem cartão. |
-
+| 1.1 | 03/11/2026 | @osamuelleite | Status Aceito com a referência ao documento do monitor; limite de 5.000.000 bytes e expurgo pelo job diário (ADR 0006 v3, ADR 0007 v1.3); interpretações registradas na ADR 0011. |

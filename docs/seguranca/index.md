@@ -21,8 +21,8 @@
 ## 2. Fronteiras de confiança
 
 1. **Navegador ↔ API**: tudo que vem do navegador é não confiável (corpo, query, cabeçalhos, arquivos).
-2. **API ↔ Firebase/GCP**: credencial de serviço com privilégio mínimo.
-3. **Cloud Scheduler ↔ rota interna**: só a conta de serviço do agendador.
+2. **API ↔ Firebase e Supabase**: credenciais de serviço com privilégio mínimo, só em variáveis protegidas do Render.
+3. **GitHub Actions (job agendado) ↔ rota interna**: só quem tem o `JOB_TOKEN`.
 4. **Tenant ↔ tenant**: fronteira lógica dentro do mesmo banco (ADR 0002).
 
 ## 3. Ameaças (STRIDE)
@@ -35,8 +35,8 @@
 | **AM-04** | Tampering / Elevation | Upload de arquivo malicioso (HTML ou script disfarçado de PDF) servido a outro usuário | Validação por assinatura de bytes; só PDF/JPG; download como anexo; nome original fora do caminho (ADR 0006) | Testes de arquivo com extensão falsa | CP2 |
 | **AM-05** | Information disclosure | Link de documento compartilhado ou reaproveitado | URL assinada de 5 min, gerada só após autorização; bucket privado; Rules deny-all | Teste de URL expirada | CP2 |
 | **AM-06** | Information disclosure / DoS | Varredura de CPFs na portaria; força bruta no login | Rate limit na consulta (30/min por usuário); proteção de força bruta do Firebase Auth; auditoria de consultas | Teste de 429 | CP2 |
-| **AM-07** | Spoofing | Chamada forjada à rota do job | Token OIDC validado (emissor, audiência, conta de serviço) | Teste de 401/403 sem OIDC | CP3 |
-| **AM-08** | Repudiation | Gestor nega ter aprovado um documento | Auditoria append-only no mesmo lote da operação (ADR 0009) | H20.CA1 | CP2 |
+| **AM-07** | Spoofing | Chamada forjada à rota do job | `JOB_TOKEN` comparado em tempo constante; token do Firebase Auth não serve | Teste de 401 sem token, com token errado e com ID token de usuário | CP3 |
+| **AM-08** | Repudiation | Analista de SST nega ter aprovado um documento | Auditoria append-only no mesmo lote da operação (ADR 0009) | H20.CA1 | CP2 |
 | **AM-09** | Tampering | Mass assignment: cliente envia `statusRevisao`, `tenantId` ou `terceirizadaId` no corpo | Esquemas com `additionalProperties: false`; mapeamento explícito de campos; tenant e terceirizada sempre da claim | Testes de contrato com campos extras | CP2 |
 | **AM-10** | Information disclosure | Segredo commitado no Git ou exposto em log de erro | `.env` fora do Git, `.env.example` sem valores; varredura de segredos no CI; erros sem stack trace para o cliente | Gitleaks no CI | CP1 (`.env.example`), CP4 (varredura) |
 | **AM-11** | Tampering | Dependência maliciosa (typosquatting) | Revisão de toda dependência nova no PR; lockfile commitado; varredura de dependências | `npm audit`/`pip-audit` + Dependabot | CP4 |
@@ -46,12 +46,12 @@
 
 | Dado | Titular | Onde fica | Finalidade | Proteção | Quem acessa |
 |---|---|---|---|---|---|
-| Nome do trabalhador | Trabalhador | Firestore | Identificar na portaria e no painel | Isolamento por tenant | Gestor, terceirizada (próprios), porteiro (na consulta) |
-| CPF | Trabalhador | Firestore, **somente** HMAC + máscara | Localizar o trabalhador e garantir unicidade | HMAC com chave no Secret Manager; nunca em log ou URL | Ninguém vê o CPF completo após o cadastro |
-| Arquivos de documentos (incl. ASO — dado de saúde) | Trabalhador | Cloud Storage privado | Comprovar aptidão | Bucket privado, URL assinada de 5 min, auditoria de cada link gerado | Gestor; terceirizada (próprios) |
-| Datas de emissão e validade | Trabalhador | Firestore | Calcular vencimento | Isolamento por tenant | Gestor, terceirizada (próprios) |
+| Nome do trabalhador | Trabalhador | Firestore | Identificar na portaria e no painel | Isolamento por tenant | Admin do contratante e analista de SST, terceirizada (próprios), porteiro (na consulta) |
+| CPF | Trabalhador | Firestore, **somente** HMAC + máscara | Localizar o trabalhador e garantir unicidade | HMAC com chave em variável protegida do Render; nunca em log ou URL | Ninguém vê o CPF completo após o cadastro |
+| Arquivos de documentos (incl. ASO — dado de saúde) | Trabalhador | Supabase Storage privado | Comprovar aptidão | Bucket privado sem política para `anon`, URL assinada de 300 s, auditoria de cada link gerado, expurgo em 90 dias | Admin do contratante e analista de SST; terceirizada (próprios) |
+| Datas de emissão e validade | Trabalhador | Firestore | Calcular vencimento | Isolamento por tenant | Admin do contratante e analista de SST, terceirizada (próprios) |
 | E-mail dos usuários do sistema | Usuários | Firebase Auth | Login | Gerenciado pelo Firebase Auth | Administração (seed) |
-| Registros de consulta e acesso | Trabalhador e porteiro | Firestore | Controle de acesso e auditoria | Append-only, sem CPF | Gestor |
+| Registros de consulta e acesso | Trabalhador e porteiro | Firestore | Controle de acesso e auditoria | Append-only, sem CPF | Admin do contratante e analista de SST |
 
 **Princípios aplicados:** finalidade (só verificar aptidão), necessidade (sem endereço, telefone, foto, data de nascimento), segurança (controles acima), não discriminação (o sistema não interpreta o conteúdo do ASO, apenas registra o documento e a validade aprovada pelo analista de SST).
 
@@ -75,13 +75,13 @@ flowchart TB
 |---|---|---|---|
 | **Firebase Hosting** | HTTPS obrigatório e HSTS | Padrão do Hosting + cabeçalho `Strict-Transport-Security` | Interceptação |
 | | Cabeçalhos de segurança | `firebase.json`: `Content-Security-Policy`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `frame-ancestors 'none'` | XSS, clickjacking |
-| | Mesma origem para web e API | Rewrite `/api/**` → Cloud Run; sem CORS em produção (em desenvolvimento, CORS só para `localhost`) | Chamadas de outros sites |
+| | CORS restrito | Allowlist explícita: domínio `.web.app`/`.firebaseapp.com` do projeto e `localhost:5173` em desenvolvimento; nunca `*`; `allow_credentials` desligado (a autenticação é por `Authorization: Bearer`) (ADR 0010, exceção 2) | Chamadas de outros sites |
 | **Borda da API (middlewares FastAPI)** | Autenticação | `firebase-admin` verifica o ID token (assinatura, expiração, emissor) em toda rota protegida | AM-02 |
 | | **Rate limit** | Ver seção 5.1 | AM-06, AM-12 |
-| | Limite de tamanho do corpo | JSON até 64 KiB; upload até 5 MB (5.000.000 bytes), verificado em *streaming* antes de ler tudo (o Cloud Run aceita até 32 MiB por requisição HTTP/1) | AM-12 |
+| | Limite de tamanho do corpo | JSON até 64 KiB; upload até 5 MB (5.000.000 bytes), verificado em *streaming* antes de ler tudo, e repetido no `file_size_limit` do bucket | AM-12 |
 | | Rastreabilidade | `X-Request-Id` em toda resposta e em todo log | AM-08 |
 | | Respostas não armazenáveis | `Cache-Control: no-store` em respostas com dado pessoal | AM-03 |
-| | Timeouts | Timeout por requisição no Cloud Run (proposta: 30 s) e em chamadas a serviços externos | AM-12 |
+| | Timeouts | Timeout por requisição na API (proposta: 30 s) e em todas as chamadas a serviços externos (Supabase, Firebase) | AM-12 |
 | **Validação (Pydantic)** | Tipos, formatos, tamanhos, `extra="forbid"` | Ver [Qualidade, seção 3](../engenharia/qualidade.md) | AM-09 |
 | | Upload pelo conteúdo real | Assinatura de bytes de PDF e JPG; imagens decodificadas pelo Pillow com limite de pixels (ADR 0006) | AM-04 |
 | **Autorização** | Papel por rota + escopo do recurso | Dependência do FastAPI que lê `x-papeis` e as claims; 403 ou 404 (ADR 0002) | AM-01, AM-02 |
@@ -90,9 +90,9 @@ flowchart TB
 | | Auditoria append-only | ADR 0009 | AM-08 |
 | **Erros e logs** | Erros em Problem Details, sem *stack trace* | *Exception handlers* globais do FastAPI | AM-10 |
 | | Logs JSON sem dado pessoal | Logger estruturado com filtro que mascara CPF e tokens; corpo da rota de portaria nunca é registrado | AM-03, RNF11 |
-| **Segredos e configuração** | Nada no código | `pydantic-settings` lê variáveis de ambiente; na nuvem, Secret Manager exposto como variável do Cloud Run; local, `.env` fora do Git | AM-10 |
+| **Segredos e configuração** | Nada no código | `pydantic-settings` lê variáveis de ambiente; na nuvem, variáveis protegidas do Render e secrets do GitHub (ADR 0010); segredos obrigatórios sem valor padrão no código (a API não sobe sem eles); local, `.env` fora do Git | AM-10 |
 | **Dependências e CI** | Varreduras | Gitleaks, Ruff (regras `S`), pip-audit, npm audit, Trivy, Dependabot ([Qualidade](../engenharia/qualidade.md)) | AM-10, AM-11 |
-| **Infraestrutura** | Menor privilégio | Conta de serviço da API só com os papéis necessários; WIF no CI; rota do job só com OIDC do agendador | AM-07 |
+| **Infraestrutura** | Menor privilégio | Conta de serviço do Firebase Admin só com os papéis necessários, chave em variável protegida (exceção ao WIF, ADR 0010); rota do job só com `JOB_TOKEN` | AM-07 |
 | | Teto de escala | `max-instances` baixo (ADR 0003) | AM-12 |
 
 ### 5.1 Rate limit
@@ -117,11 +117,11 @@ flowchart TB
 Base: checklist de 24 pontos para sistemas feitos com IA, adaptado para Firebase/GCP (onde o original fala em RLS de Postgres, aqui valem as Security Rules e o isolamento na API).
 
 ### Segredos
-- [ ] Nenhuma chave no código; tudo via variáveis de ambiente ou Secret Manager.
+- [ ] Nenhuma chave no código; tudo via variáveis de ambiente (Render e secrets do GitHub). Allowlist do gitleaks restrita a regra e trecho, nunca a arquivo inteiro.
 - [ ] `.env` no `.gitignore`; `.env.example` só com nomes e valores fictícios. **(CP1)**
 - [ ] Nenhum segredo no histórico do Git (Gitleaks no CI). **(CP4)**
 - [ ] Credencial de serviço só no backend; o frontend usa apenas a configuração pública do Firebase.
-- [ ] Sem chave JSON de conta de serviço: Workload Identity Federation no CI. **(CP3)**
+- [ ] Chave da conta de serviço só em variável protegida do Render e secret do GitHub, com papel mínimo e procedimento de troca documentado (exceção ao WIF, ADR 0010). **(CP3)**
 
 ### Dados e acesso
 - [ ] Security Rules **deny-all** no Firestore e no Storage, com teste no emulador. **(CP2)**
@@ -138,7 +138,7 @@ Base: checklist de 24 pontos para sistemas feitos com IA, adaptado para Firebase
 - [ ] Senhas gerenciadas pelo Firebase Auth (o Habilita nunca armazena senha).
 
 ### Infraestrutura e tráfego
-- [ ] HTTPS em tudo (Hosting e Cloud Run já forçam).
+- [ ] HTTPS em tudo (Hosting, Render e Supabase já forçam).
 - [ ] Cabeçalhos de segurança no Hosting: `Content-Security-Policy`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `frame-ancestors 'none'` (ou `X-Frame-Options: DENY`), `Strict-Transport-Security`. **(CP3)**
 - [ ] Rate limit na consulta de portaria e nas rotas de escrita. **(CP2)**
 - [ ] Proteção de login contra força bruta (recursos do Firebase Auth). **(CP3)**
@@ -160,3 +160,4 @@ Base: checklist de 24 pontos para sistemas feitos com IA, adaptado para Firebase
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Ameaças, controles por camada e evidências por gate, adaptados à estrutura da PO. |
+| 1.1 | 03/11/2026 | @osamuelleite | Correções do CP1 (26/10) e Plano Custo Zero (ADR 0010): fronteiras, CORS, segredos, job com `JOB_TOKEN` e Supabase Storage; papéis atualizados. |

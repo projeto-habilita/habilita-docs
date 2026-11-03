@@ -8,6 +8,9 @@
 
 Esta página documenta **toda configuração manual** feita no GitHub, para que ninguém dependa de lembrar o que foi clicado (regra do CP2: "nenhuma configuração manual não documentada").
 
+!!! warning "Estado em 03/11/2026 (conferido pelo DevOps em [Como contribuir](contribuir.md), DO-07)"
+    A transferência para a organização (seção 2) já foi feita e a `main` dos dois repositórios está protegida por **ruleset** (Settings → Rules → Rulesets → `main`), sem bypass. **Ainda falta**, para cumprir a regra da equipe: **2 aprovações** nos dois repositórios (hoje 1 no código e 0 nos docs), *Dismiss stale approvals*, *Require branches to be up to date*, *Require conversation resolution*, merge **só por squash** e *Automatically delete head branches*. Quem é admin aplica as mesmas opções da seção 4 dentro do ruleset e atualiza os prints em `docs/engenharia/evidencias/`.
+
 ## 1. Onde ficam os repositórios
 
 | Repositório | Conteúdo | Check obrigatório |
@@ -17,7 +20,7 @@ Esta página documenta **toda configuração manual** feita no GitHub, para que 
 
 Site publicado: <https://projeto-habilita.github.io/habilita-docs/>
 
-## 2. Transferir o `habilita-docs` para a organização (feito uma vez)
+## 2. Transferir o `habilita-docs` para a organização (feito)
 
 > **Quem pode:** o dono atual (`@osamuelleite`), desde que tenha permissão para **criar repositórios** na organização `projeto-habilita`. Se não tiver, um owner da organização precisa liberar isso primeiro (Organization → Settings → Member privileges → Repository creation).
 
@@ -86,3 +89,4 @@ Site publicado: <https://projeto-habilita.github.io/habilita-docs/>
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 26/10/2026 | @osamuelleite | Versão inicial: transferência para a org, ajustes de merge e proteção da `main` com 2 aprovações (planilha TL-01, TL-02 e TL-15; feedback do CP1, itens 2 e 10). |
+| 1.1 | 03/11/2026 | @osamuelleite | Estado atual da proteção (ruleset) e o que falta ativar; transferência marcada como feita. |

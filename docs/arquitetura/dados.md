@@ -68,8 +68,8 @@ tenants/{tenantId}
 execucoesJob/{dataReferencia}              ← controle do job diário (fora dos tenants)
 ```
 
-**Arquivos** no Cloud Storage (bucket privado):
-`tenants/{tenantId}/trabalhadores/{trabalhadorId}/documentos/{documentoId}/{uuid}.{pdf|jpg}` e, para JPG, a miniatura `{uuid}_mini.jpg` ([ADR 0006](adr/0006-armazenamento-de-documentos.md)). Regra de lifecycle do bucket: apagar quando `daysSinceCustomTime ≥ 90`.
+**Arquivos** no Supabase Storage (bucket privado `documentos`, [ADR 0010](adr/0010-plano-custo-zero.md)):
+`tenants/{tenantId}/trabalhadores/{trabalhadorId}/documentos/{documentoId}/{uuid}.{pdf|jpg}` e, para JPG, a miniatura `{uuid}_mini.jpg` ([ADR 0006](adr/0006-armazenamento-de-documentos.md)). Expurgo: o job diário apaga o original e a miniatura quando `arquivo.expurgoPrevistoEm ≤ hoje` (90 dias depois de o arquivo deixar de ser necessário, ADR 0006 §3.4).
 
 ### Índices previstos
 
@@ -144,7 +144,7 @@ Estados de revisão são **finais**: aprovado ou rejeitado não volta para pende
   },
   "enviadoPor": "uid_terceirizada_demo",
   "enviadoEm": "2026-10-20T13:02:11Z",
-  "revisadoPor": "uid_gestor_demo",
+  "revisadoPor": "uid_analista_demo",
   "revisadoEm": "2026-10-20T14:40:03Z"
 }
 ```
@@ -163,3 +163,4 @@ Estados de revisão são **finais**: aprovado ou rejeitado não volta para pende
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Modelo de dados por tenant e regras de negócio RN-01 a RN-12, ajustadas à validade informada no envio (C7). |
 | 1.1 | 26/10/2026 | @osamuelleite | Feedback do CP1 (item 3): 4 papéis; coleção `contagens/{contratoId}` para o dashboard de 500 trabalhadores; miniatura; RN-15 (portaria), RN-16 (contagens) e RN-17 (retenção de 90 dias). |
+| 1.2 | 03/11/2026 | @osamuelleite | Arquivos no Supabase Storage; expurgo pelo job diário (ADR 0006 v3). |

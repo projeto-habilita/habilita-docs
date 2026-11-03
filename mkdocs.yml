@@ -114,7 +114,6 @@ nav:
   - Testes:
       - testes/index.md
       - Estratégia de testes: testes/estrategia.md
-      - Rastreabilidade (caminho do Caderno): rastreabilidade.md
       - Matriz de rastreabilidade: testes/matriz.md
       - Relatórios:
           - Visão geral: testes/relatorios/index.md

@@ -8,7 +8,7 @@
 | Consultados | PO, Tutores AI LAB / MAKERS |
 | Relacionados | ADR 0002 (tenant e autorização), ADR 0003 (CI/CD), ADR 0004 (documentação), ADR 0005 (estilo arquitetural), [ADR 0010](0010-plano-custo-zero.md) (Plano Custo Zero), [Qualidade e ferramentas](../../engenharia/qualidade.md), [Segurança](../../seguranca/index.md) |
 
-> **Atenção:** os itens de hospedagem/armazenamento/agendamento/custo desta ADR estão sendo substituídos pela [ADR 0010](0010-plano-custo-zero.md) (Proposto).
+> **Atenção:** a linguagem, os frameworks e o Firebase (Auth, Firestore, Hosting) continuam como decididos aqui. **Hospedagem da API, armazenamento de arquivos, agendamento e segredos** seguem a [ADR 0010](0010-plano-custo-zero.md) (Plano Custo Zero do monitor): Render, Supabase Storage, GitHub Actions e variáveis protegidas.
 
 ## 1. Contexto
 
@@ -41,25 +41,27 @@ As outras camadas seguem a base obrigatória do ciclo (GCP + Firebase) e não ti
 | Camada | Tecnologia | Justificativa | Detalhe |
 |---|---|---|---|
 | Frontend | **React + TypeScript (modo `strict`)**, empacotado com **Vite** (SPA) | React previsto no escopo; tipagem estrita no cliente | [Qualidade](../../engenharia/qualidade.md) |
-| Hospedagem do frontend | **Firebase Hosting** | CDN, HTTPS, preview por PR, rewrite `/api` para o Cloud Run (mesma origem, sem CORS) | ADR 0003 |
+| Hospedagem do frontend | **Firebase Hosting** | CDN, HTTPS, preview por PR; rewrite `/api` para o Cloud Run † (no Plano Custo Zero, CORS restrito) | ADR 0003 |
 | API | **Python 3.12 + FastAPI**, servidor ASGI **Uvicorn** | Decisão da equipe (seção 2.1) | ADR 0005 |
 | Validação e tipos da API | **Pydantic v2** (modelos de entrada e saída) + **mypy** em modo estrito | Validação declarativa; bloqueio de campos extras; respostas enxutas | [Qualidade](../../engenharia/qualidade.md) |
 | Configuração | **pydantic-settings** (variáveis de ambiente tipadas) | Falha na subida se faltar configuração | — |
 | Acesso ao Firebase | **firebase-admin** (verificação de token, Storage) e cliente Firestore do Google Cloud | SDKs oficiais | ADR 0002 |
-| Execução da API | **Cloud Run**, `min-instances=0` | Mesmo contêiner do Compose; escala a zero | ADR 0003 |
+| Execução da API | **Cloud Run**, `min-instances=0` † | Mesmo contêiner do Compose; escala a zero | ADR 0003 |
 | Autenticação | **Firebase Authentication** + custom claims | Claims levam tenant e papel sem leitura extra | ADR 0002 |
 | Banco | **Cloud Firestore**, tenant no caminho, Rules deny-all | Base do ciclo; isolamento estrutural | ADR 0002 |
-| Arquivos | **Cloud Storage** privado + URL assinada de 5 min | Barato para binários; acesso só via API | ADR 0006 |
-| Segredos | **Secret Manager** (nuvem) e `.env` local fora do Git | Chave HMAC do CPF e credenciais fora do código | ADR 0008 |
+| Arquivos | **Cloud Storage** privado + URL assinada de 5 min † | Barato para binários; acesso só via API | ADR 0006 |
+| Segredos | **Secret Manager** (nuvem) e `.env` local fora do Git † | Chave HMAC do CPF e credenciais fora do código | ADR 0008 |
 | Segurança da aplicação | Rate limit, cabeçalhos de segurança, limite de tamanho, logs sem dados pessoais | Controles por camada | [Segurança](../../seguranca/index.md) |
-| Agendamento | **Cloud Scheduler** → rota interna com OIDC | Recálculo diário idempotente | ADR 0007 |
+| Agendamento | **Cloud Scheduler** → rota interna com OIDC † | Recálculo diário idempotente | ADR 0007 |
 | Ambiente local | **Docker Compose** + **Firebase Emulator Suite** (Auth, Firestore, Storage) | Exigência do CP1; gasto zero até a S4 | — |
-| CI/CD | **GitHub Actions** + **Workload Identity Federation** | Sem chave JSON permanente | ADR 0003 |
-| Imagens | **Artifact Registry**, tag = SHA, retenção das últimas 5 | Exigência do CP3 | ADR 0003 |
+| CI/CD | **GitHub Actions** + **Workload Identity Federation** † | Sem chave JSON permanente | ADR 0003 |
+| Imagens | **Artifact Registry**, tag = SHA, retenção das últimas 5 † | Exigência do CP3 | ADR 0003 |
 | Contrato da API | **OpenAPI 3.1** em `openapi.yaml` na raiz (contrato primeiro) | Fonte única; o FastAPI precisa estar conforme | [Qualidade](../../engenharia/qualidade.md) |
 | Testes e qualidade | pytest, Schemathesis, Playwright, Ruff, mypy, Vitest e outros | Ferramentas e metas por nível | [Qualidade](../../engenharia/qualidade.md) |
 | Documentação | **MkDocs + Material** | — | ADR 0004 |
-| Observabilidade | **Cloud Logging** (logs JSON) + alertas do Cloud Monitoring | Nativo do Cloud Run | — |
+| Observabilidade | **Cloud Logging** (logs JSON) + alertas do Cloud Monitoring † | Nativo do Cloud Run | — |
+
+† Substituído pela [ADR 0010](0010-plano-custo-zero.md) (Plano Custo Zero): API no Render, arquivos no Supabase Storage, segredos em variáveis protegidas do Render e secrets do GitHub, agendamento no GitHub Actions com `JOB_TOKEN`, deploy pelo Render sem registro de imagens, logs do Render e UptimeRobot. Fica registrado para o caso de voltar ao GCP.
 
 ## 4. Consequências
 
@@ -102,3 +104,4 @@ As outras camadas seguem a base obrigatória do ciclo (GCP + Firebase) e não ti
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: tema e formato do ADR. Do Tech Lead: stack justificada, com a decisão de linguagem incorporada (C8). |
 | 1.1 | 31/10/2026 | @pedrolmelo | Nota de substituição parcial pela ADR 0010 (Plano Custo Zero). |
 | 1.2 | 03/11/2026 | @osamuelleite | Feedback do CP1 (item 7): motivo da equipe registrado; caixas de compose e CI marcadas com evidência; status Aceito. |
+| 1.3 | 03/11/2026 | @osamuelleite | Nota da ADR 0010 reescrita: o que continua desta ADR e o que passa para o Plano Custo Zero. |

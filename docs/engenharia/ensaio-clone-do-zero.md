@@ -37,7 +37,7 @@ Quem executa: uma pessoa que **não** escreveu a parte testada, em uma pasta nov
 5. Com o usuário da empresa A, abrir um registro da empresa B pelo ID. **O sistema recusa (404)?**
 6. Com `analista_sst`, tentar editar a matriz. **O sistema recusa (403)?**
 7. Abrir o último PR: o CI rodou os testes e o `ci-ok` ficou verde?
-8. Abrir o site dos docs: a [rastreabilidade](../rastreabilidade.md) e o relatório de testes estão lá?
+8. Abrir o site dos docs: a [matriz de rastreabilidade](../testes/matriz.md) e o relatório de testes estão lá?
 
 ## Registro dos ensaios
 

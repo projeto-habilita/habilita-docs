@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: Habilita API
-  version: 0.1.0
-  summary: Contrato da API do Habilita (Checkpoint 1)
+  version: 0.2.0
+  summary: Contrato da API do Habilita (Checkpoint 2, Plano Custo Zero)
   description: |
     Contrato v0.1 das jornadas do MVP do Habilita. Ainda não implementado; vai mudar.
 
@@ -574,7 +574,7 @@ paths:
         '403': { $ref: '#/components/responses/Proibido' }
         '404': { $ref: '#/components/responses/NaoEncontrado' }
         '410':
-          description: Arquivo já expurgado pelo lifecycle de 90 dias; o registro e a trilha continuam disponíveis (ADR 0006 §3.4)
+          description: Arquivo já expurgado pelo job diário (90 dias depois de deixar de ser necessário); o registro e a trilha continuam disponíveis (ADR 0006 §3.4)
           content:
             application/problem+json:
               schema: { $ref: '#/components/schemas/Problema' }
@@ -826,11 +826,14 @@ paths:
       operationId: executarRecalculoVencimentos
       summary: Recalcular situações, semáforos e alertas (idempotente)
       description: |
-        H15 e ADR 0007. Aceita apenas token OIDC da conta de serviço do Cloud Scheduler.
+        H15 e ADR 0007. Chamado pelo workflow agendado do GitHub Actions (Plano Custo Zero, ADR 0010).
+        Aceita apenas `Authorization: Bearer <JOB_TOKEN>` (segredo compartilhado, comparado em tempo constante);
+        qualquer outro chamador, inclusive um token do Firebase Auth, recebe 401. Também executa o expurgo
+        dos arquivos com `expurgoPrevistoEm` vencido (ADR 0006 §3.4).
         Reexecutar para a mesma `dataReferencia` produz o mesmo estado final.
       security:
-        - oidcAgendador: []
-      x-papeis: [conta-servico-agendador]
+        - tokenJob: []
+      x-papeis: [job-agendado]
       requestBody:
         required: false
         content:
@@ -850,7 +853,6 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/ExecucaoJob' }
         '401': { $ref: '#/components/responses/NaoAutenticado' }
-        '403': { $ref: '#/components/responses/Proibido' }
 
 components:
   securitySchemes:
@@ -859,11 +861,10 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: Firebase ID token com claims `tenantId`, `papel` e, para terceirizada, `terceirizadaId`.
-    oidcAgendador:
+    tokenJob:
       type: http
       scheme: bearer
-      bearerFormat: JWT
-      description: Token OIDC emitido para a conta de serviço do Cloud Scheduler.
+      description: Segredo `JOB_TOKEN` (≥ 32 bytes aleatórios), guardado só nos secrets do GitHub e nas variáveis do Render (ADR 0007, ADR 0010).
 
   parameters:
     Limite:
@@ -1122,7 +1123,7 @@ components:
             expurgoPrevistoEm:
               type: [string, 'null']
               format: date
-              description: Data em que o arquivo será apagado pelo lifecycle de 90 dias (ADR 0006 §3.4); nulo enquanto o arquivo está em uso
+              description: Data em que o job diário apagará o arquivo, 90 dias depois de ele deixar de ser necessário (ADR 0006 §3.4); nulo enquanto o arquivo está em uso
             expurgadoEm:
               type: [string, 'null']
               format: date-time
