@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Responsável | Tech Lead (com QA) |
-| Última atualização | 14/10/2026 |
+| Última atualização | 02/11/2026 |
 | Relacionados | [ADR 0001](../arquitetura/adr/0001-stack.md), [Estratégia de testes](../testes/estrategia.md), [Segurança](../seguranca/index.md), [DoD](definition-of-done.md) |
 
 Esta página define **quais ferramentas** garantem a qualidade do Habilita, **onde** cada uma roda e **qual meta** ela protege. A estratégia (o que testar e por quê) está na [Estratégia de testes](../testes/estrategia.md); aqui fica o *como*.
@@ -81,7 +81,7 @@ A validação acontece em **três camadas**, cada uma com um papel:
 4. **Texto normalizado** antes de validar (ex.: remover espaços nas pontas do motivo, RN-03; deixar só os dígitos do CPF).
 5. **Modelo de resposta** (`response_model`) em toda rota: a API devolve só os campos declarados. `cpfHash` e o caminho interno do arquivo nunca saem, mesmo que existam no objeto.
 6. **Erros de validação** convertidos em Problem Details (RFC 9457) com a lista de campos inválidos, sem expor a mensagem interna do Pydantic.
-7. **Upload** validado fora do Pydantic: tamanho máximo de 10 MiB e tipo real pela assinatura de bytes (ADR 0006).
+7. **Upload** validado fora do Pydantic: tamanho máximo de 5 MiB (5.242.880 bytes) e tipo real pela assinatura de bytes (somente PDF e JPEG, ADR 0006).
 
 **Contrato primeiro:** o `openapi.yaml` é a fonte. Um teste no CI compara o OpenAPI gerado pelo FastAPI com o arquivo da raiz e falha em caso de divergência; o Schemathesis gera requisições a partir do contrato e verifica se a API responde conforme.
 
@@ -138,3 +138,4 @@ Cada etapa bloqueia a seguinte (Caderno CP4). Unidade e lint rodam primeiro porq
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead após a decisão por Python + FastAPI (14/10). Ferramentas de qualidade, tipagem e validação. |
+| 1.1 | 02/11/2026 | @pedrolmelo | Ajuste da regra de validação de upload para 5 MiB (5.242.880 bytes) e somente PDF e JPEG (PO-06). |
