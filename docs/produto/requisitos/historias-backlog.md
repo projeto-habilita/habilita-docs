@@ -64,7 +64,7 @@ Inclui cadastrar o trabalhador e enviar cada documento com a data de validade (R
 
 *Como porteiro(a), quero consultar se o trabalhador está liberado, para autorizar a entrada.* (RF09)
 
-- **CA1** Dado um trabalhador verde ou amarelo em pelo menos um contrato vigente do meu tenant, quando consulto o CPF, então a resposta é `LIBERADO`, com o nome do trabalhador e os contratos em que está apto (sem foto; ver *Won't*).
+- **CA1** Dado um trabalhador verde ou amarelo em pelo menos um contrato vigente do meu tenant, quando consulto o CPF, então a resposta é `LIBERADO`, com o nome do trabalhador (sem contratos nem foto; ver *Won't*).
 - **CA2** Dado um trabalhador vermelho em todos os contratos vigentes, então a resposta é `BLOQUEADO` com a orientação "Procure o SST", sem tipo de documento, motivo ou contrato. O detalhe das pendências aparece só para o gestor.
 - **CA3** Dado um CPF não cadastrado no meu tenant (inclusive se existir em outro tenant), então a resposta é `NAO_CADASTRADO`, sem nenhum dado do outro tenant.
 - **CA4** O CPF é enviado no corpo da requisição, nunca na URL (ver [ADR 0008](../../arquitetura/adr/0008-consulta-liberacao-cpf.md)).
@@ -260,3 +260,4 @@ Implementação após o Checkpoint 2.
 | 1.2 | 01/11/2026 | @Lelafeta | Promoção de H05, H14 e H23 a Must, remoção do aviso Q5 e ajuste no item de reuso da lista Won't. |
 | 1.3 | 02/11/2026 | @Lelafeta | Movimentação da tabela do backlog para /docs/backlog, validação de H07 a H23 pela PO, remoção de H06 e ajuste de H10.CA1. |
 | 1.4 | 02/11/2026 | @Lelafeta | Critérios numéricos nas histórias das jornadas: H11.CA1 com 60 segundos e H12.CA3 sem fixar o código do armazenamento. |
+| 1.5 | 03/11/2026 | @Lelafeta | Ajuste de H04.CA1 para exibir apenas o nome do trabalhador na consulta da portaria, sem contratos nem foto. |

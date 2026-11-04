@@ -32,6 +32,23 @@ As histórias abaixo cobrem as 5 jornadas ponta a ponta do MVP — **J1** (criar
 !!! note "Legenda MoSCoW"
     **Must** = sem isso não há MVP · **Should** = importante · **Could** = se der tempo · **Won't** = fora deste ciclo.
 
+## Won't — fora deste ciclo
+
+Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](../produto/requisitos/historias-backlog.md#wont).
+
+| Item | Motivo |
+|---|---|
+| Leitura automática de documentos (OCR) | Fora da ficha; custo e complexidade incompatíveis com 9 semanas |
+| Integração com o eSocial | Fora da ficha; Habilita não é integrador do eSocial |
+| Assinatura digital ICP-Brasil | Fora da ficha |
+| App nativo iOS ou Android | Fora da ficha; a portaria usa navegador (web responsiva) |
+| Pagamentos ou cobrança | Fora da ficha |
+| Integração com catraca ou biometria | Fora da classificação "Não Faz" |
+| Verificar autenticidade do documento junto à clínica ou ao órgão emissor | Fora da classificação "Não Faz"; a aprovação humana é o controle no MVP |
+| Cadastro self-service de novos clientes e usuários | Clientes e usuários entram por seed; reduz superfície de ataque |
+| Reuso de cadastro e documentos entre contratantes diferentes (efeito de rede) | LGPD e isolamento por tenant. Exigiria consentimento da prestadora e um cadastro fora do tenant. O MVP prova o reuso dentro de um mesmo cliente (H11) |
+| Foto do trabalhador na consulta de portaria | Dado biométrico, aumenta o risco LGPD sem ser essencial ao MVP |
+
 ## Revisões do backlog
 
 | Data | O que mudou | Por quê |
@@ -45,3 +62,4 @@ As histórias abaixo cobrem as 5 jornadas ponta a ponta do MVP — **J1** (criar
 | 1.0 | 18/10/2026 | @Lelafeta | Versão inicial: página de índice do backlog com links para Histórias de Usuário e Requisitos Funcionais. |
 | 1.1 | 02/11/2026 | @Lelafeta | Inclusão da tabela do backlog MoSCoW e do registro de revisões semanais do backlog. |
 | 1.2 | 02/11/2026 | @Lelafeta | Inclusão do parágrafo no topo listando as jornadas J1 a J5 com link para o Mapeamento de Jornadas. |
+| 1.3 | 03/11/2026 | @Lelafeta | Inclusão da seção Won't com a tabela de itens fora deste ciclo. |

@@ -53,7 +53,7 @@ Ver [É / Não É / Faz / Não Faz](e-nao-e.md) e [Jornadas](jornadas.md).
 
 ## Privacidade e LGPD
 
-**Frase-resumo:** o Habilita guarda dados pessoais de trabalhadores terceirizados (nome, CPF em forma protegida e documentos de SST, incluindo o ASO, que contém informação de saúde) exclusivamente para verificar a aptidão para o trabalho exigida da contratante, pelo tempo de vigência do contrato acrescido de 90 dias, com expurgo automático (padrão até a orientação jurídica), e nunca os expõe a outro cliente.
+**Frase-resumo:** o Habilita guarda dados pessoais de trabalhadores terceirizados (nome, CPF em forma protegida e documentos de SST, incluindo o ASO, que contém informação de saúde) exclusivamente para verificar a aptidão para o trabalho exigida da contratante, enquanto forem necessários e por mais 90 dias, contados de quando o arquivo deixa de ser necessário, com expurgo automático pelo job diário (padrão até a orientação jurídica), e nunca os expõe a outro cliente.
 
 | Ponto | Decisão no MVP |
 |---|---|
@@ -61,7 +61,7 @@ Ver [É / Não É / Faz / Não Faz](e-nao-e.md) e [Jornadas](jornadas.md).
 | Dado pessoal sensível | O ASO registra aptidão (dado de saúde): acesso só por papéis autorizados, download por link temporário, nunca em logs. |
 | Base legal provável | Cumprimento de obrigação legal ou regulatória pela controladora. **A confirmar** com orientação jurídica do lab ou do cliente. |
 | Minimização | CPF guardado como hash com chave secreta (HMAC) mais versão mascarada; sem endereço, telefone, foto ou dados de saúde além do arquivo enviado. |
-| Retenção | 90 dias após o fim do contrato, com expurgo automático. Padrão até a orientação jurídica (Q4, 15/11). |
+| Retenção | 90 dias contados de quando o arquivo deixa de ser necessário, com expurgo automático pelo job diário. Padrão até a orientação jurídica (Q4, 15/11). |
 | Dados de demonstração | Somente dados fictícios (RNF09). |
 
 Detalhes e controles em [Segurança](../../seguranca/index.md).
@@ -93,7 +93,7 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | Q1 | Um documento recém-rejeitado deve deixar o trabalhador vermelho mesmo que exista outro aprovado e válido do mesmo tipo? (Proposta técnica: não; RN-06) | PO | 18/10 | Não. Um documento rejeitado não derruba outro aprovado e válido do mesmo tipo (RN-06). |
 | Q2 | Na portaria, basta estar apto em **um** contrato vigente, ou a consulta deve indicar o contrato do serviço do dia? (Proposta técnica: basta um; RN-10) | PO | 18/10 | Basta estar apto em um contrato vigente (RN-10). |
 | Q3 | A antecedência do alerta (30 dias) deve ser configurável por cliente? (Proposta técnica: fixa no MVP) | PO | 01/11 | Em aberto. |
-| Q4 | Prazo de retenção dos documentos após o fim do contrato | PO + orientação jurídica | 15/11 | Padrão de 90 dias com expurgo até a orientação jurídica. |
+| Q4 | Prazo de retenção dos documentos após o fim do contrato | PO + orientação jurídica | 15/11 | Padrão de 90 dias contados de quando o arquivo deixa de ser necessário, com expurgo pelo job diário, até a orientação jurídica. |
 | Q5 | Alertas de vencimento (H05) são **Should** ou **Must**? A jornada J4 da ficha inclui alertas no MVP | PO | 18/10 | H05 é Must: a jornada J4 da ficha inclui alertas no MVP. |
 | Q6 | Métrica principal da demo: tempo de liberação na portaria ou taxa de reuso? Ver [Defensibilidade](defensibilidade.md) | PO | 18/10 | Opção B (taxa de reuso) como principal; Opção A (tempo na portaria) como complementar. |
 
@@ -105,3 +105,4 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | 1.1 | 01/11/2026 | @Lelafeta | Definição padrão de retenção de 90 dias com expurgo automático pós-contrato. |
 | 1.2 | 01/11/2026 | @Lelafeta | Registro das decisões da PO para as questões Q1, Q2, Q4, Q5 e Q6. |
 | 1.3 | 02/11/2026 | @Lelafeta | Inclusão dos riscos de prazo das jornadas J1 a J3 e de entrevistas reais pendentes na tabela de riscos de produto. |
+| 1.4 | 03/11/2026 | @Lelafeta | Ajuste da regra de retenção de 90 dias contados de quando o arquivo deixa de ser necessário, com expurgo pelo job diário. |
