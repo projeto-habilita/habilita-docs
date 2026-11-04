@@ -85,6 +85,9 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | Documento falso aprovado por engano | Média | Alto | Verificar autenticidade está fora do MVP; aprovação humana obrigatória e trilha de quem aprovou |
 | Prazo apertado: jornadas J1 a J3 começaram tarde | Alta | Alto | Mesclar a branch do backend e adiar painel e compressão de imagem |
 | Entrevistas reais ainda não realizadas | Média | Médio | Convidar 3 ou 4 pessoas; manter as personas rotuladas como hipótese |
+| API no Render dorme após 15 min sem uso (cerca de 1 min para acordar) | Alta | Médio | Acordar a API antes da demo (chamada a /healthz ou monitor gratuito) |
+| Supabase pausa após 1 semana sem uso | Média | Médio | Uso semanal; o job diário de expurgo mantém o projeto ativo |
+| Cota diária do Firestore (plano Spark) estourar | Média | Alto | Testes e seed só no emulador; painel lê só a coleção de contagens |
 
 ## Questões em aberto
 
@@ -96,6 +99,7 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | Q4 | Prazo de retenção dos documentos após o fim do contrato | PO + orientação jurídica | 15/11 | Padrão de 90 dias contados de quando o arquivo deixa de ser necessário, com expurgo pelo job diário, até a orientação jurídica. |
 | Q5 | Alertas de vencimento (H05) são **Should** ou **Must**? A jornada J4 da ficha inclui alertas no MVP | PO | 18/10 | H05 é Must: a jornada J4 da ficha inclui alertas no MVP. |
 | Q6 | Métrica principal da demo: tempo de liberação na portaria ou taxa de reuso? Ver [Defensibilidade](defensibilidade.md) | PO | 18/10 | Opção B (taxa de reuso) como principal; Opção A (tempo na portaria) como complementar. |
+| Q7 | Limite de upload: 5 MB (Caderno) ou 10 MB (carta da cliente)? | PO | — | 5 MB (5.000.000 bytes) no MVP, só PDF/JPG, configurável; 10 MB fica para depois do MVP, a confirmar com a cliente. |
 
 ## Histórico de versões
 
@@ -106,3 +110,4 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | 1.2 | 01/11/2026 | @Lelafeta | Registro das decisões da PO para as questões Q1, Q2, Q4, Q5 e Q6. |
 | 1.3 | 02/11/2026 | @Lelafeta | Inclusão dos riscos de prazo das jornadas J1 a J3 e de entrevistas reais pendentes na tabela de riscos de produto. |
 | 1.4 | 03/11/2026 | @Lelafeta | Ajuste da regra de retenção de 90 dias contados de quando o arquivo deixa de ser necessário, com expurgo pelo job diário. |
+| 1.5 | 04/11/2026 | @Lelafeta | Inclusão dos riscos de infraestrutura gratuita e da questão Q7 sobre o limite de upload. |

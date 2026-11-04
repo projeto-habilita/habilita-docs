@@ -54,6 +54,7 @@ Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](
 | Data | O que mudou | Por quê |
 |---|---|---|
 | 02/11/2026 | H05, H14 e H23 para Must (H23 implementada após o CP2); H07 a H23 validadas; H06 removida; critérios de upload (5 MB, PDF/JPG) e painel (500 trabalhadores em ≤ 2 s) | Feedback do Checkpoint 1, itens 3, 5 e 8 |
+| 04/11/2026 | H11.CA1 com 60 s e H12.CA3 sem fixar o código do armazenamento; H04.CA1 sem contratos na resposta da portaria; seção Won't em /docs/backlog; retenção de 90 dias contados de quando o arquivo deixa de ser necessário; upload mantido em 5 MB (5.000.000 bytes) e só PDF/JPG, com os 10 MB da carta da cliente para depois do MVP; entrevistas reais adiadas para a Sprint 3, com E1 e E2 como hipótese; prioridade em J1 a J3 | Feedback do Checkpoint 2 e revisão do Tech Lead |
 
 ## Histórico de versões
 
@@ -63,3 +64,4 @@ Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](
 | 1.1 | 02/11/2026 | @Lelafeta | Inclusão da tabela do backlog MoSCoW e do registro de revisões semanais do backlog. |
 | 1.2 | 02/11/2026 | @Lelafeta | Inclusão do parágrafo no topo listando as jornadas J1 a J5 com link para o Mapeamento de Jornadas. |
 | 1.3 | 03/11/2026 | @Lelafeta | Inclusão da seção Won't com a tabela de itens fora deste ciclo. |
+| 1.4 | 04/11/2026 | @Lelafeta | Registro da revisão do backlog de 04/11/2026 após o Checkpoint 2 e a revisão do Tech Lead. |
