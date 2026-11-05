@@ -13,7 +13,7 @@ Decisões de arquitetura numeradas e imutáveis após aceitas. Mudanças geram u
 | [0007](0007-recalculo-idempotente.md) | Recálculo diário idempotente de vencimentos | Proposto | CP2 |
 | [0008](0008-consulta-liberacao-cpf.md) | Consulta de liberação por CPF com HMAC e POST | Proposto | CP2 |
 | [0009](0009-auditoria-append-only.md) | Trilha de auditoria append-only | Proposto | CP2 |
-| [0010](0010-plano-custo-zero.md) | Plano Custo Zero (substituição de serviços GCP por equivalentes gratuitos) | Proposto | CP2 |
+| [0010](0010-plano-custo-zero.md) | Plano Custo Zero (substituição de serviços GCP por equivalentes gratuitos) | **Aceito** | CP2 |
 | [0011](0011-divergencias-caderno.md) | Registro de divergências e interpretações em relação ao Caderno | Proposto | CP2 |
 
 **Cobertura do Checkpoint 1:** as 4 ADRs gerais (0001 a 0004). Os ADRs específicos do Habilita pedidos pelo Guia do PO — **multi-tenancy** e **RBAC** — estão registrados juntos na ADR 0002. As ADRs 0001 a 0004 foram aceitas em PR na Sprint 4 (feedback do CP1, item 7). As ADRs 0005 a 0009 detalham os desafios de engenharia da ficha (upload seguro, recálculo idempotente, portaria). A ADR 0010 adota o **Plano Custo Zero** definido pelo monitor (sem GCP pago). **Toda divergência ou interpretação em relação ao Caderno ou ao Plano Custo Zero é registrada na [ADR 0011](0011-divergencias-caderno.md).**
@@ -41,3 +41,4 @@ Contexto · Opções consideradas · Decisão · Consequências · Riscos e miti
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Índice dos ADRs 0001 a 0004 (temas da PO) e 0005 a 0009 (propostos pelo Tech Lead). |
 | 1.1 | 31/10/2026 | @pedrolmelo | Inclusão da ADR 0010 (Plano Custo Zero). |
 | 1.2 | 03/11/2026 | @osamuelleite | 0001 a 0004 aceitas; 0006 revisada para os valores do Caderno; 0011 (divergências) criada. |
+| 1.3 | 05/11/2026 | @osamuelleite | Status da 0010 alinhado à própria ADR (Aceito). |

@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Status | **Aceito** no merge do PR do Tech Lead (03/11/2026): plano definido pelo monitor; exceções ao Caderno pendentes de registro da aprovação do professor (seção 6) |
+| Status | **Aceito** no merge do PR #16 do Tech Lead: plano definido pelo monitor; exceções ao Caderno pendentes de registro da aprovação do professor (seção 6) |
 | Data | 31/10/2026 · revisado em 03/11/2026 |
 | Decisores | Tech Lead, DevOps |
 | Consultados | PO e tutores AI Lab / Makers |
@@ -160,3 +160,4 @@ Caso a equipe receba um voucher institucional do Google Cloud Platform durante o
 |---|---|---|---|
 | 1.0 | 31/10/2026 | @pedrolmelo | Versão inicial: proposta do Plano Custo Zero com substituição de Cloud Run, Cloud Storage, Cloud Scheduler por serviços gratuitos sem cartão. |
 | 1.1 | 03/11/2026 | @osamuelleite | Status Aceito com a referência ao documento do monitor; limite de 5.000.000 bytes e expurgo pelo job diário (ADR 0006 v3, ADR 0007 v1.3); interpretações registradas na ADR 0011. |
+| 1.2 | 05/11/2026 | @osamuelleite | Status aponta para o PR #16, sem data fixa de merge. |

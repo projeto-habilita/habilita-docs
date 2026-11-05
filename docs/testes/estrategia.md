@@ -83,15 +83,16 @@ Técnicas obrigatórias pelo Caderno. Cada tabela vira testes parametrizados.
 | Caso | Entrada | Esperado |
 |---|---|---|
 | T-UPL-01 | PDF válido pequeno (cerca de 1 KB) | 201 |
-| T-UPL-02 | PDF de 10.485.760 bytes | 201 |
-| T-UPL-03 | PDF de 10.485.761 bytes | 413 |
+| T-UPL-02 | PDF de 5.000.000 bytes | 201 |
+| T-UPL-03 | PDF de 5.000.001 bytes | 413 |
 | T-UPL-04 | Arquivo HTML renomeado para `.pdf` | 415 |
-| T-UPL-05 | PNG com `Content-Type: application/pdf` | 201 (vale a assinatura de bytes; gravado como PNG) |
+| T-UPL-05 | PNG com `Content-Type: application/pdf` | 415 (vale a assinatura de bytes; PNG não é aceito) |
 | T-UPL-06 | Arquivo vazio (0 bytes) | 400 |
 | T-UPL-07 | `dataEmissao` = amanhã | 400 |
 | T-UPL-08 | `validoAte` ausente | 400 |
 | T-UPL-09 | `validoAte` anterior à `dataEmissao` | 400 |
 | T-UPL-10 | `validoAte` já vencida (ontem) | 201; documento entra `PENDENTE` e, se aprovado, fica `VENCIDO` |
+| T-UPL-11 | PDF de 4.999.999 bytes | 201 |
 
 ### 4.4 Motivo de rejeição (RN-03)
 
@@ -227,3 +228,4 @@ A partir do CP2, manter a [Matriz de rastreabilidade](matriz.md) (colunas: Requi
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Estratégia de testes com EP/BVA, testes de isolamento de tenant e matriz de autorização por papel. |
+| 1.1 | 05/11/2026 | @osamuelleite | Casos de upload com o limite de 5.000.000 bytes, só PDF/JPG (ADR 0006): T-UPL-02, T-UPL-03 e T-UPL-05 revistos; T-UPL-11 incluído. |
