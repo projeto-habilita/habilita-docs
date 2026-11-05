@@ -138,3 +138,4 @@ Cada etapa bloqueia a seguinte (Caderno CP4). Unidade e lint rodam primeiro porq
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead após a decisão por Python + FastAPI (14/10). Ferramentas de qualidade, tipagem e validação. |
+| 1.1 | 05/11/2026 | @osamuelleite | Limite de upload de 5 MB (5.000.000 bytes), só PDF ou JPG (ADR 0006). |

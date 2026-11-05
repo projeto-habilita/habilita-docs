@@ -49,3 +49,4 @@ O produto se apresenta como "trilha de auditoria de decisões e acessos". Em um 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Trilha de auditoria append-only. Status: proposto. |
+| 1.1 | 05/11/2026 | @osamuelleite | Leitura da auditoria pelo `admin_contratante`, no lugar de `gestor` (ADR 0002, 4 papéis). |
