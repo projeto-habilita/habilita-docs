@@ -82,6 +82,7 @@ Refs: H03
 - Título no padrão Conventional Commits (vira o commit do squash).
 - Template obrigatório: ``.github/PULL_REQUEST_TEMPLATE.md``.
 - Revisor responde em até 1 dia útil. PR parado há mais de 2 dias vai para a reunião semanal.
+- A equipe usa *pair programming* e revisão em par: PR feito em par precisa de aprovação de alguém de fora do par (decisão da PO com o tutor).
 - Rascunho (*draft*) é incentivado para receber feedback cedo.
 
 ## CODEOWNERS (Checkpoint 1)
@@ -165,3 +166,4 @@ A decisão de ativar essas travas estritas no GitHub ou de ajustar o texto da do
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Fluxo Git, branches, PR e proteção da main. |
 | 1.1 | 31/10/2026 | @pedrolmelo | Registro das evidências de proteção da main para o Checkpoint 2 (DO-07) e conferência com as regras da equipe. |
 | 1.2 | 03/11/2026 | @osamuelleite | Proteção da `main` com 2 aprovações, CODEOWNERS e checks `ci-ok`/`build`, nos dois repositórios da org `projeto-habilita`. |
+| 1.3 | 05/11/2026 | @osamuelleite | Regra de pair programming e revisão em par, decidida pela PO com o tutor. |

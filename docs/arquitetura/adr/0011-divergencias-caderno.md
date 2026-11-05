@@ -29,6 +29,7 @@ Adotamos a opção 2. **Toda divergência ou interpretação nova entra nesta ta
 | D2 | Nome dos papéis | "prestadora" e "portaria" | Identificadores `terceirizada` e `porteiro` | Só o nome muda; permissões iguais às da ficha. Evita renomear o código e o contrato já existentes | [ADR 0002](0002-tenant-autorizacao.md) |
 | D3 | Miniaturas | "miniaturas" | Miniatura **só para JPG**; PDF mostra ícone | Renderizar PDF exige biblioteca nativa na imagem da API (tamanho, cold start, superfície de ataque) | [ADR 0006](0006-armazenamento-de-documentos.md) §3.3 |
 | D4 | Infraestrutura em nuvem | Cloud Run, Cloud Storage, Cloud Scheduler, Workload Identity, Secret Manager, Cloud Monitoring | Render, Supabase Storage, GitHub Actions, chave em variável protegida, UptimeRobot | Sem voucher do GCP e sem cartão; plano definido pelo monitor. As 6 exceções ficam listadas e justificadas na ADR 0010 | [ADR 0010](0010-plano-custo-zero.md) §6 |
+| D5 | Demonstração do CP3 | Usuário externo acessa, autentica e executa uma jornada sem depender da máquina de desenvolvimento | Apresentação local com `docker compose up` e o roteiro de 8 passos; o deploy é entrega secundária | Combinado com o tutor, para o deploy não consumir mais tempo que as jornadas. `[pendente — registrar data e onde foi combinado]` | [Demo](../../demo/index.md) |
 
 ### 3.2 Interpretações (o Caderno não fixa o detalhe; adotamos a leitura mais segura)
 
@@ -67,7 +68,7 @@ Adotamos a opção 2. **Toda divergência ou interpretação nova entra nesta ta
 | Q-T2 | Os 90 dias podem contar a partir de quando o arquivo deixa de ser necessário (rejeitado, substituído, vencido ou sem vínculo), e não do envio? | Sim, pelo job diário (I2) |
 | Q-T3 | Para a transferência internacional (região nos EUA), basta registrar as garantias contratuais do provedor, ou o lab espera outra base legal? | Garantias contratuais + minimização (ADR 0003 §3.1) |
 | Q-T4 | Miniatura só para JPG, com ícone para PDF, atende a ficha? | Sim (D3) |
-| Q-T5 | O professor aprova as 6 exceções do Plano Custo Zero (ADR 0010 §6)? Onde registramos a aprovação? | Plano adotado; aprovação registrada no cabeçalho da ADR 0010 quando vier |
+| Q-T5 | O professor aprova as 6 exceções do Plano Custo Zero (ADR 0010 §6)? Onde registramos a aprovação? | Respondida: aprovado pelo monitor em 14/10/2026, registrado no cabeçalho da ADR 0010 |
 | Q-T6 | Upload multipart pela API (I5), em vez de URL assinada de envio, atende o plano? | Sim (I5) |
 
 Quando o tutor responder, a resposta é registrada aqui e a divergência é fechada ou mantida.
@@ -88,3 +89,4 @@ Quando o tutor responder, a resposta é registrada aqui e a divergência é fech
 |---|---|---|---|
 | 1.0 | 26/10/2026 | @osamuelleite | Versão inicial (feedback do CP1, itens 3 e 7; planilha TL-06 e TL-11). |
 | 1.1 | 03/11/2026 | @osamuelleite | Renumerada de 0010 para 0011 (a 0010 é o Plano Custo Zero). D4 (infraestrutura Custo Zero); I2 com expurgo pelo job; I5 a I8 (upload pela API, deny-all no Supabase, rota do job, região); Q-T1 decidida; Q-T5 e Q-T6. |
+| 1.2 | 05/11/2026 | @osamuelleite | D5 (demonstração do CP3 local, combinada com o tutor); Q-T5 respondida (aprovação do monitor em 14/10/2026). |

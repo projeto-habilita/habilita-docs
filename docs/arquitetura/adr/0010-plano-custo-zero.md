@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Status | **Aceito** no merge do PR #16 do Tech Lead: plano definido pelo monitor; exceções ao Caderno pendentes de registro da aprovação do professor (seção 6) |
+| Status | **Aceito** no merge do PR #16 do Tech Lead: plano definido e aprovado pelo monitor em 14/10/2026, com as exceções ao Caderno da seção 6 |
 | Data | 31/10/2026 · revisado em 03/11/2026 |
 | Decisores | Tech Lead, DevOps |
 | Consultados | PO e tutores AI Lab / Makers |
 | Relacionados | [ADR 0001](0001-stack.md), [ADR 0003](0003-ci-cd.md), [ADR 0006](0006-armazenamento-de-documentos.md), [ADR 0007](0007-recalculo-idempotente.md), [FinOps](../../finops/index.md), Registro de gasto (gasto.md) e Cotas gratuitas (cotas-gratuitas.md) |
 | Origem | Documento do monitor **"Plano Custo Zero — sem o voucher do GCP"** (@Pedro Henrique Pereira Santos, 14/10/2026), repassado à equipe pelo Tech Lead em 03/11/2026 |
-| Aprovação do professor | `[pendente — registrar data, quem aprovou e onde (e-mail, mensagem ou ata)]` |
+| Aprovação | Monitor, em 14/10/2026 (documento "Plano Custo Zero — sem o voucher do GCP") |
 
 > **Atenção:** Esta ADR **substitui parcialmente** (no que diz respeito a hospedagem, armazenamento, agendamento e custo) as seguintes decisões: [ADR 0001](0001-stack.md) (stack principal), [ADR 0003](0003-ci-cd.md) (CI/CD e deploy), [ADR 0006](0006-armazenamento-de-documentos.md) (armazenamento de documentos) e [ADR 0007](0007-recalculo-idempotente.md) (recálculo idempotente).
 
@@ -99,7 +99,7 @@ No ambiente local, **o Storage do Supabase roda como serviço do próprio Docker
 - Pausa no Supabase: o projeto gratuito pausa após 7 dias de inatividade, exigindo workflow de manutenção.
 - Perda do rewrite de mesma origem: a separação entre Firebase Hosting e Render impõe a configuração e manutenção de CORS rigoroso.
 - Rollback restrito: o Render limita o rollback imediato aos 2 últimos deploys realizados.
-- Exceções ao Caderno que demandam aprovação formal do professor.
+- Exceções ao Caderno registradas na seção 6, aprovadas pelo monitor em 14/10/2026.
 
 ## 5. Riscos e mitigação
 
@@ -110,11 +110,11 @@ No ambiente local, **o Storage do Supabase roda como serviço do próprio Docker
 | **750 horas do Render acabarem** | Alto (API suspensa até o mês seguinte) | Manter rigorosamente um único web service por workspace; suspender instâncias experimentais; monitorar consumo no painel. |
 | **Supabase pausar por inatividade** | Médio (falha de upload/download de arquivos) | Workflow semanal no GitHub Actions que executa operação mínima no bucket, mantendo o projeto ativo. |
 | **Chave da conta de serviço vazar** | Crítico (comprometimento do Firebase) | Conta de serviço com privilégios mínimos necessários; credencial armazenada apenas em segredos protegidos (GitHub Secrets e variáveis de ambiente do Render); verificação obrigatória de gitleaks no CI; procedimento documentado de exclusão e rotação imediata no console em caso de suspeita. |
-| **Exceções ao Caderno não aceitas pela banca** | Alto (penalização em nota no gate) | Submeter o plano para aprovação formal do professor antes do Checkpoint 2 (01/11/2026); registrar todas as 6 exceções com justificativas e mitigações nesta ADR. |
+| **Exceções ao Caderno não aceitas pela banca** | Alto (penalização em nota no gate) | Plano aprovado pelo monitor em 14/10/2026; todas as 6 exceções registradas com justificativas e mitigações nesta ADR. |
 
 ## 6. Exceções ao Caderno
 
-Para cumprir a diretriz de não utilizar o GCP sem cartão, a equipe solicita formalmente a aprovação das seguintes 6 exceções aos requisitos do Caderno:
+Para cumprir a diretriz de não utilizar o GCP sem cartão, a equipe adota as seguintes 6 exceções aos requisitos do Caderno, aprovadas pelo monitor em 14/10/2026:
 
 1. **API hospedada no Render em vez do Cloud Run:**
    - *Justificativa:* O Cloud Run exige ativação de faturamento no GCP com cartão de crédito. O Render oferece hospedagem de contêineres Docker com camada gratuita sem exigir cartão.
@@ -151,7 +151,7 @@ Caso a equipe receba um voucher institucional do Google Cloud Platform durante o
 - [ ] Configuração de CORS restrito ao domínio de produção implementada e validada antes do CP3.
 - [ ] Monitoramento via UptimeRobot apontando para `/readyz` e health check do Render em `/healthz` configurados no CP3.
 - [ ] Auditoria de cotas gratuitas consumidas realizada no CP4 em substituição ao limite de US$ 40.
-- [ ] Aprovação do professor para as 6 exceções da seção 6 registrada no cabeçalho desta ADR.
+- [x] Aprovação do monitor (14/10/2026) para as 6 exceções da seção 6 registrada no cabeçalho desta ADR.
 - [ ] Workflow do job diário (`job-diario.yml`) chamando a rota protegida com `JOB_TOKEN` (ADR 0007) no CP3.
 
 ## 9. Histórico de versões
@@ -161,3 +161,4 @@ Caso a equipe receba um voucher institucional do Google Cloud Platform durante o
 | 1.0 | 31/10/2026 | @pedrolmelo | Versão inicial: proposta do Plano Custo Zero com substituição de Cloud Run, Cloud Storage, Cloud Scheduler por serviços gratuitos sem cartão. |
 | 1.1 | 03/11/2026 | @osamuelleite | Status Aceito com a referência ao documento do monitor; limite de 5.000.000 bytes e expurgo pelo job diário (ADR 0006 v3, ADR 0007 v1.3); interpretações registradas na ADR 0011. |
 | 1.2 | 05/11/2026 | @osamuelleite | Status aponta para o PR #16, sem data fixa de merge. |
+| 1.3 | 05/11/2026 | @osamuelleite | Registro da aprovação do plano e das 6 exceções pelo monitor em 14/10/2026. |
