@@ -16,7 +16,7 @@ O MVP tem 5 jornadas, 9 semanas de prazo, equipe pequena e teto de US$ 50. O lab
 
 1. **Microsserviços por jornada** — isolamento de deploy; mas multiplica pipelines, contêineres, custos de cold start e pontos de falha. Não se justifica para o volume e o prazo.
 2. **Funções serverless por rota (Cloud Functions)** — barato e simples por rota; mas espalha regras de autorização por dezenas de funções, dificulta testar o domínio de forma isolada e diverge do ambiente local em contêiner.
-3. **Monólito modular em camadas, uma API em contêiner** — um deploy, um ponto de autorização, domínio isolado e testável; escala a zero no Cloud Run.
+3. **Monólito modular em camadas, uma API em contêiner** — um deploy, um ponto de autorização, domínio isolado e testável; escala a zero no Render gratuito (ADR 0010).
 
 ## 3. Decisão
 
@@ -32,7 +32,7 @@ Adotar **um monólito modular** com duas aplicações: `apps/web` (SPA) e `apps/
 
 | Risco | Mitigação |
 |---|---|
-| Um bug derruba a API inteira | Testes no CI bloqueando merge; rollback por revisão do Cloud Run (ADR 0003) |
+| Um bug derruba a API inteira | Testes no CI bloqueando merge; rollback pelo painel do Render (ADR 0010) |
 | Camadas se misturam com a pressa do prazo | Regra de lint de dependências entre pastas + checklist de revisão no template de PR |
 
 ## 6. Validação da decisão
@@ -45,3 +45,4 @@ Adotar **um monólito modular** com duas aplicações: `apps/web` (SPA) e `apps/
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Monólito modular em camadas. Status: proposto, para aprovação até o CP2. |
+| 1.1 | 03/11/2026 | @osamuelleite | Referências de hospedagem atualizadas para o Plano Custo Zero (ADR 0010). |

@@ -4,9 +4,16 @@
 
 Repositório de **documentação** do Habilita: plataforma B2B de conformidade documental de Segurança e Saúde no Trabalho (SST) para empresas que contratam terceirizados. Projeto 01 do ciclo B2B do AI LAB / Makers (04/10 a 05/12/2026).
 
-📖 **Site publicado:** https://osamuelleite.github.io/habilita-docs/
+📖 **Site publicado:** https://projeto-habilita.github.io/habilita-docs/
 
-O código da aplicação fica em um repositório separado. [Repositório do código](https://github.com/pedrolmelo/Habilita)
+O código da aplicação fica em um repositório separado, na mesma organização: **[projeto-habilita/Habilita](https://github.com/projeto-habilita/Habilita)** (API FastAPI, frontend React, emuladores e CI).
+
+| Repositório | O que tem | Check obrigatório na `main` |
+|---|---|---|
+| [projeto-habilita/habilita-docs](https://github.com/projeto-habilita/habilita-docs) | Documentação, ADRs, contrato OpenAPI | `build` (mkdocs `--strict`) |
+| [projeto-habilita/Habilita](https://github.com/projeto-habilita/Habilita) | Código da aplicação | `ci-ok` |
+
+Regras de proteção da `main` (2 aprovações + CI verde): [Configuração do GitHub](docs/engenharia/configuracao-github.md).
 
 ## Onde encontrar cada evidência
 

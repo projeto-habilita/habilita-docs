@@ -1,25 +1,38 @@
-# CODEOWNERS — Habilita (habilita-docs)
-# A revisão do dono só é obrigatória se "Require review from Code Owners" estiver ativo na regra da branch main.
-# Cada dono precisa aprovar alterações na sua área antes do merge.
+# CODEOWNERS do habilita-docs: quem revisa cada parte da documentação.
+# A revisão do dono só é OBRIGATÓRIA com "Require review from Code Owners" ativo na proteção da main
+# (ver docs/engenharia/configuracao-github.md). A ÚLTIMA regra que casar com o arquivo é a que vale.
+# Regra da equipe: todo caminho tem PELO MENOS 2 donos, para que o autor nunca seja o único dono possível.
+#
+# Papéis: Tech Lead @osamuelleite | PO @Lelafeta | Backend @Gustavormq | Frontend @ArthurFeitosa05
+#         DevOps @pedrolmelo | QA @CauaRVeloso
 
-# Padrão: Tech Lead revisa o que não tiver dono específico
-*                          @osamuelleite
+# Padrão: Tech Lead + PO
+*                          @osamuelleite @Lelafeta
 
-# Decisões de arquitetura e segurança
-/docs/arquitetura/         @osamuelleite
-/docs/seguranca/           @osamuelleite
+# Produto e negócio (PO)
+/docs/produto/             @Lelafeta @osamuelleite
+/docs/backlog/             @Lelafeta @CauaRVeloso
+/docs/validacao/           @Lelafeta @osamuelleite
+/docs/demo/                @Lelafeta @osamuelleite
+/docs/produto/design/      @ArthurFeitosa05 @Lelafeta
 
-# Produto
-/docs/produto/             @Lelafeta
+# Arquitetura, contrato e segurança (Tech Lead + Backend)
+/docs/arquitetura/         @osamuelleite @Gustavormq
+/openapi.yaml              @osamuelleite @Gustavormq @ArthurFeitosa05
+/docs/seguranca/           @osamuelleite @Gustavormq
 
-# Contrato da API: backend e frontend precisam concordar
-/openapi.yaml              @Gustavormq @ArthurFeitosa05
+# Engenharia (Tech Lead + DevOps)
+/docs/engenharia/          @osamuelleite @pedrolmelo
 
-# Infra, pipeline e configuração do site (DevOps + Tech Lead para evitar trava)
-/.github/                  @pedrolmelo @osamuelleite
-/mkdocs.yml                @pedrolmelo @osamuelleite
+# Testes e rastreabilidade (QA)
+/docs/testes/              @CauaRVeloso @osamuelleite
+/docs/rastreabilidade.md   @CauaRVeloso @osamuelleite
 
-# FinOps e Engenharia (DevOps + Tech Lead para evitar trava)
+# Operação e custos (DevOps)
+/docs/operacao/            @pedrolmelo @osamuelleite
 /docs/finops/              @pedrolmelo @osamuelleite
-/docs/engenharia/          @pedrolmelo @osamuelleite
 
+# Site e automação
+/mkdocs.yml                @osamuelleite @pedrolmelo
+/requirements-docs.txt     @osamuelleite @pedrolmelo
+/.github/                  @osamuelleite @pedrolmelo

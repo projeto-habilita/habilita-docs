@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Status | **Proposto** (aprovar até o Checkpoint 1 — 18/10/2026) |
+| Status | **Aceito** — aprovado em PR (Tech Lead + 1 integrante) na Sprint 4 (feedback do Checkpoint 1, item 7) |
 | Data | 14/10/2026 |
 | Decisores | PO + equipe Habilita |
 | Consultados | Tutores AI LAB / MAKERS |
@@ -98,3 +98,4 @@ O ecossistema MkDocs está em transição e isso precisa estar explícito:
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial da PO: documentação com MkDocs + Material, versões fixadas. Verificada pelo Tech Lead na conciliação. |
+| 1.1 | 26/10/2026 | @osamuelleite | Status Aceito (feedback do CP1, item 7). URLs do site e do repositório atualizadas para a organização `projeto-habilita`. |
