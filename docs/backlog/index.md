@@ -2,6 +2,8 @@
 
 Backlog do Habilita com priorização MoSCoW. Os critérios de aceite detalhados de cada história estão em [Histórias de Usuário e Backlog](../produto/requisitos/historias-backlog.md).
 
+As histórias abaixo cobrem as 5 jornadas ponta a ponta do MVP — **J1** (criar contratos e a matriz de exigências), **J2** (cadastrar trabalhadores e enviar documentos), **J3** (aprovar ou rejeitar documentos, com motivo), **J4** (atualizar vencimentos, status e alertas) e **J5** (consultar a liberação e registrar o acesso na portaria) — detalhadas em [Mapeamento de Jornadas](../produto/estrategia/jornadas.md).
+
 | ID | História | MoSCoW | RF | Critério de aceite |
 |---|---|---|---|---|
 | H01 | Como gestor(a) de SST, quero definir os documentos exigidos por contrato, para padronizar a conferência | Must | RF01 | Contrato com `dataInicio ≤ dataFim`; matriz de 1 a 20 tipos; semáforo recalculado em até 60 s — ver [H01](../produto/requisitos/historias-backlog.md#h01) |
@@ -30,11 +32,29 @@ Backlog do Habilita com priorização MoSCoW. Os critérios de aceite detalhados
 !!! note "Legenda MoSCoW"
     **Must** = sem isso não há MVP · **Should** = importante · **Could** = se der tempo · **Won't** = fora deste ciclo.
 
+## Won't — fora deste ciclo
+
+Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](../produto/requisitos/historias-backlog.md#wont).
+
+| Item | Motivo |
+|---|---|
+| Leitura automática de documentos (OCR) | Fora da ficha; custo e complexidade incompatíveis com 9 semanas |
+| Integração com o eSocial | Fora da ficha; Habilita não é integrador do eSocial |
+| Assinatura digital ICP-Brasil | Fora da ficha |
+| App nativo iOS ou Android | Fora da ficha; a portaria usa navegador (web responsiva) |
+| Pagamentos ou cobrança | Fora da ficha |
+| Integração com catraca ou biometria | Fora da classificação "Não Faz" |
+| Verificar autenticidade do documento junto à clínica ou ao órgão emissor | Fora da classificação "Não Faz"; a aprovação humana é o controle no MVP |
+| Cadastro self-service de novos clientes e usuários | Clientes e usuários entram por seed; reduz superfície de ataque |
+| Reuso de cadastro e documentos entre contratantes diferentes (efeito de rede) | LGPD e isolamento por tenant. Exigiria consentimento da prestadora e um cadastro fora do tenant. O MVP prova o reuso dentro de um mesmo cliente (H11) |
+| Foto do trabalhador na consulta de portaria | Dado biométrico, aumenta o risco LGPD sem ser essencial ao MVP |
+
 ## Revisões do backlog
 
 | Data | O que mudou | Por quê |
 |---|---|---|
 | 02/11/2026 | H05, H14 e H23 para Must (H23 implementada após o CP2); H07 a H23 validadas; H06 removida; critérios de upload (5 MB, PDF/JPG) e painel (500 trabalhadores em ≤ 2 s) | Feedback do Checkpoint 1, itens 3, 5 e 8 |
+| 04/11/2026 | H11.CA1 com 60 s e H12.CA3 sem fixar o código do armazenamento; H04.CA1 sem contratos na resposta da portaria; seção Won't em /docs/backlog; retenção de 90 dias contados de quando o arquivo deixa de ser necessário; upload mantido em 5 MB (5.000.000 bytes) e só PDF/JPG, com os 10 MB da carta da cliente para depois do MVP; entrevistas reais adiadas para a Sprint 3, com E1 e E2 como hipótese; prioridade em J1 a J3 | Feedback do Checkpoint 2 e revisão do Tech Lead |
 
 ## Histórico de versões
 
@@ -42,3 +62,6 @@ Backlog do Habilita com priorização MoSCoW. Os critérios de aceite detalhados
 |---|---|---|---|
 | 1.0 | 18/10/2026 | @Lelafeta | Versão inicial: página de índice do backlog com links para Histórias de Usuário e Requisitos Funcionais. |
 | 1.1 | 02/11/2026 | @Lelafeta | Inclusão da tabela do backlog MoSCoW e do registro de revisões semanais do backlog. |
+| 1.2 | 02/11/2026 | @Lelafeta | Inclusão do parágrafo no topo listando as jornadas J1 a J5 com link para o Mapeamento de Jornadas. |
+| 1.3 | 03/11/2026 | @Lelafeta | Inclusão da seção Won't com a tabela de itens fora deste ciclo. |
+| 1.4 | 04/11/2026 | @Lelafeta | Registro da revisão do backlog de 04/11/2026 após o Checkpoint 2 e a revisão do Tech Lead. |
