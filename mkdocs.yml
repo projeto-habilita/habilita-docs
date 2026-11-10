@@ -67,6 +67,7 @@ nav:
           - Roteiro de Entrevista: produto/estrategia/roteiro-entrevista.md
           - Modelo de Registro de Entrevista: produto/estrategia/modelo-registro-entrevista.md
           - Evidências Secundárias: produto/estrategia/evidencias-secundarias.md
+          - Validação: [validacao/index.md]
           - Brainstorming e Priorização: produto/estrategia/brainstorming.md
           - Personas do Usuário: produto/estrategia/personas.md
           - Mapeamento de Jornadas: produto/estrategia/jornadas.md
@@ -79,6 +80,7 @@ nav:
           - Requisitos Funcionais: produto/requisitos/funcionais.md
           - Requisitos Não Funcionais: produto/requisitos/nao-funcionais.md
           - Histórias de Usuário e Backlog: produto/requisitos/historias-backlog.md
+          - Backlog: [backlog/index.md]
       - Manuais e Guias:
           - Manual do Usuário e Fluxos: produto/manuais/manual-usuario.md
   - Arquitetura:
