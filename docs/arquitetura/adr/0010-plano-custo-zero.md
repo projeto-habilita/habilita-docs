@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Status | **Proposto** (aprovar até o Checkpoint 2 — 01/11/2026) |
-| Data | 31/10/2026 |
+| Data | 31/10/2026 (atualizada em 02/11/2026) |
 | Decisores | Tech Lead, DevOps |
 | Consultados | PO e tutores AI Lab / Makers |
 | Relacionados | [ADR 0001](0001-stack.md), [ADR 0003](0003-ci-cd.md), [ADR 0006](0006-armazenamento-de-documentos.md), [ADR 0007](0007-recalculo-idempotente.md), [FinOps](../../finops/index.md), Registro de gasto (gasto.md) e Cotas gratuitas (cotas-gratuitas.md) |
@@ -57,7 +57,7 @@ Adotar integralmente o **Plano Custo Zero** para a hospedagem, armazenamento, ag
 | Peça original (GCP) | Substituto gratuito | Limite do plano gratuito |
 |---|---|---|
 | **Cloud Run (API)** | **Render** (web service gratuito) | 750 horas/mês por workspace; dorme após 15 min de inatividade e leva cerca de 1 min para acordar (cold start). |
-| **Cloud Storage** | **Supabase Storage** (plano gratuito) | 1 GB total armazenado, 5 GB de download/mês, arquivo de até 50 MB; o projeto pausa após 1 semana sem uso. Limite da aplicação fixado em 5 MB. |
+| **Cloud Storage** | **Supabase Storage** (plano gratuito) | 1 GB total armazenado, 5 GB de download/mês, arquivo de até 50 MB; o projeto pausa após 1 semana sem uso. Limite da aplicação fixado em 5 MiB (5.242.880 bytes). |
 | **Cloud Scheduler** | **GitHub Actions** (`schedule` cron) | 2.000 min/mês em repositório privado, ilimitado em público; workflow chama rota protegida da API. |
 | **Secret Manager** | **GitHub Secrets** e **variáveis de ambiente do Render** | Variáveis protegidas e mascaradas nativas das ferramentas. |
 | **Artifact Registry e retenção de 5 imagens** | **Build nativo do Render** a partir do Git | Rollback limitado aos 2 deploys anteriores; não há registro de imagens para limpar. |
@@ -126,7 +126,7 @@ Para cumprir a diretriz de não utilizar o GCP sem cartão, a equipe solicita fo
    - *Mitigação:* A conta de serviço do Firebase Admin possui papéis estritamente limitados ao escopo do app; o JSON da chave é injetado como segredo criptografado nas GitHub Actions e no Render; gitleaks bloqueia commits com segredos; em caso de suspeita, revoga-se a chave no console do Firebase e gera-se uma nova.
 4. **Supabase Storage no lugar do Cloud Storage:**
    - *Justificativa:* O Cloud Storage do Firebase exige plano Blaze ou conta de faturamento GCP. O Supabase fornece 1 GB gratuito com bucket privado sem necessidade de cartão.
-   - *Mitigação:* Upload multipart intermediado e validado pela API com limite de 5 MB por arquivo; URLs assinadas temporárias para download; acesso direto ao bucket bloqueado.
+   - *Mitigação:* Upload multipart intermediado e validado pela API com limite de 5 MiB (5.242.880 bytes) por arquivo; URLs assinadas temporárias para download; acesso direto ao bucket bloqueado.
 5. **GitHub Actions no lugar do Cloud Scheduler:**
    - *Justificativa:* O Cloud Scheduler requer faturamento ativado no GCP.
    - *Mitigação:* Workflow do GitHub Actions agendado via `schedule` (cron) diário às 03:00, que invoca a rota protegida `/internal/jobs/recalculo-vencimentos` enviando token de autorização.
@@ -156,4 +156,5 @@ Caso a equipe receba um voucher institucional do Google Cloud Platform durante o
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 31/10/2026 | @pedrolmelo | Versão inicial: proposta do Plano Custo Zero com substituição de Cloud Run, Cloud Storage, Cloud Scheduler por serviços gratuitos sem cartão. |
+| 1.1 | 02/11/2026 | @pedrolmelo | Ajuste na menção ao limite de upload de documentos para 5 MiB (5.242.880 bytes). |
 

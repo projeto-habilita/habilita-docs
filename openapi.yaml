@@ -320,7 +320,7 @@ paths:
       tags: [Conformidade]
       operationId: obterConformidadeContrato
       summary: Semáforo do contrato e de cada trabalhador
-      description: H16 e H23
+      description: 'H16 e H23. Os campos `semaforo`, `totais` e `vencendoEm30Dias` são lidos do documento de contagens do contrato (ver Modelo de dados); a lista `trabalhadores` vem das alocações, paginada.'
       x-papeis: [gestor, terceirizada]
       parameters:
         - $ref: '#/components/parameters/Limite'
@@ -414,7 +414,7 @@ paths:
       operationId: enviarDocumento
       summary: Enviar documento (upload)
       description: |
-        H02. Multipart. Arquivo PDF, JPEG ou PNG com até 10 MiB (10.485.760 bytes),
+        H02. Multipart. Arquivo PDF ou JPEG com até 5 MiB (5.242.880 bytes),
         validado pela assinatura de bytes (ADR 0006).
       x-papeis: [terceirizada, gestor]
       requestBody:
@@ -428,7 +428,7 @@ paths:
                 arquivo:
                   type: string
                   contentMediaType: application/octet-stream
-                  description: PDF, JPEG ou PNG, até 10 MiB
+                  description: PDF ou JPEG, até 5 MiB (5.242.880 bytes)
                 tipoDocumentoId: { $ref: '#/components/schemas/Id' }
                 validoAte:
                   type: string
@@ -440,7 +440,7 @@ paths:
                   description: Opcional. Não pode estar no futuro; `validoAte` não pode ser anterior a ela
             encoding:
               arquivo:
-                contentType: application/pdf, image/jpeg, image/png
+                contentType: application/pdf, image/jpeg
       responses:
         '201':
           description: Documento criado como PENDENTE
@@ -1034,8 +1034,8 @@ components:
           type: object
           description: Metadados apenas; o caminho interno não é exposto
           properties:
-            contentType: { type: string, enum: [application/pdf, image/jpeg, image/png] }
-            tamanhoBytes: { type: integer, minimum: 1, maximum: 10485760 }
+            contentType: { type: string, enum: [application/pdf, image/jpeg] }
+            tamanhoBytes: { type: integer, minimum: 1, maximum: 5242880 }
             sha256: { type: string, pattern: '^[a-f0-9]{64}$' }
         enviadoEm: { type: string, format: date-time }
         revisadoEm:
@@ -1166,12 +1166,12 @@ components:
         application/problem+json:
           schema: { $ref: '#/components/schemas/Problema' }
     ArquivoGrande:
-      description: Arquivo maior que 10 MiB
+      description: Arquivo maior que 5 MiB (5.242.880 bytes)
       content:
         application/problem+json:
           schema: { $ref: '#/components/schemas/Problema' }
     TipoNaoSuportado:
-      description: Conteúdo do arquivo não é PDF, JPEG ou PNG
+      description: Conteúdo do arquivo não é PDF ou JPEG
       content:
         application/problem+json:
           schema: { $ref: '#/components/schemas/Problema' }

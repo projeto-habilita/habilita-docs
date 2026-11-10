@@ -4,7 +4,7 @@
 |---|---|
 | Status | Rascunho |
 | Responsável | Tech Lead |
-| Última atualização | 14/10/2026 |
+| Última atualização | 02/11/2026 |
 | Notação | Modelo C4 (níveis 1 e 2) e diagramas de sequência em Mermaid |
 
 ## 1. Objetivos e restrições que moldam a arquitetura
@@ -128,7 +128,7 @@ sequenceDiagram
     participant A as API
     participant S as Cloud Storage
     participant F as Firestore
-    T->>A: POST /api/trabalhadores/{id}/documentos (multipart, ≤ 10 MiB, validoAte)
+    T->>A: POST /api/trabalhadores/{id}/documentos (multipart, ≤ 5 MiB, validoAte)
     A->>A: autoriza (RN-02), valida tamanho e assinatura de bytes
     A->>S: grava arquivo em caminho privado + SHA-256
     A->>F: cria documento PENDENTE + auditoria
@@ -214,3 +214,4 @@ Os requisitos são definidos em [Requisitos Não Funcionais](../produto/requisit
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Visão da arquitetura em camadas e diagramas de sequência, adaptados à estrutura da PO. |
+| 1.1 | 02/11/2026 | @pedrolmelo | Ajuste do limite de upload no diagrama de sequência para ≤ 5 MiB (PO-06). |
