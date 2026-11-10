@@ -86,14 +86,14 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 
 ## Questões em aberto
 
-| # | Questão | Dono | Prazo |
-|---|---|---|---|
-| Q1 | Um documento recém-rejeitado deve deixar o trabalhador vermelho mesmo que exista outro aprovado e válido do mesmo tipo? (Proposta técnica: não; RN-06) | PO | 18/10 |
-| Q2 | Na portaria, basta estar apto em **um** contrato vigente, ou a consulta deve indicar o contrato do serviço do dia? (Proposta técnica: basta um; RN-10) | PO | 18/10 |
-| Q3 | A antecedência do alerta (30 dias) deve ser configurável por cliente? (Proposta técnica: fixa no MVP) | PO | 01/11 |
-| Q4 | Prazo de retenção dos documentos após o fim do contrato | PO + orientação jurídica | 15/11 |
-| Q5 | Alertas de vencimento (H05) são **Should** ou **Must**? A jornada J4 da ficha inclui alertas no MVP | PO | 18/10 |
-| Q6 | Métrica principal da demo: tempo de liberação na portaria ou taxa de reuso? Ver [Defensibilidade](defensibilidade.md) | PO | 18/10 |
+| # | Questão | Dono | Prazo | Decisão (01/11/2026) |
+|---|---|---|---|---|
+| Q1 | Um documento recém-rejeitado deve deixar o trabalhador vermelho mesmo que exista outro aprovado e válido do mesmo tipo? (Proposta técnica: não; RN-06) | PO | 18/10 | Não. Um documento rejeitado não derruba outro aprovado e válido do mesmo tipo (RN-06). |
+| Q2 | Na portaria, basta estar apto em **um** contrato vigente, ou a consulta deve indicar o contrato do serviço do dia? (Proposta técnica: basta um; RN-10) | PO | 18/10 | Basta estar apto em um contrato vigente (RN-10). |
+| Q3 | A antecedência do alerta (30 dias) deve ser configurável por cliente? (Proposta técnica: fixa no MVP) | PO | 01/11 | Em aberto. |
+| Q4 | Prazo de retenção dos documentos após o fim do contrato | PO + orientação jurídica | 15/11 | Padrão de 90 dias com expurgo até a orientação jurídica. |
+| Q5 | Alertas de vencimento (H05) são **Should** ou **Must**? A jornada J4 da ficha inclui alertas no MVP | PO | 18/10 | H05 é Must: a jornada J4 da ficha inclui alertas no MVP. |
+| Q6 | Métrica principal da demo: tempo de liberação na portaria ou taxa de reuso? Ver [Defensibilidade](defensibilidade.md) | PO | 18/10 | Opção B (taxa de reuso) como principal; Opção A (tempo na portaria) como complementar. |
 
 ## Histórico de versões
 
@@ -101,3 +101,4 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página, frase de visão, público, problema e proposta. Do Tech Lead: frase e tabela de LGPD (C14), riscos e questões Q1 a Q6 para decisão da PO. |
 | 1.1 | 01/11/2026 | @Lelafeta | Definição padrão de retenção de 90 dias com expurgo automático pós-contrato. |
+| 1.2 | 01/11/2026 | @Lelafeta | Registro das decisões da PO para as questões Q1, Q2, Q4, Q5 e Q6. |
