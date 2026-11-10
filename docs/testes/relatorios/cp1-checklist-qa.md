@@ -45,16 +45,19 @@ A suíte implementada traduz integralmente a Seção 5 da [Estratégia de Testes
 
 | ID | Critério | Descrição do Cenário | Dados do Seed Utilizados | Esperado | Status Atual |
 |---|---|---|---|---|:---:|
-| **T-ISO-01** | H19.CA1 | Gestor de A acessa por ID recursos pertencentes exclusivamente a B (`/contratos/{id_B}`, `/trabalhadores/{id_B}`, `/documentos/{id_B}`). | `tnt_alfa` (`uid_gestor_alfa`) vs `ctr_beta_1`, `trb_beta_1`, `doc_beta_1_aso` | HTTP **404** em todos, corpo sem dados de B. | **PASSED** |
+| **T-ISO-01** | H19.CA1 | Gestor de A acessa por ID recursos pertencentes exclusivamente a B (`/contratos/{id_B}`, `/trabalhadores/{id_B}`, `/documentos/{id_B}`). | `tnt_alfa` (`uid_gestor_alfa`) vs `ctr_beta_1`, `trb_beta_1`, `doc_beta_1_aso` | HTTP **404 Problem Details** (RFC 9457), corpo sem dados de B. | **XFAIL** (Semana 4 / RFC 9457) |
 | **T-ISO-02** | H19.CA1 | Gestor de A lista contratos, trabalhadores, documentos, alertas e auditoria. | `tnt_alfa` (`uid_gestor_alfa`) vs coleções de `tnt_beta` | HTTP **200** trazendo apenas itens de `tnt_alfa`. Nenhum item de B. | **XFAIL** (Semana 4) |
 | **T-ISO-03** | H19.CA5 | Gestor de A tenta injetar `tenantId: "tnt_beta"` no corpo, query e cabeçalho ao criar contrato. | `uid_gestor_alfa` enviando `tenantId="tnt_beta"` | HTTP **400/422** (rejeitado por `extra="forbid"`) ou **201** criado em A. Nada criado em B. | **XFAIL** (Semana 4) |
 | **T-ISO-04** | H19.CA1 | Portaria de A consulta via POST CPF que só existe em B (`trb_beta_1`). | Porteiro de A vs CPF `20200000160` | HTTP **200** com `resultado: "NAO_CADASTRADO"`, sem expor nome ou dados de B. | **XFAIL** (Semana 4) |
-| **T-ISO-05** | H19.CA3 | Terceirizada 1 de A tenta acessar trabalhador da Terceirizada 2 de A. | `uid_terc_alfa_1` (`ter_alfa_1`) vs `trb_alfa_y1` (`ter_alfa_2`) | HTTP **404** (isolamento horizontal intra-tenant). | **PASSED** |
-| **T-ISO-06** | H19.CA4 | Tentativa de acesso direto ao Firestore ou Storage sem passar pela API. | Verificação estrita das Security Rules | HTTP **403** (`PERMISSION_DENIED`) pelas regras deny-all. | **PASSED** |
-| **T-ISO-07** | H19.CA1 | Gestor de A tenta gerar URL assinada de download para documento de B. | `uid_gestor_alfa` vs `doc_beta_1_aso` | HTTP **404** (bloqueio de geração de URL assinada para outro tenant). | **PASSED** |
+| **T-ISO-05** | H19.CA3 | Terceirizada 1 de A tenta acessar trabalhador da Terceirizada 2 de A. | `uid_terc_alfa_1` (`ter_alfa_1`) vs `trb_alfa_y1` (`ter_alfa_2`) | HTTP **404 Problem Details** (isolamento horizontal intra-tenant). | **XFAIL** (Semana 4 / RFC 9457) |
+| **T-ISO-06** | H19.CA4 | Tentativa de acesso direto ao Firestore ou Storage sem passar pela API. | Prova em tempo de execução contra emuladores locais (`:8080` e `:9199`) | HTTP **403** (`PERMISSION_DENIED`) pelas regras deny-all (leitura e escrita). | **PASSED** |
+| **T-ISO-07** | H19.CA1 | Gestor de A tenta gerar URL assinada de download para documento de B. | `uid_gestor_alfa` vs `doc_beta_1_aso` | HTTP **404 Problem Details** (bloqueio de geração de URL assinada para outro tenant). | **XFAIL** (Semana 4 / RFC 9457) |
+| **T-ISO-08** | H19.CA6 | Requisições a rotas protegidas sem token de autenticação. | Cliente anônimo sem header Authorization | HTTP **401 Unauthorized** com payload Problem Details (RFC 9457). | **XFAIL** (Semana 4 / RFC 9457) |
+| **T-ISO-09** | H19.CA6 | Usuário com papel inadequado tenta executar ação restrita (RBAC). | Porteiro criando contrato ou Terceirizada aprovando documento | HTTP **403 Forbidden** com payload Problem Details (RFC 9457). | **XFAIL** (Semana 4 / RFC 9457) |
+| **T-ISO-10** | H19.CA1 | Acesso a recursos com IDs semelhantes, colisões de chaves ou path traversal. | `tnt_alfa` vs `ctr_beta_1`, prefixos e '../tnt_beta/...' | HTTP **404 Problem Details** sem vazamento por correspondência parcial. | **XFAIL** (Semana 4 / RFC 9457) |
 
-!!! info "Nota sobre os testes com status XFAIL"
-    Conforme preconizado na ADR 0002 e nas diretrizes do Checkpoint 1, os testes de listagem e criação que dependem dos endpoints da API retornam `XFAIL` (*expected failure*), pois a implementação dos modelos de domínio e rotas de negócio ocorre na **Semana 4 (01/11/2026)**. Nenhum teste foi apagado ou desativado.
+!!! info "Nota sobre os testes com status XFAIL e prevenção de falsos positivos"
+    Conforme orientações de QA e da ADR 0002, testes que validam regras de isolamento em rotas ainda não implementadas no Checkpoint 1 utilizam `@pytest.mark.xfail(strict=True)`. Isso evita falsos positivos (como o FastAPI retornar 404 genérico de rota não registrada em vez do 404/401/403 com `application/problem+json` emitido pela camada de autorização/guard de tenant). Na **Semana 4 (01/11/2026)**, com a disponibilização dos endpoints pelo time de backend, os testes passarão a validar as regras reais de negócio.
 
 ---
 
@@ -62,34 +65,28 @@ A suíte implementada traduz integralmente a Seção 5 da [Estratégia de Testes
 
 ### 4.1 Execução da Suíte de Testes (Pytest)
 
-Comando: `cd apps/api && uv run pytest`
+Comando: `cd apps/api && uv run pytest -v`
 
 ```text
 ============================= test session starts ==============================
 platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.7.0
 rootdir: /home/veloso/Habilita/apps/api
 configfile: pyproject.toml
-testpaths: tests
 plugins: anyio-4.15.1
-collecting ... collected 7 items
+collecting ... collected 10 items
 
-tests/test_h19_isolamento_tenant.py .xxx...                              [100%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_01_gestor_acessa_recursos_outro_tenant_retorna_404 XFAIL [ 10%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_02_gestor_lista_recursos_nao_enxerga_outro_tenant XFAIL [ 20%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca5_t_iso_03_injecao_tenant_id_criacao_contrato_isolado_no_tenant_da_claim XFAIL [ 30%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_04_portaria_consulta_cpf_outro_tenant_retorna_nao_cadastrado XFAIL [ 40%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca3_t_iso_05_terceirizada_acessa_trabalhador_outra_terceirizada_retorna_404 XFAIL [ 50%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca4_t_iso_06_acesso_direto_firestore_storage_sem_api_rejeitado_deny_all PASSED [ 60%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_07_gestor_gera_url_download_documento_outro_tenant_retorna_404 XFAIL [ 70%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca6_t_iso_08_requisicao_sem_token_retorna_401_problem_details XFAIL [ 80%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca6_t_iso_09_papel_inadequado_retorna_403_problem_details XFAIL [ 90%]
+tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_10_ids_parecidos_ou_colidentes_entre_tenants_retorna_404 XFAIL [100%]
 
-=========================== short test summary info ============================
-XFAIL tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_02_gestor_lista_recursos_nao_enxerga_outro_tenant - Endpoints de listagem (H01, H02, H19) previstos para implementação na Semana 4.
-XFAIL tests/test_h19_isolamento_tenant.py::test_h19_ca5_t_iso_03_injecao_tenant_id_criacao_contrato_isolado_no_tenant_da_claim - Rota POST /contratos prevista para implementação na Semana 4 (ADR 0002).
-XFAIL tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_04_portaria_consulta_cpf_outro_tenant_retorna_nao_cadastrado - Rota POST /liberacoes/consultas prevista para implementação na Semana 4 (ADR 0008).
-=================== 4 passed, 3 xfailed, 1 warning in 0.06s ====================
-```
-
-Execução em modo estrito (`uv run pytest --runxfail`):
-
-```text
-=================================== FAILURES ===================================
-FAILED tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_02_gestor_lista_recursos_nao_enxerga_outro_tenant
-FAILED tests/test_h19_isolamento_tenant.py::test_h19_ca5_t_iso_03_injecao_tenant_id_criacao_contrato_isolado_no_tenant_da_claim
-FAILED tests/test_h19_isolamento_tenant.py::test_h19_ca1_t_iso_04_portaria_consulta_cpf_outro_tenant_retorna_nao_cadastrado
-==================== 3 failed, 4 passed, 1 warning in 0.06s ====================
+=================== 1 passed, 9 xfailed, 1 warning in 0.17s ====================
 ```
 
 ### 4.2 Verificações de Tipagem, Lint e Arquitetura
