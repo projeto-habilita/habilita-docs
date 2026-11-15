@@ -55,6 +55,21 @@ Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](
 |---|---|---|
 | 02/11/2026 | H05, H14 e H23 para Must (H23 implementada após o CP2); H07 a H23 validadas; H06 removida; critérios de upload (5 MB, PDF/JPG) e painel (500 trabalhadores em ≤ 2 s) | Feedback do Checkpoint 1, itens 3, 5 e 8 |
 | 04/11/2026 | H11.CA1 com 60 s e H12.CA3 sem fixar o código do armazenamento; H04.CA1 sem contratos na resposta da portaria; seção Won't em /docs/backlog; retenção de 90 dias contados de quando o arquivo deixa de ser necessário; upload mantido em 5 MB (5.000.000 bytes) e só PDF/JPG, com os 10 MB da carta da cliente para depois do MVP; entrevistas reais adiadas para a Sprint 3, com E1 e E2 como hipótese; prioridade em J1 a J3 | Feedback do Checkpoint 2 e revisão do Tech Lead |
+| 15/11/2026 | Riscos do Plano Custo Zero registrados (seção abaixo); telas de J1 a J3 como Must na S7; preview em PR registrado como exceção ao Caderno | Gate do CP3 e congelamento de escopo de 16/11 |
+
+## Riscos registrados em 15/11/2026
+
+| Risco | Impacto | Mitigação |
+|---|---|---|
+| Telas de J1 a J3 ainda não existem no frontend | Alto: sem demo pela interface no CP4 e no Demo Day | Must na S7, com prazo combinado com o Frontend |
+| Manter a API acordada consome as 750 horas mensais do Render | Alto: API suspensa até o mês seguinte | Um único serviço; acordar só antes das demos |
+| Preview em PR exigiria um segundo serviço no Render | Médio: item do Caderno não atendido | Registrado como exceção ao Caderno |
+| Cota diária do Firestore (Spark) estourar em ensaios | Alto: API fora do ar até a cota zerar | Ensaios e testes de carga no emulador |
+| Supabase pausar após 7 dias sem uso do banco | Médio: upload e download falham | Workflow semanal com consulta real ao banco |
+| Supabase gratuito sem backup | Médio: documentos da demo perdidos | Script de seed que recria os dados |
+| Cron do GitHub Actions atrasar ou falhar | Médio: semáforo desatualizado | `workflow_dispatch` para rodar o recálculo à mão |
+| Contas dos serviços com uma só pessoa | Alto: ninguém consegue reiniciar ou fazer rollback | Convidar uma segunda pessoa em cada serviço |
+| Retenção de 90 dias contra guarda para prova judicial (entrevista E03) | A confirmar | Verificar a base legal antes do CP4 |
 
 ## Histórico de versões
 
@@ -65,3 +80,4 @@ Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](
 | 1.2 | 02/11/2026 | @Lelafeta | Inclusão do parágrafo no topo listando as jornadas J1 a J5 com link para o Mapeamento de Jornadas. |
 | 1.3 | 03/11/2026 | @Lelafeta | Inclusão da seção Won't com a tabela de itens fora deste ciclo. |
 | 1.4 | 04/11/2026 | @Lelafeta | Registro da revisão do backlog de 04/11/2026 após o Checkpoint 2 e a revisão do Tech Lead. |
+| 1.5 | 15/11/2026 | @Lelafeta | Revisão de 15/11/2026 e registro dos riscos do Plano Custo Zero e do gate do CP3. |
