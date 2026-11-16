@@ -56,14 +56,15 @@ Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](
 | 02/11/2026 | H05, H14 e H23 para Must (H23 implementada após o CP2); H07 a H23 validadas; H06 removida; critérios de upload (5 MB, PDF/JPG) e painel (500 trabalhadores em ≤ 2 s) | Feedback do Checkpoint 1, itens 3, 5 e 8 |
 | 04/11/2026 | H11.CA1 com 60 s e H12.CA3 sem fixar o código do armazenamento; H04.CA1 sem contratos na resposta da portaria; seção Won't em /docs/backlog; retenção de 90 dias contados de quando o arquivo deixa de ser necessário; upload mantido em 5 MB (5.000.000 bytes) e só PDF/JPG, com os 10 MB da carta da cliente para depois do MVP; entrevistas reais adiadas para a Sprint 3, com E1 e E2 como hipótese; prioridade em J1 a J3 | Feedback do Checkpoint 2 e revisão do Tech Lead |
 | 15/11/2026 | Riscos do Plano Custo Zero registrados (seção abaixo); telas de J1 a J3 como Must na S7; preview em PR registrado como exceção ao Caderno | Gate do CP3 e congelamento de escopo de 16/11 |
+| 16/11/2026 | Riscos reconciliados com a ADR 0011: o Render saiu (exigiu cartão) e a API está sem hospedagem; exceção de preview reescrita (o backend não tem preview no Plano Custo Zero e o preview do frontend vem do PR #51 do código); prazo das telas de J1 a J3 escrito na tabela de riscos | Feedback do Checkpoint 3, itens 6 e 7 |
 
-## Riscos registrados em 15/11/2026
+## Riscos registrados em 15/11/2026 (revistos em 16/11/2026)
 
 | Risco | Impacto | Mitigação |
 |---|---|---|
-| Telas de J1 a J3 ainda não existem no frontend | Alto: sem demo pela interface no CP4 e no Demo Day | Must na S7, com prazo combinado com o Frontend |
-| Manter a API acordada consome as 750 horas mensais do Render | Alto: API suspensa até o mês seguinte | Um único serviço; acordar só antes das demos |
-| Preview em PR exigiria um segundo serviço no Render | Médio: item do Caderno não atendido | Registrado como exceção ao Caderno |
+| Telas de J1 a J3 ainda não existem no frontend | Alto: sem demo pela interface no CP4 e no Demo Day; o reuso de documento só aparece no Swagger | Must na S7. Prazo: login e telas de J1 a J3 ligadas à API até 24/11/2026 (feedback do CP3). Ordem: fila de aprovação e semáforo antes do acabamento; se faltar tempo, a J2 com tela vem primeiro |
+| API sem hospedagem: o Render exigiu cartão, o que a regra de ouro nº 1 do Plano Custo Zero proíbe | Alto: sem URL pública da API, o CP4 e o Demo Day dependem da demo local | Escolher um host gratuito sem cartão, registrar em ADR e atualizar a ADR 0011 (I8) até 29/11/2026; demo local ensaiada como plano B |
+| O backend não tem preview em PR no Plano Custo Zero | Médio: item do Caderno atendido só no frontend | Exceção ao Caderno registrada; o preview do frontend vem do workflow do PR #51 do código, ainda aberto |
 | Cota diária do Firestore (Spark) estourar em ensaios | Alto: API fora do ar até a cota zerar | Ensaios e testes de carga no emulador |
 | Supabase pausar após 7 dias sem uso do banco | Médio: upload e download falham | Workflow semanal com consulta real ao banco |
 | Supabase gratuito sem backup | Médio: documentos da demo perdidos | Script de seed que recria os dados |
@@ -81,3 +82,4 @@ Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](
 | 1.3 | 03/11/2026 | @Lelafeta | Inclusão da seção Won't com a tabela de itens fora deste ciclo. |
 | 1.4 | 04/11/2026 | @Lelafeta | Registro da revisão do backlog de 04/11/2026 após o Checkpoint 2 e a revisão do Tech Lead. |
 | 1.5 | 15/11/2026 | @Lelafeta | Revisão de 15/11/2026 e registro dos riscos do Plano Custo Zero e do gate do CP3. |
+| 1.6 | 16/11/2026 | @Lelafeta | Revisão de 16/11/2026 após o feedback do Checkpoint 3: riscos do Render reconciliados com a ADR 0011, exceção de preview reescrita e prazo das telas de J1 a J3. |
