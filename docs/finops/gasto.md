@@ -38,6 +38,7 @@ Em **15/11/2026**, para o Checkpoint 3, o gasto acumulado da plataforma Habilita
 | `evidencias/firebase-plano.png` | Aba "Utilização e faturamento" do Firebase mostrando "Custo do projeto Spark: Sem custos financeiros" e cotas diárias do Cloud Firestore em 0%. | 15/11/2026 | @pedrolmelo | **Existe** |
 | `evidencias/supabase-plano.png` | Painel de faturamento (*Billing*) da organização `Habilita` no Supabase comprovando assinatura no **Free Plan** limitada à cota gratuita incluída. | 15/11/2026 | @pedrolmelo | **Existe** |
 | `evidencias/uptimerobot-plano.png` | Aba *Billing, plan & subscription* do UptimeRobot comprovando operação no plano **Free 50** (50 monitores, intervalo de 300 s) sem faturamento. | 15/11/2026 | @pedrolmelo | **Existe** |
+| `evidencias/uptimerobot-monitor.png` | Painel do monitor HTTP(S) ativo no UptimeRobot para `https://habilita-eb7ca.web.app/` (status **Up**, checagem a cada 5 min). | 17/11/2026 | @pedrolmelo | **Existe** |
 | `evidencias/render-plano.png` | Workspace do Render sem cartão de crédito. | — | @pedrolmelo | **Não aplicável (débito do CP3):** Render exigiu cartão de crédito no cadastro do serviço gratuito e não foi ativado |
 
 ### Evidências do plano Firebase Spark (CP2 e CP3)
@@ -57,6 +58,9 @@ Em **15/11/2026**, para o Checkpoint 3, o gasto acumulado da plataforma Habilita
 
 ![Plano Free 50 no UptimeRobot](evidencias/uptimerobot-plano.png)
 *Figura 4: Painel Billing, plan & subscription do UptimeRobot operando no plano Free 50 (CP3).*
+
+![Monitor ativo no UptimeRobot](evidencias/uptimerobot-monitor.png)
+*Figura 5: Monitor HTTP(S) ativo no UptimeRobot acompanhando https://habilita-eb7ca.web.app/ com status Up (CP3).*
 
 ## Como outra pessoa confere
 

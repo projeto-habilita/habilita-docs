@@ -40,8 +40,11 @@ Este runbook descreve apenas os procedimentos operacionais que **existem de fato
 
 - **Configuração atual (CP3):**
   - Conta no plano **Free 50** (sem cartão de crédito, até 50 monitores HTTP(s) com checagem a cada 5 minutos / 300 segundos e notificação por e-mail).
-  - Enquanto a API pública permanece como débito técnico, o monitor acompanha a disponibilidade do frontend publicado no Firebase Hosting (`https://habilita-eb7ca.web.app`).
+  - Monitor HTTP(S) ativo acompanhando a disponibilidade do frontend publicado no Firebase Hosting (`https://habilita-eb7ca.web.app`), respondendo **Up** com checagens a cada 5 minutos.
   - Quando a API pública estiver no ar com `/readyz` consultando o Firestore, um monitor adicional apontará para `GET <API_URL>/readyz`.
+
+![Monitor UptimeRobot ativo em habilita-eb7ca.web.app](../finops/evidencias/uptimerobot-monitor.png)
+*Evidência do monitor HTTP(S) ativo no UptimeRobot para `https://habilita-eb7ca.web.app/` (status Up, checagem a cada 5 min).*
 
 ---
 
