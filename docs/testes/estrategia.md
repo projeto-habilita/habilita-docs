@@ -133,6 +133,42 @@ Técnicas obrigatórias pelo Caderno. Cada tabela vira testes parametrizados.
 | T-RL-01 | Porteiro faz a 31ª consulta de liberação no mesmo minuto | 429 com `Retry-After`; a 30ª ainda responde 200 |
 | T-RL-02 | Porteiro A atinge o limite; porteiro B do mesmo tenant consulta em seguida | B recebe 200 (o limite é por usuário, não por IP) |
 
+### 4.8 Jornadas J1 a J3 — Contratos, Trabalhadores, Reuso e Revisão (H01, H08–H14)
+
+Casos complementares às tabelas de CPF (`T-CPF-*`), upload (`T-UPL-*`) e rejeição (`T-REJ-*`) para cobrir 100% dos critérios de J1 a J3 e o reuso entre contratos (`H11`).
+
+| Caso | Critério(s) | Cenário | Esperado |
+|---|---|---|---|
+| T-J1-01 | H01.CA3 | Criar contrato com `dataFim` no passado | `vigente = false`; não conta como liberação (RN-10) |
+| T-J1-02 | H01.CA5 | Salvar matriz com tipo de documento de outro tenant ou inexistente | 400 / 404 Problem Details |
+| T-J1-03 | H01.CA5 | Salvar matriz com 0 ou 21 tipos (fora de `1..20`) | 422 Problem Details |
+| T-J1-04 | H01.CA6 | Alterar matriz de exigências | Versão anterior e nova registradas em `/auditoria` |
+| T-J1-05 | H08.CA3 | Cadastrar terceirizada com CNPJ já existente no tenant | 409 Problem Details |
+| T-J1-06 | H09.CA2 | Cadastrar tipo de documento com `validadeMeses` = `0` ou `121` | 400 / 422 Problem Details |
+| T-J1-07 | H09.CA1 | Cadastrar tipo de documento com bordas `1` e `120` meses (nome `2..80` chars) | 201 |
+| T-J1-08 | H01.CA1 | Criar contrato válido (`identificador` `1..40` chars, `dataInicio ≤ dataFim`) | 201 |
+| T-J1-09 | H01.CA2 | Criar contrato com `dataFim < dataInicio` | 400 / 422 Problem Details |
+| T-J1-10 | H01.CA4 | Substituir matriz (`1..20` tipos) e recalcular semáforo | 200; `versaoMatriz` incrementada e semáforo atualizado em até 60 s |
+| T-J1-11 | H08.CA1, H08.CA2 | Cadastrar terceirizada com CNPJ válido / dígito verificador inválido | 201 para válido; 400 / 422 para inválido |
+| T-J1-12 | H09.CA3 | Sugestão de `validoAte = dataEmissao + N meses` e aviso ao ultrapassar padrão | Comportamento validado na tela (Frontend) |
+| T-J2-01 | H02.CA1, H02.CA3, H02.CA4 | Cadastrar trabalhador com CPF válido, rejeitar CPF duplicado e persistir só HMAC + máscara | 201 (`cpfMascarado`), 409 em duplicidade, CPF completo ausente no banco |
+| T-J2-02 | H02.CA11 | Upload recusado por `413` ou `415` na interface | Tela exibe `"Envie um PDF ou JPG de até 5 MB"` (Frontend) |
+| T-J2-03 | H10.CA1 | Vincular trabalhador a contrato da mesma terceirizada | 201 e semáforo calculado em até 60 s |
+| T-J2-04 | H10.CA2 | Terceirizada tenta vincular trabalhador a contrato de outra terceirizada | 404 Problem Details |
+| T-J2-05 | H10.CA3 | Vincular o mesmo trabalhador duas vezes no mesmo contrato | 409 Problem Details |
+| T-J2-06 | H11.CA1, H11.CA2 | Alocar trabalhador com ASO aprovado e válido em segundo contrato do mesmo tenant | 201; exigência atendida e semáforo `VERDE` sem novo upload |
+| T-J2-07 | H11.CA3 | Documento aprovado em tenant A consultado via alocação no tenant B (mesmo CPF) | Semáforo `VERMELHO` / pendência `AUSENTE` em B |
+| T-J3-01 | H03.CA1 | Rejeitar documento `PENDENTE` com motivo de 10 a 500 caracteres | 200; status `REJEITADO` e motivo salvo |
+| T-J3-02 | H03.CA4 | Rejeitar documento `APROVADO` ou já `REJEITADO` | 409 Problem Details |
+| T-J3-03 | H12.CA1 | Listar fila de pendentes com limite máximo de 50 itens e ordem do mais antigo ao mais novo | 200 para `limite=50`; 422 para `limite=51` |
+| T-J3-04 | H12.CA2 | Abrir fila de documentos sem itens pendentes | Estado vazio `"Nenhum documento aguardando análise"` (Frontend) |
+| T-J3-05 | H12.CA3 | Gerar URL assinada de visualização | URL válida por no máximo `300 s`; após expirar, storage recusa (`4xx`) |
+| T-J3-06 | H13.CA1 | Aprovar documento `PENDENTE` confirmando `validoAte` | 200; status `APROVADO` e semáforo recalculado em até 60 s |
+| T-J3-07 | H13.CA2 | Aprovar documento que não está `PENDENTE` | 409 Problem Details |
+| T-J3-08 | H13.CA3 | Aprovar documento com `validoAte < dataEmissao` | 400 / 422 Problem Details |
+| T-J3-09 | H14.CA1 | Terceirizada consulta trabalhador/documento rejeitado | Visualiza `motivoRejeicao` exato registrado pelo gestor |
+| T-J3-10 | H14.CA2 | Terceirizada reenvia documento do mesmo tipo após rejeição | Novo documento `PENDENTE` criado; documento rejeitado permanece inalterado |
+
 ## 5. Testes de isolamento de tenant
 
 **Exigido no Checkpoint 1: escrito, mesmo falhando.** Massa de dados: tenants `A` e `B`, cada um com um gestor, uma terceirizada (usuário próprio), um porteiro, um contrato, um trabalhador e um documento.
@@ -229,3 +265,4 @@ A partir do CP2, manter a [Matriz de rastreabilidade](matriz.md) (colunas: Requi
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Estratégia de testes com EP/BVA, testes de isolamento de tenant e matriz de autorização por papel. |
 | 1.1 | 05/11/2026 | @osamuelleite | Casos de upload com o limite de 5.000.000 bytes, só PDF/JPG (ADR 0006): T-UPL-02, T-UPL-03 e T-UPL-05 revistos; T-UPL-11 incluído. |
+| 1.2 | 17/11/2026 | @CauaRVeloso | Inclusão da seção 4.8 (T-J1-01 a T-J1-12, T-J2-01 a T-J2-07 e T-J3-01 a T-J3-10) para cobertura dos critérios das jornadas J1 a J3 e H11. |
