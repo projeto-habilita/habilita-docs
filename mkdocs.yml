@@ -98,6 +98,7 @@ nav:
           - "0009 — Auditoria append-only": arquitetura/adr/0009-auditoria-append-only.md
           - "0010 — Plano Custo Zero": arquitetura/adr/0010-plano-custo-zero.md
           - "0011 — Divergências em relação ao Caderno": arquitetura/adr/0011-divergencias-caderno.md
+          - "0012 — Teto do teste de carga em produção": arquitetura/adr/0012-teto-teste-carga-producao.md
   - Engenharia:
       - engenharia/index.md
       - Primeiros passos: engenharia/primeiros-passos.md

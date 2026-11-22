@@ -46,6 +46,7 @@ A ficha do Habilita define **quatro papéis** com permissões diferentes — **a
 - **Firebase Auth** (e-mail e senha no MVP).
 - Claims customizadas: `tenantId`, `papel` (`admin_contratante` | `analista_sst` | `terceirizada` | `porteiro`) e, para terceirizada, `terceirizadaId`. Atribuídas só pelo script de seed ou por rotina administrativa com credencial de serviço. Os valores `terceirizada` e `porteiro` correspondem a "prestadora" e "portaria" da ficha; mantivemos os nomes já usados no código e no contrato.
 - **Separação de funções:** só `admin_contratante` cria contratos, edita a **matriz de exigências** e o catálogo de tipos de documento; `analista_sst` revisa documentos (aprova ou rejeita) e acompanha semáforo e alertas, mas **não edita a matriz**. Quem define a regra não é o mesmo papel que, no dia a dia, julga o documento; o admin também pode revisar, para clientes pequenos com uma pessoa só no SST.
+- **O analista de SST vê o ASO** (esclarecimento da 1.2, sem mudar a decisão): para aprovar ou rejeitar o documento ele precisa abrir o arquivo, e o ASO é dado de saúde (dado pessoal sensível, LGPD art. 5º, II). O acesso se justifica pela finalidade de verificar a aptidão, e a ADR 0006 e a [Segurança](../../seguranca/index.md) limitam o resto: URL assinada de 300 s, auditoria de cada link gerado, e a portaria nunca vê o documento, só o resultado.
 - A API **verifica o ID token** em toda rota protegida e autoriza em duas etapas: **papel permitido na rota** (senão 403) e **escopo do recurso** — tenant e, quando aplicável, terceirizada (senão 404).
 - **Security Rules deny-all** no Firestore e no Storage: o navegador nunca acessa dados diretamente.
 - A matriz rota × papel é declarada no `openapi.yaml` (extensão `x-papeis`) e testada automaticamente.
@@ -107,3 +108,4 @@ Papel fora da lista da rota → **403**. Recurso de outro tenant ou de outra ter
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: tema e formato do ADR. Do Tech Lead: ADRs de multi-tenancy e RBAC fundidos, com 404 entre clientes (C8, C16). |
 | 1.1 | 26/10/2026 | @osamuelleite | Feedback do CP1 (item 7): `gestor` separado em `admin_contratante` e `analista_sst`, como na ficha; matriz de papéis; o analista não edita a matriz. Status Aceito. |
+| 1.2 | 22/11/2026 | @osamuelleite | Esclarecimento (débito do CP3): o analista de SST vê o ASO, e por quê (dado de saúde, LGPD). A decisão aceita não mudou. |

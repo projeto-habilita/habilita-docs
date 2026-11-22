@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Status | **Proposto** (aprovar em PR com o Tech Lead e mais um integrante) |
-| Data | 26/10/2026 · revisado em 03/11/2026 |
+| Data | 26/10/2026 · revisado em 22/11/2026 |
 | Decisores | Tech Lead, PO |
 | Consultados | Tutor e monitor (perguntas abertas na seção 4) |
 | Relacionados | ADR 0002, ADR 0003, ADR 0006, ADR 0007, ADR 0008, [ADR 0010](0010-plano-custo-zero.md) (Plano Custo Zero), [Modelo de dados](../dados.md), feedback do Checkpoint 1 (itens 3 e 7) |
@@ -28,8 +28,8 @@ Adotamos a opção 2. **Toda divergência ou interpretação nova entra nesta ta
 | D1 | Identificação na portaria | Consulta de liberação (a ficha cita QR) | Consulta por **CPF no corpo de um POST**, guardando só HMAC e versão mascarada | CPF fora de URLs, logs e histórico (LGPD); busca em uma leitura | [ADR 0008](0008-consulta-liberacao-cpf.md) |
 | D2 | Nome dos papéis | "prestadora" e "portaria" | Identificadores `terceirizada` e `porteiro` | Só o nome muda; permissões iguais às da ficha. Evita renomear o código e o contrato já existentes | [ADR 0002](0002-tenant-autorizacao.md) |
 | D3 | Miniaturas | "miniaturas" | Miniatura **só para JPG**; PDF mostra ícone | Renderizar PDF exige biblioteca nativa na imagem da API (tamanho, cold start, superfície de ataque) | [ADR 0006](0006-armazenamento-de-documentos.md) §3.3 |
-| D4 | Infraestrutura em nuvem | Cloud Run, Cloud Storage, Cloud Scheduler, Workload Identity, Secret Manager, Cloud Monitoring | Render, Supabase Storage, GitHub Actions, chave em variável protegida, UptimeRobot | Sem voucher do GCP e sem cartão; plano definido pelo monitor. As 6 exceções ficam listadas e justificadas na ADR 0010 | [ADR 0010](0010-plano-custo-zero.md) §6 |
-| D5 | Demonstração do CP3 | Usuário externo acessa, autentica e executa uma jornada sem depender da máquina de desenvolvimento | Apresentação local com `docker compose up` e o roteiro de 8 passos; o deploy é entrega secundária | Combinado com o tutor, para o deploy não consumir mais tempo que as jornadas. `[pendente — registrar data e onde foi combinado]` | [Demo](../../demo/index.md) |
+| D4 | Infraestrutura em nuvem | Cloud Run, Cloud Storage, Cloud Scheduler, Workload Identity, Secret Manager, Cloud Monitoring | Supabase Storage, GitHub Actions, chave em variável protegida, UptimeRobot. **API pública: sem host definido.** O Render (previsto na ADR 0010) e o Hugging Face Spaces exigiram cartão e não foram ativados; o host gratuito sem cartão será escolhido e registrado em ADR até o CP4. Até lá, a API roda local | Sem voucher do GCP e sem cartão; plano definido pelo monitor. As 6 exceções ficam listadas e justificadas na ADR 0010; a troca do Render fica na ADR do host | [ADR 0010](0010-plano-custo-zero.md) §6, [Operação](../../operacao/index.md) |
+| D5 | Demonstração do CP3 | Usuário externo acessa, autentica e executa uma jornada sem depender da máquina de desenvolvimento | Apresentação local com `docker compose up` e o roteiro de 8 passos; o deploy é entrega secundária | Combinado com o tutor, para o deploy não consumir mais tempo que as jornadas. Combinado por escrito no feedback do CP2 (03/11/2026, seção "Para todos") e confirmado no feedback do CP3 v2 (16/11/2026, seção "Respostas do Pedro", item 1) | [Demo](../../demo/index.md) |
 
 ### 3.2 Interpretações (o Caderno não fixa o detalhe; adotamos a leitura mais segura)
 
@@ -41,7 +41,7 @@ Adotamos a opção 2. **Toda divergência ou interpretação nova entra nesta ta
 | I5 | Envio de arquivo | Plano Custo Zero: "a API gera a URL assinada curta para envio e para download" | **Upload multipart pela API**; URL assinada curta (300 s) só para **download** | A API valida tamanho e assinatura de bytes **antes** de gravar e a chave do Supabase fica só no servidor; atende o objetivo do plano (bucket privado, chave fora do navegador) | [ADR 0006](0006-armazenamento-de-documentos.md) §3.1 |
 | I6 | "Rules deny-all" do Storage | Caderno: Security Rules deny-all (Firestore e Storage) | Firestore: Security Rules deny-all. Supabase: bucket privado **sem nenhuma política** para `anon`/`authenticated`; o teste do H19.CA4 passa a provar que a chave `anon` não lê nem grava | O Supabase não usa Security Rules do Firebase; ausência de política é o equivalente a deny-all | [ADR 0006](0006-armazenamento-de-documentos.md) §3.5 |
 | I7 | Rota do job diário | Plano Custo Zero cita `POST /jobs/recalcular` | **`POST /internal/jobs/recalculo-vencimentos`**, com `Authorization: Bearer <JOB_TOKEN>` | A rota já estava no contrato; `/internal/` deixa claro que não é rota de usuário | [ADR 0007](0007-recalculo-idempotente.md) |
-| I8 | Região de Render e Supabase | Caderno: região dos EUA (GCP) | Firestore em `us-central1`; Render e Supabase numa região dos EUA escolhida pelo DevOps ao criar os serviços: `[preencher região do Render]`, `[preencher região do Supabase]` | Mantém tudo nos EUA, como no Caderno, e perto do Firestore | [ADR 0003](0003-ci-cd.md) §3.2 |
+| I8 | Região dos serviços em nuvem | Caderno: região dos EUA (GCP) | Firestore em `us-central1`; Supabase numa região dos EUA escolhida pelo DevOps ao criar o projeto: `[preencher região do Supabase]`. A API não tem região hoje, porque roda local (D4); o host que for escolhido deve ficar nos EUA e a região será registrada na ADR do host | Mantém tudo nos EUA, como no Caderno, e perto do Firestore | [ADR 0003](0003-ci-cd.md) §3.2 |
 | I4 | Caminho da matriz de rastreabilidade | `/docs/rastreabilidade.md` | A página existe nesse caminho e aponta para `docs/testes/matriz.md`, onde o QA mantém a matriz | Atende o caminho do Caderno sem duplicar conteúdo | [Matriz de rastreabilidade](../../testes/matriz.md) (a página `docs/rastreabilidade.md` entra pelo PR da PO) |
 
 ### 3.3 Alinhadas ao Caderno nesta revisão (deixaram de ser divergência em 26/10/2026)
@@ -49,7 +49,7 @@ Adotamos a opção 2. **Toda divergência ou interpretação nova entra nesta ta
 | Tema | Antes | Agora | Onde |
 |---|---|---|---|
 | Papéis | 3 (`gestor`, `terceirizada`, `porteiro`) | **4**: `admin_contratante`, `analista_sst`, `terceirizada`, `porteiro`; o analista não edita a matriz | [ADR 0002](0002-tenant-autorizacao.md) |
-| Região | `southamerica-east1` | **`us-central1`** no Firestore; Render e Supabase nos EUA (I8) | [ADR 0003](0003-ci-cd.md) |
+| Região | `southamerica-east1` | **`us-central1`** no Firestore; Supabase nos EUA (I8) | [ADR 0003](0003-ci-cd.md) |
 | Upload | PDF/JPEG/PNG até 10 MiB | **PDF/JPG até 5 MB**, com compressão no cliente | [ADR 0006](0006-armazenamento-de-documentos.md) |
 | Retenção | Sem lifecycle | **90 dias** com expurgo pelo job diário (I2) | [ADR 0006](0006-armazenamento-de-documentos.md) |
 | Dashboard | 200 trabalhadores, sem coleção de contagens | **500 trabalhadores em ≤ 2 s**, lendo `contagens/{contratoId}` | [Modelo de dados](../dados.md) |
@@ -90,3 +90,4 @@ Quando o tutor responder, a resposta é registrada aqui e a divergência é fech
 | 1.0 | 26/10/2026 | @osamuelleite | Versão inicial (feedback do CP1, itens 3 e 7; planilha TL-06 e TL-11). |
 | 1.1 | 03/11/2026 | @osamuelleite | Renumerada de 0010 para 0011 (a 0010 é o Plano Custo Zero). D4 (infraestrutura Custo Zero); I2 com expurgo pelo job; I5 a I8 (upload pela API, deny-all no Supabase, rota do job, região); Q-T1 decidida; Q-T5 e Q-T6. |
 | 1.2 | 05/11/2026 | @osamuelleite | D5 (demonstração do CP3 local, combinada com o tutor); Q-T5 respondida (aprovação do monitor em 14/10/2026). |
+| 1.3 | 22/11/2026 | @osamuelleite | D5 fechada com a origem do combinado (feedbacks do CP2 e do CP3 v2, informada pela PO); D4 e I8 sem o Render, que não foi ativado por exigir cartão (host a definir em ADR até o CP4), alinhados ao runbook. |
