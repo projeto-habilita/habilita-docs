@@ -18,7 +18,7 @@ Este runbook descreve apenas os procedimentos operacionais que **existem de fato
 | **Armazenamento de documentos** | **Ativo** (bucket criado em nuvem; emulador/serviço local no Compose) | Supabase Storage (plano Free, 1 GB, bucket privado sem políticas para `anon`/`authenticated`) |
 | **Job diário de recálculo** | **Parcial** (workflow `.github/workflows/job-diario.yml` criado; depende da rota no backend e de URL pública da API) | GitHub Actions (`cron: "0 6 * * *"` = 03:00 BRT e `workflow_dispatch`) |
 | **Monitoramento externo** | **Ativo** (conta Free 50 criada; monitor no Hosting após primeiro deploy da `main`) | UptimeRobot (intervalo de 5 minutos, alerta por e-mail) |
-| **API FastAPI em nuvem** | **Pendente (débito técnico do CP3)** | Demonstração oficial executada localmente via `docker compose up` ([ADR 0011, D5](../arquitetura/adr/0011-divergencias-caderno.md)). O Render (mesmo no plano Free) e o Hugging Face Spaces (Docker) exigiram cartão de crédito/plano pago, vedado pela [ADR 0010](../arquitetura/adr/0010-plano-custo-zero.md) |
+| **API FastAPI em nuvem** | **Pendente (débito técnico do CP3)** | Demonstração oficial executada localmente via `docker compose up` ([ADR 0011, D5](../arquitetura/adr/0011-divergencias-caderno.md)). O Render (mesmo no plano Free) e o Hugging Face Spaces (Docker) exigiram cartão de crédito/plano pago, vedado pela [ADR 0010](../arquitetura/adr/0010-plano-custo-zero.md); o host gratuito sem cartão será escolhido e registrado em ADR até o CP4 ([ADR 0011, D4](../arquitetura/adr/0011-divergencias-caderno.md)) |
 
 ---
 
