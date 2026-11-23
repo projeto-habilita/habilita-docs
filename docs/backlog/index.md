@@ -1,12 +1,85 @@
 # Backlog
 
-O backlog com as histórias no formato "Como [papel], quero [ação], para [benefício]" e a priorização MoSCoW (Must, Should, Could e Won't) está em:
+Backlog do Habilita com priorização MoSCoW. Os critérios de aceite detalhados de cada história estão em [Histórias de Usuário e Backlog](../produto/requisitos/historias-backlog.md).
 
-- [Histórias de Usuário e Backlog](../produto/requisitos/historias-backlog.md)
-- [Requisitos Funcionais](../produto/requisitos/funcionais.md) (critérios de aceite)
+As histórias abaixo cobrem as 5 jornadas ponta a ponta do MVP — **J1** (criar contratos e a matriz de exigências), **J2** (cadastrar trabalhadores e enviar documentos), **J3** (aprovar ou rejeitar documentos, com motivo), **J4** (atualizar vencimentos, status e alertas) e **J5** (consultar a liberação e registrar o acesso na portaria) — detalhadas em [Mapeamento de Jornadas](../produto/estrategia/jornadas.md).
+
+| ID | História | MoSCoW | RF | Critério de aceite |
+|---|---|---|---|---|
+| H01 | Como gestor(a) de SST, quero definir os documentos exigidos por contrato, para padronizar a conferência | Must | RF01 | Contrato com `dataInicio ≤ dataFim`; matriz de 1 a 20 tipos; semáforo recalculado em até 60 s — ver [H01](../produto/requisitos/historias-backlog.md#h01) |
+| H02 | Como terceirizada, quero enviar os documentos dos meus trabalhadores, para que sejam liberados | Must | RF02, RF03 | CPF válido e único por cliente; PDF/JPG até 5 MB; validade obrigatória; 413/415 fora disso — ver [H02](../produto/requisitos/historias-backlog.md#h02) |
+| H03 | Como gestor(a), quero rejeitar um documento informando o motivo, para que a terceirizada corrija | Must | RF04 | Motivo de 10 a 500 caracteres; sem motivo → 400 e documento continua pendente — ver [H03](../produto/requisitos/historias-backlog.md#h03) |
+| H04 | Como porteiro(a), quero consultar se o trabalhador está liberado, para autorizar a entrada | Must | RF09 | LIBERADO / BLOQUEADO / NAO_CADASTRADO; p95 ≤ 800 ms; CPF fora da URL; toda consulta auditada — ver [H04](../produto/requisitos/historias-backlog.md#h04) |
+| H05 | Como gestor(a), quero ser avisado(a) de vencimentos próximos, para agir antes do bloqueio | Must | RF07 | 1 alerta por documento e faixa (30 dias, vencido); sem duplicar em reexecuções — ver [H05](../produto/requisitos/historias-backlog.md#h05) |
+| H07 | Como usuário cadastrado (gestor, terceirizada ou porteiro), quero entrar com e-mail e senha e ver apenas as telas do meu papel, para trabalhar sem acessar o que não me cabe. | Must | — (RNF01) | ver [H07](../produto/requisitos/historias-backlog.md#h07) |
+| H08 | Como gestor, quero cadastrar as empresas terceirizadas com quem tenho contrato, para vinculá-las aos contratos. | Must | RF01 | ver [H08](../produto/requisitos/historias-backlog.md#h08) |
+| H09 | Como gestor, quero cadastrar os tipos de documento que exijo (ex.: ASO, NR-35) com o prazo de validade padrão, para que o sistema calcule os vencimentos. | Must | RF01 | ver [H09](../produto/requisitos/historias-backlog.md#h09) |
+| H10 | Como responsável da terceirizada, quero vincular um trabalhador a um contrato da minha empresa, para que ele possa ser liberado nesse contrato. | Must | RF02 | ver [H10](../produto/requisitos/historias-backlog.md#h10) |
+| H11 | Como responsável da terceirizada, quero que um documento já aprovado e válido conte automaticamente para qualquer contrato do mesmo cliente que o exija, para não reenviar o mesmo arquivo. | Must | RF08 | ver [H11](../produto/requisitos/historias-backlog.md#h11) |
+| H12 | Como gestor, quero ver todos os documentos pendentes e abrir cada arquivo, para decidir sobre eles. | Must | RF04 | ver [H12](../produto/requisitos/historias-backlog.md#h12) |
+| H13 | Como gestor, quero aprovar um documento confirmando sua data de validade, para que ele conte no semáforo. | Must | RF04 | ver [H13](../produto/requisitos/historias-backlog.md#h13) |
+| H14 | Como responsável da terceirizada, quero ver por que um documento foi rejeitado e enviar um novo, para regularizar o trabalhador. | Must | RF03, RF04 | ver [H14](../produto/requisitos/historias-backlog.md#h14) |
+| H15 | Como gestor, quero que o sistema recalcule sozinho a situação de todos os documentos todo dia, para não depender de ninguém lembrar. | Must | RF05 | ver [H15](../produto/requisitos/historias-backlog.md#h15) |
+| H16 | Como gestor, quero ver o semáforo de cada trabalhador em cada contrato, para saber quem está apto. | Must | RF06 | ver [H16](../produto/requisitos/historias-backlog.md#h16) |
+| H17 | Como gestor, quero receber um resumo diário dos alertas por e-mail, para não precisar abrir o sistema. | Could | RF07 | ver [H17](../produto/requisitos/historias-backlog.md#h17) |
+| H18 | Como porteiro, quero confirmar se o trabalhador entrou ou foi barrado, para que fique registrado quem acessou o local. | Must | RF09 | ver [H18](../produto/requisitos/historias-backlog.md#h18) |
+| H19 | Como gestor de um cliente, quero ter a garantia de que nenhum outro cliente vê meus dados, para confiar meus documentos ao Habilita. | Must | — (RNF01) | ver [H19](../produto/requisitos/historias-backlog.md#h19) |
+| H20 | Como gestor, quero que toda decisão e todo acesso fiquem registrados de forma imutável, para responder a uma auditoria ou a um incidente. | Must | RF10 | ver [H20](../produto/requisitos/historias-backlog.md#h20) |
+| H21 | Como gestor, quero filtrar a trilha por período, ação e recurso, para investigar uma decisão. | Should | RF10 | ver [H21](../produto/requisitos/historias-backlog.md#h21) |
+| H22 | Como gestor, quero exportar o semáforo de um contrato em CSV, para anexar a relatórios. | Could | RF06 | ver [H22](../produto/requisitos/historias-backlog.md#h22) |
+| H23 | Como gestor, quero ver, por contrato, quantos trabalhadores estão em cada cor e quantos documentos vencem nos próximos 30 dias, para priorizar ações. | Must | RF06 | ver [H23](../produto/requisitos/historias-backlog.md#h23) |
+
+!!! note "Legenda MoSCoW"
+    **Must** = sem isso não há MVP · **Should** = importante · **Could** = se der tempo · **Won't** = fora deste ciclo.
+
+## Won't — fora deste ciclo
+
+Itens fora do MVP, com o motivo. Detalhes em [Histórias de Usuário e Backlog](../produto/requisitos/historias-backlog.md#wont).
+
+| Item | Motivo |
+|---|---|
+| Leitura automática de documentos (OCR) | Fora da ficha; custo e complexidade incompatíveis com 9 semanas |
+| Integração com o eSocial | Fora da ficha; Habilita não é integrador do eSocial |
+| Assinatura digital ICP-Brasil | Fora da ficha |
+| App nativo iOS ou Android | Fora da ficha; a portaria usa navegador (web responsiva) |
+| Pagamentos ou cobrança | Fora da ficha |
+| Integração com catraca ou biometria | Fora da classificação "Não Faz" |
+| Verificar autenticidade do documento junto à clínica ou ao órgão emissor | Fora da classificação "Não Faz"; a aprovação humana é o controle no MVP |
+| Cadastro self-service de novos clientes e usuários | Clientes e usuários entram por seed; reduz superfície de ataque |
+| Reuso de cadastro e documentos entre contratantes diferentes (efeito de rede) | LGPD e isolamento por tenant. Exigiria consentimento da prestadora e um cadastro fora do tenant. O MVP prova o reuso dentro de um mesmo cliente (H11) |
+| Foto do trabalhador na consulta de portaria | Dado biométrico, aumenta o risco LGPD sem ser essencial ao MVP |
+
+## Revisões do backlog
+
+| Data | O que mudou | Por quê |
+|---|---|---|
+| 02/11/2026 | H05, H14 e H23 para Must (H23 implementada após o CP2); H07 a H23 validadas; H06 removida; critérios de upload (5 MB, PDF/JPG) e painel (500 trabalhadores em ≤ 2 s) | Feedback do Checkpoint 1, itens 3, 5 e 8 |
+| 04/11/2026 | H11.CA1 com 60 s e H12.CA3 sem fixar o código do armazenamento; H04.CA1 sem contratos na resposta da portaria; seção Won't em /docs/backlog; retenção de 90 dias contados de quando o arquivo deixa de ser necessário; upload mantido em 5 MB (5.000.000 bytes) e só PDF/JPG, com os 10 MB da carta da cliente para depois do MVP; entrevistas reais adiadas para a Sprint 3, com E1 e E2 como hipótese; prioridade em J1 a J3 | Feedback do Checkpoint 2 e revisão do Tech Lead |
+| 15/11/2026 | Riscos do Plano Custo Zero registrados (seção abaixo); telas de J1 a J3 como Must na S7; preview em PR registrado como exceção ao Caderno | Gate do CP3 e congelamento de escopo de 16/11 |
+| 16/11/2026 | Riscos reconciliados com a ADR 0011: o Render saiu (exigiu cartão) e a API está sem hospedagem; exceção de preview reescrita (o backend não tem preview no Plano Custo Zero e o preview do frontend vem do PR #51 do código); prazo das telas de J1 a J3 escrito na tabela de riscos | Feedback do Checkpoint 3, itens 6 e 7 |
+
+## Riscos registrados em 15/11/2026 (revistos em 16/11/2026)
+
+| Risco | Impacto | Mitigação |
+|---|---|---|
+| Telas de J1 a J3 ainda não existem no frontend | Alto: sem demo pela interface no CP4 e no Demo Day; o reuso de documento só aparece no Swagger | Must na S7. Prazo: login e telas de J1 a J3 ligadas à API até 24/11/2026 (feedback do CP3). Ordem: fila de aprovação e semáforo antes do acabamento; se faltar tempo, a J2 com tela vem primeiro |
+| API sem hospedagem: o Render exigiu cartão, o que a regra de ouro nº 1 do Plano Custo Zero proíbe | Alto: sem URL pública da API, o CP4 e o Demo Day dependem da demo local | Escolher um host gratuito sem cartão, registrar em ADR e atualizar a ADR 0011 (I8) até 29/11/2026; demo local ensaiada como plano B |
+| O backend não tem preview em PR no Plano Custo Zero | Médio: item do Caderno atendido só no frontend | Exceção ao Caderno registrada; o preview do frontend vem do workflow do PR #51 do código, ainda aberto |
+| Cota diária do Firestore (Spark) estourar em ensaios | Alto: API fora do ar até a cota zerar | Ensaios e testes de carga no emulador |
+| Supabase pausar após 7 dias sem uso do banco | Médio: upload e download falham | Workflow semanal com consulta real ao banco |
+| Supabase gratuito sem backup | Médio: documentos da demo perdidos | Script de seed que recria os dados |
+| Cron do GitHub Actions atrasar ou falhar | Médio: semáforo desatualizado | `workflow_dispatch` para rodar o recálculo à mão |
+| Contas dos serviços com uma só pessoa | Alto: ninguém consegue reiniciar ou fazer rollback | Convidar uma segunda pessoa em cada serviço |
+| Retenção de 90 dias contra guarda para prova judicial (entrevista E03) | A confirmar | Verificar a base legal antes do CP4 |
 
 ## Histórico de versões
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 18/10/2026 | @Lelafeta | Versão inicial: página de índice do backlog com links para Histórias de Usuário e Requisitos Funcionais. |
+| 1.1 | 02/11/2026 | @Lelafeta | Inclusão da tabela do backlog MoSCoW e do registro de revisões semanais do backlog. |
+| 1.2 | 02/11/2026 | @Lelafeta | Inclusão do parágrafo no topo listando as jornadas J1 a J5 com link para o Mapeamento de Jornadas. |
+| 1.3 | 03/11/2026 | @Lelafeta | Inclusão da seção Won't com a tabela de itens fora deste ciclo. |
+| 1.4 | 04/11/2026 | @Lelafeta | Registro da revisão do backlog de 04/11/2026 após o Checkpoint 2 e a revisão do Tech Lead. |
+| 1.5 | 15/11/2026 | @Lelafeta | Revisão de 15/11/2026 e registro dos riscos do Plano Custo Zero e do gate do CP3. |
+| 1.6 | 16/11/2026 | @Lelafeta | Revisão de 16/11/2026 após o feedback do Checkpoint 3: riscos do Render reconciliados com a ADR 0011, exceção de preview reescrita e prazo das telas de J1 a J3. |
