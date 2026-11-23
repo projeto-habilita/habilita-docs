@@ -9,20 +9,22 @@
 
 | # | Perfil (sem nome) | Data | Tipo | Principais achados |
 |---|---|---|---|---|
-| E1 | Persona sintética: gerente de SST, indústria média | 18/10/2026 | Entrevista com persona sintética — **hipótese não validada** | Controle em planilha alimentada por e-mail das prestadoras; vencimentos descobertos tarde, às vezes na portaria; o mesmo ASO é pedido de novo a cada contrato. **Custo hoje:** horas da equipe em conferência manual e exposição a autuação, cuja multa cresce com a gravidade e o nº de empregados (ES1, ES5). **Decisor:** gestão de SST/Facilities, com aprovação da diretoria ou dos sócios (ES6). **Disposição a pagar:** referência de mercado de R$ 900/mês por plataforma de gestão de terceiros com 3 usuários (ES5); a persona considera viável algo abaixo disso para empresa média |
-| E2 | Persona sintética: porteiro e coordenador de terceirizada | 18/10/2026 | Entrevista com persona sintética — **hipótese não validada** | Portaria confere lista impressa desatualizada e libera na dúvida; sem registro de quem entrou. A terceirizada reenvia os mesmos documentos para cada cliente, por e-mail e ligações, sem padrão (ES6). **Frequência:** a cada novo contrato e a cada vencimento. **Decisor e pagamento:** não decide nem paga; quem contrata é a empresa contratante |
+| E1 | Perfil hipotético: gerente de SST, indústria média | 18/10/2026 | **Hipótese não validada** (não é entrevista real) | Supomos que o controle é feito em planilha alimentada por e-mail das prestadoras e que vencimentos são descobertos tarde, às vezes na portaria. Supomos que o mesmo ASO é pedido de novo a cada contrato. **Custo hoje (hipótese):** horas da equipe em conferência manual e exposição a autuação, cuja multa cresce com a gravidade e o nº de empregados (ES1, ES5). **Decisor (hipótese):** gestão de SST/Facilities, com aprovação da diretoria ou dos sócios (ES6). **Disposição a pagar (hipótese):** a referência de mercado é R$ 900/mês por plataforma de gestão de terceiros com 3 usuários (ES5); falta testar se uma empresa média pagaria menos que isso |
+| E2 | Perfil hipotético: porteiro e coordenador de terceirizada | 18/10/2026 | **Hipótese não validada** (não é entrevista real) | Supomos que a portaria confere lista impressa desatualizada, libera na dúvida e não registra quem entrou. Supomos que a terceirizada reenvia os mesmos documentos para cada cliente, por e-mail e ligações, sem padrão (ES6). **Frequência (hipótese):** a cada novo contrato e a cada vencimento. **Decisor e pagamento (hipótese):** não decide nem paga; quem contrata é a empresa contratante |
+| E03 | Advogada trabalhista, com experiência em escritório e no jurídico de empresas | 10/11/2026 | **Entrevista real**, por vídeo, com consentimento | Controle em planilha e pastas locais é "muito comum"; vencimento sem ninguém perceber "acontece sempre" e costuma aparecer só em auditoria, denúncia ou processo trabalhista; na portaria "praticamente não é visto" aviso de pendência, e em empresas grandes leva de 3 a 4 dias até o supervisor saber; correção de documento rejeitado em 15 dias, prorrogáveis por mais 15. Quem decide a compra é o financeiro, alinhado com o jurídico e a segurança do trabalho. Relato indireto, de quem atua no jurídico. Registro em [Entrevista E03](entrevista-E03.md) |
 | ES1 | Legislação federal | 14/10/2026 | Evidência secundária — **hipótese não validada** | A contratante responde pelas condições de segurança dos terceirizados em suas dependências (Lei nº 6.019/1974, art. 5º-A, § 3º) |
 | ES2 | Normas regulamentadoras | 14/10/2026 | Evidência secundária — **hipótese não validada** | Documentos de SST têm periodicidades diferentes (ex.: NR-10 e NR-35 bienais); um prazo único não serve |
 | ES3 | Modelos públicos de checklist de obra | 14/10/2026 | Evidência secundária — **hipótese não validada** | Conferência de ASO, treinamentos e EPI de terceirizados aparece em formulários manuais |
 | ES4 | Estudo DIEESE sobre terceirização | 18/10/2026 | Evidência secundária — **hipótese não validada** | Afastamentos por acidente de trabalho típico: 9,6% em atividades tipicamente terceirizadas contra 6,1% nas tipicamente contratantes ([Fundação Perseu Abramo/DIEESE](https://fpabramo.org.br/2017/03/28/notas-fpa-politica-social-407)) |
 | ES5 | NR-28 e preço público de concorrente | 18/10/2026 | Evidência secundária — **hipótese não validada** | Multas por descumprimento de NR variam pela gravidade (I1 a I4) e pelo nº de empregados ([CBIC, 27/04/2026](https://cbic.org.br/multas-por-descumprimento-das-normas-regulamentadoras-seguem-criterios-tecnicos-e-variam-conforme-gravidade-da-infracao/)); plataforma de gestão de terceiros custa R$ 900/mês com 3 usuários ([SoftExpert Store](https://store.softexpert.com/pt/gestao_terceiros/p)) |
 | ES6 | Avaliações públicas de concorrente | 18/10/2026 | Evidência secundária — **hipótese não validada** | Usuários do Tertium Online relatam burocracia com documentos de terceiros, muitas ligações e e-mails sem padrão, e redução do tempo operacional após automatizar; avaliadores são sócios ou proprietários ([B2B Stack](https://www.b2bstack.com.br/product/tertium-online)) |
-Detalhes e fontes de ES1 a ES3 em [Evidências secundárias](evidencias-secundarias.md).
+
+Detalhes e fontes de ES1 a ES6 em [Evidências secundárias](evidencias-secundarias.md).
 
 ## Como conduzir
 
 - [Roteiro de entrevista](roteiro-entrevista.md): consentimento, 10 perguntas (P1 a P10) ligadas às hipóteses e ao [Ishikawa](ishikawa.md).
-- [Modelo de registro](modelo-registro-entrevista.md): copiar para `entrevista-E01.md` e `entrevista-E02.md` nesta pasta (e adicionar ao `nav:` do `mkdocs.yml`).
+- [Modelo de registro](modelo-registro-entrevista.md): copiar para `entrevista-E0X.md` nesta pasta (e adicionar ao `nav:` do `mkdocs.yml`).
 
 ## Regras
 
@@ -38,15 +40,15 @@ Detalhes e fontes de ES1 a ES3 em [Evidências secundárias](evidencias-secundar
 3. Responsável por documentação em empresa terceirizada.
 4. Supervisor(a) de portaria ou controle de acesso.
 
-## Síntese das hipóteses (preencher após as entrevistas)
+## Síntese das hipóteses (1 entrevista real até 16/11/2026)
 
 | Hipótese | Evidência a favor | Evidência contra | Conclusão |
 |---|---|---|---|
-| HP1 · Documentos de SST de terceirizados são controlados em planilha ou e-mail | | | |
-| HP2 · Vencimentos passam despercebidos com frequência | | | |
-| HP3 · A portaria não consegue verificar aptidão na hora | | | |
-| HP4 · Reenviar o mesmo documento para cada contrato é uma dor real | | | |
-| HP5 · Quem decide a compra é a gestão de SST ou Facilities | | | |
+| HP1 · Documentos de SST de terceirizados são controlados em planilha ou e-mail | E03: planilha, pastas locais e sistemas próprios de RH; a prova de cobrança é feita por e-mail e pastas compartilhadas | — | Parcialmente validada (1 entrevista, relato indireto) |
+| HP2 · Vencimentos passam despercebidos com frequência | E03: "acontece sempre", sobretudo em empresas com mais de 200 funcionários; a falha aparece em auditoria, denúncia ou processo | — | Parcialmente validada (1 entrevista, relato indireto) |
+| HP3 · A portaria não consegue verificar aptidão na hora | E03: hoje praticamente não há aviso na entrada; de 3 a 4 dias até o supervisor saber | Sem caso concreto de entrada indevida | Parcialmente validada (1 entrevista, relato indireto) |
+| HP4 · Reenviar o mesmo documento para cada contrato é uma dor real | E03: quem volta a prestar serviço entrega tudo de novo e refaz o ASO | E03 considera esse retrabalho necessário; não tratou de contratos simultâneos | Sem evidência suficiente; testar com gestor de SST |
+| HP5 · Quem decide a compra é a gestão de SST ou Facilities | E03: a segurança do trabalho e o jurídico influenciam | E03: a compra fica com o financeiro | Parcialmente refutada (1 entrevista) |
 
 !!! note "HP1 a HP5 são hipóteses de pesquisa"
     O prefixo `HP` evita confusão com as histórias de usuário `H01`, `H02`… do [Backlog](../requisitos/historias-backlog.md).
@@ -57,3 +59,6 @@ Detalhes e fontes de ES1 a ES3 em [Evidências secundárias](evidencias-secundar
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e tabela de entrevistas. Do Tech Lead: evidências secundárias ES1 a ES3, perfis-alvo e hipóteses renomeadas para HP1 a HP5 (C10). |
 | 1.1 | 18/10/2026 | @Lelafeta | Inclusão dos registros de entrevista com personas sintéticas (E1 e E2) e adição de novas evidências secundárias (ES4 a ES6). |
+| 1.2 | 02/11/2026 | @Lelafeta | Correção de quebra de linha após a tabela de entrevistas e evidências. |
+| 1.3 | 02/11/2026 | @Lelafeta | E1 e E2 marcadas como personas sintéticas, com achados escritos como hipóteses a testar; referência a ES1 a ES6. |
+| 1.4 | 16/11/2026 | @Lelafeta | Feedback do Checkpoint 3: E1 e E2 rotuladas como hipótese não validada; registro da entrevista real E03 e síntese de HP1 a HP5. |

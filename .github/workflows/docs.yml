@@ -1,8 +1,10 @@
 name: docs
 
 on:
+  # Sem filtro de caminhos no PR: o job `build` é check obrigatório da `main` e precisa rodar em
+  # TODO PR (inclusive os que só mexem em README, CODEOWNERS ou templates). Com filtro, o PR fica
+  # travado em "Expected — Waiting for status to be reported".
   pull_request:
-    paths: ["docs/**", "mkdocs.yml", "requirements-docs.txt", "openapi.yaml", ".github/workflows/docs.yml"]
   push:
     branches: [main]
     paths: ["docs/**", "mkdocs.yml", "requirements-docs.txt", "openapi.yaml", ".github/workflows/docs.yml"]

@@ -39,6 +39,8 @@ ishikawa-beta
         Pressão de prazo para iniciar o serviço
 ```
 
+![Ishikawa em espinha de peixe](ishikawa.png)
+
 ## Causas por categoria
 
 Todas são **hipóteses** até as entrevistas. A última coluna liga cada causa à pergunta do [roteiro de entrevista](roteiro-entrevista.md) que a testa.
@@ -75,3 +77,4 @@ Todas são **hipóteses** até as entrevistas. A última coluna liga cada causa 
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: efeito e 5 causas de exemplo (marcadas com ★). Do Tech Lead: organização nos 6M exigidos pelo guia (C1) e demais causas ligadas ao roteiro de entrevista. |
 | 1.1 | 18/10/2026 | @Lelafeta | Diagrama trocado para o formato espinha de peixe (Mermaid `ishikawa-beta`) e imagem `ishikawa.png` adicionada. Item do gate marcado como concluído. |
 | 1.2 | 01/11/2026 | @Lelafeta | Alinhamento do formato e limite de upload (PDF e JPG até 5 MB) ao Caderno. |
+| 1.3 | 02/11/2026 | @Lelafeta | Inclusão da referência à imagem `ishikawa.png` abaixo do diagrama Mermaid. |

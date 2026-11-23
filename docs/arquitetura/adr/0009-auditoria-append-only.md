@@ -24,7 +24,7 @@ O produto se apresenta como "trilha de auditoria de decisões e acessos". Em um 
 - Coleção `tenants/{t}/auditoria/{id}` **somente inserção**: o repositório de auditoria expõe apenas `registrar()`; não há métodos de atualização ou exclusão nem rotas para isso.
 - O registro é gravado **no mesmo lote atômico** da operação de negócio. Se a auditoria falha, a operação falha.
 - Campos: `ator` (uid), `papel`, `acao` (ex.: `DOCUMENTO_APROVADO`), `recurso` (tipo e id), `detalhes` (sem dados pessoais além de ids), `dataHora` (UTC), `requestId`.
-- Leitura pelo gestor via `GET /api/auditoria`, paginada (H21).
+- Leitura pelo `admin_contratante` via `GET /api/auditoria`, paginada (H21).
 
 ## 4. Consequências
 
@@ -49,3 +49,4 @@ O produto se apresenta como "trilha de auditoria de decisões e acessos". Em um 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Trilha de auditoria append-only. Status: proposto. |
+| 1.1 | 05/11/2026 | @osamuelleite | Leitura da auditoria pelo `admin_contratante`, no lugar de `gestor` (ADR 0002, 4 papéis). |

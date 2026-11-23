@@ -1,0 +1,38 @@
+# CODEOWNERS do habilita-docs: quem revisa cada parte da documentação.
+# A revisão do dono só é OBRIGATÓRIA com "Require review from Code Owners" ativo na proteção da main
+# (ver docs/engenharia/configuracao-github.md). A ÚLTIMA regra que casar com o arquivo é a que vale.
+# Regra da equipe: todo caminho tem PELO MENOS 2 donos, para que o autor nunca seja o único dono possível.
+#
+# Papéis: Tech Lead @osamuelleite | PO @Lelafeta | Backend @Gustavormq | Frontend @ArthurFeitosa05
+#         DevOps @pedrolmelo | QA @CauaRVeloso
+
+# Padrão: Tech Lead + PO
+*                          @osamuelleite @Lelafeta
+
+# Produto e negócio (PO)
+/docs/produto/             @Lelafeta @osamuelleite
+/docs/backlog/             @Lelafeta @CauaRVeloso
+/docs/validacao/           @Lelafeta @osamuelleite
+/docs/demo/                @Lelafeta @osamuelleite
+/docs/produto/design/      @ArthurFeitosa05 @Lelafeta
+
+# Arquitetura, contrato e segurança (Tech Lead + Backend)
+/docs/arquitetura/         @osamuelleite @Gustavormq
+/openapi.yaml              @osamuelleite @Gustavormq @ArthurFeitosa05
+/docs/seguranca/           @osamuelleite @Gustavormq
+
+# Engenharia (Tech Lead + DevOps)
+/docs/engenharia/          @osamuelleite @pedrolmelo
+
+# Testes e rastreabilidade (QA)
+/docs/testes/              @CauaRVeloso @osamuelleite
+/docs/rastreabilidade.md   @CauaRVeloso @osamuelleite
+
+# Operação e custos (DevOps)
+/docs/operacao/            @pedrolmelo @osamuelleite
+/docs/finops/              @pedrolmelo @osamuelleite
+
+# Site e automação
+/mkdocs.yml                @osamuelleite @pedrolmelo
+/requirements-docs.txt     @osamuelleite @pedrolmelo
+/.github/                  @osamuelleite @pedrolmelo
