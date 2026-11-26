@@ -1,0 +1,392 @@
+{
+  "referencia": "[QA-05] #83",
+  "executadoEm": "2026-11-26T03:22:16.176170+00:00",
+  "alvo": "docker-compose-local",
+  "baseUrl": "http://127.0.0.1:8000",
+  "authEmulatorUrl": "http://127.0.0.1:9099",
+  "perfisAutenticados": {
+    "admin_contratante": {
+      "uid": "uid_admin_alfa",
+      "tenantId": "tnt_alfa",
+      "papel": "admin_contratante",
+      "terceirizadaId": null
+    },
+    "analista_sst": {
+      "uid": "uid_analista_alfa",
+      "tenantId": "tnt_alfa",
+      "papel": "analista_sst",
+      "terceirizadaId": null
+    },
+    "terceirizada": {
+      "uid": "uid_terc_alfa_1",
+      "tenantId": "tnt_alfa",
+      "papel": "terceirizada",
+      "terceirizadaId": "ter_alfa_1"
+    },
+    "porteiro": {
+      "uid": "uid_porteiro_alfa",
+      "tenantId": "tnt_alfa",
+      "papel": "porteiro",
+      "terceirizadaId": null
+    }
+  },
+  "recursosCriados": {
+    "terceirizadaId": "ter_e51570ce",
+    "tipoDocumentoId": "tip_45a36603",
+    "contratoId": "ctr_d3adb52e",
+    "trabalhadorId": "trb_cf5c4abf",
+    "documentoAsoId": "doc_1bf95ce2",
+    "documentoTipoId": "doc_aefaba11",
+    "documentoRejeitadoId": "doc_8ad3c8ca"
+  },
+  "resumo": {
+    "totalVerificacoes": 38,
+    "aprovadas": 38,
+    "falhas": 0,
+    "j5PortariaImplementada": false
+  },
+  "passos": [
+    {
+      "etapa": "saude",
+      "perfil": "anonimo",
+      "metodo": "GET",
+      "rota": "/healthz",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "Liveness OK"
+    },
+    {
+      "etapa": "prontidao",
+      "perfil": "anonimo",
+      "metodo": "GET",
+      "rota": "/readyz",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "Readiness (Firestore Emulator) OK"
+    },
+    {
+      "etapa": "autenticacao_perfil",
+      "perfil": "admin_contratante",
+      "metodo": "GET",
+      "rota": "/me",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "tenantId=tnt_alfa papel=admin_contratante"
+    },
+    {
+      "etapa": "autenticacao_perfil",
+      "perfil": "analista_sst",
+      "metodo": "GET",
+      "rota": "/me",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "tenantId=tnt_alfa papel=analista_sst"
+    },
+    {
+      "etapa": "autenticacao_perfil",
+      "perfil": "terceirizada",
+      "metodo": "GET",
+      "rota": "/me",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "tenantId=tnt_alfa papel=terceirizada"
+    },
+    {
+      "etapa": "autenticacao_perfil",
+      "perfil": "porteiro",
+      "metodo": "GET",
+      "rota": "/me",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "tenantId=tnt_alfa papel=porteiro"
+    },
+    {
+      "etapa": "J1_criar_terceirizada",
+      "perfil": "admin_contratante",
+      "metodo": "POST",
+      "rota": "/terceirizadas",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "terceirizadaId=ter_e51570ce"
+    },
+    {
+      "etapa": "J1_criar_tipo_documento",
+      "perfil": "admin_contratante",
+      "metodo": "POST",
+      "rota": "/tipos-documento",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "tipoDocumentoId=tip_45a36603"
+    },
+    {
+      "etapa": "J1_criar_contrato",
+      "perfil": "admin_contratante",
+      "metodo": "POST",
+      "rota": "/contratos",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "contratoId=ctr_d3adb52e"
+    },
+    {
+      "etapa": "J1_definir_exigencias",
+      "perfil": "admin_contratante",
+      "metodo": "PUT",
+      "rota": "/contratos/ctr_d3adb52e/exigencias",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "versaoMatriz=1 qtd=2"
+    },
+    {
+      "etapa": "J2_criar_trabalhador",
+      "perfil": "terceirizada",
+      "metodo": "POST",
+      "rota": "/trabalhadores",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "trabalhadorId=trb_cf5c4abf cpfMascarado=***.663.337-**"
+    },
+    {
+      "etapa": "J2_vincular_alocacao",
+      "perfil": "terceirizada",
+      "metodo": "POST",
+      "rota": "/contratos/ctr_d3adb52e/alocacoes",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "semaforo_inicial=VERMELHO pendencias=2"
+    },
+    {
+      "etapa": "J2_upload_pdf_aso",
+      "perfil": "terceirizada",
+      "metodo": "POST",
+      "rota": "/trabalhadores/trb_cf5c4abf/documentos",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "documentoId=doc_1bf95ce2 status=PENDENTE"
+    },
+    {
+      "etapa": "J2_gerar_url_download",
+      "perfil": "terceirizada",
+      "metodo": "POST",
+      "rota": "/documentos/doc_1bf95ce2/url-download",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "URL assinada gerada"
+    },
+    {
+      "etapa": "J2_download_storage_assinado",
+      "perfil": "anonimo_signed_url",
+      "metodo": "GET",
+      "rota": "/storage/signed-url",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "bytes=148 sha256_match=True"
+    },
+    {
+      "etapa": "J2_upload_pdf_nr10",
+      "perfil": "terceirizada",
+      "metodo": "POST",
+      "rota": "/trabalhadores/trb_cf5c4abf/documentos",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "documentoId=doc_aefaba11"
+    },
+    {
+      "etapa": "J2_upload_pdf_para_rejeicao",
+      "perfil": "terceirizada",
+      "metodo": "POST",
+      "rota": "/trabalhadores/trb_cf5c4abf/documentos",
+      "status_http": 201,
+      "sucesso": true,
+      "detalhe": "documentoId=doc_8ad3c8ca"
+    },
+    {
+      "etapa": "J3_listar_fila_sst",
+      "perfil": "analista_sst",
+      "metodo": "GET",
+      "rota": "/documentos?statusRevisao=PENDENTE",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "total_pendentes=6 documentos_upload_encontrados=3"
+    },
+    {
+      "etapa": "J3_rejeicao_motivo_curto_bloqueada",
+      "perfil": "analista_sst",
+      "metodo": "POST",
+      "rota": "/documentos/doc_8ad3c8ca/rejeicao",
+      "status_http": 400,
+      "sucesso": true,
+      "detalhe": "Motivo < 10 chars bloqueado via validação Pydantic/RFC 9457 (HTTP 400)"
+    },
+    {
+      "etapa": "J3_rejeitar_documento",
+      "perfil": "analista_sst",
+      "metodo": "POST",
+      "rota": "/documentos/doc_8ad3c8ca/rejeicao",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "status=REJEITADO"
+    },
+    {
+      "etapa": "J3_conflito_transicao_nao_pendente",
+      "perfil": "analista_sst",
+      "metodo": "POST",
+      "rota": "/documentos/doc_8ad3c8ca/aprovacao",
+      "status_http": 409,
+      "sucesso": true,
+      "detalhe": "Transição de REJEITADO -> APROVADO bloqueada com HTTP 409"
+    },
+    {
+      "etapa": "J3_aprovar_aso",
+      "perfil": "analista_sst",
+      "metodo": "POST",
+      "rota": "/documentos/doc_1bf95ce2/aprovacao",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "status=APROVADO"
+    },
+    {
+      "etapa": "J3_aprovar_nr10",
+      "perfil": "analista_sst",
+      "metodo": "POST",
+      "rota": "/documentos/doc_aefaba11/aprovacao",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "status=APROVADO"
+    },
+    {
+      "etapa": "J3_recalculo_semaforo_trabalhador",
+      "perfil": "analista_sst",
+      "metodo": "GET",
+      "rota": "/trabalhadores/trb_cf5c4abf",
+      "status_http": 200,
+      "sucesso": true,
+      "detalhe": "semaforo_final=VERDE pendencias=[]"
+    },
+    {
+      "etapa": "rbac_porteiro_terceirizadas",
+      "perfil": "porteiro",
+      "metodo": "GET",
+      "rota": "/terceirizadas",
+      "status_http": 403,
+      "sucesso": true,
+      "detalhe": "Princípio do menor privilégio aplicado (403 Forbidden)"
+    },
+    {
+      "etapa": "rbac_porteiro_contratos",
+      "perfil": "porteiro",
+      "metodo": "GET",
+      "rota": "/contratos",
+      "status_http": 403,
+      "sucesso": true,
+      "detalhe": "Princípio do menor privilégio aplicado (403 Forbidden)"
+    },
+    {
+      "etapa": "rbac_porteiro_trabalhadores",
+      "perfil": "porteiro",
+      "metodo": "GET",
+      "rota": "/trabalhadores",
+      "status_http": 403,
+      "sucesso": true,
+      "detalhe": "Princípio do menor privilégio aplicado (403 Forbidden)"
+    },
+    {
+      "etapa": "rbac_porteiro_documentos",
+      "perfil": "porteiro",
+      "metodo": "GET",
+      "rota": "/documentos",
+      "status_http": 403,
+      "sucesso": true,
+      "detalhe": "Princípio do menor privilégio aplicado (403 Forbidden)"
+    },
+    {
+      "etapa": "rbac_terceirizada_nao_aprova",
+      "perfil": "terceirizada",
+      "metodo": "POST",
+      "rota": "/documentos/doc_1bf95ce2/aprovacao",
+      "status_http": 403,
+      "sucesso": true,
+      "detalhe": "Terceirizada bloqueada de aprovar documento (403 Forbidden)"
+    },
+    {
+      "etapa": "sonda_j5_portaria",
+      "perfil": "porteiro",
+      "metodo": "POST",
+      "rota": "/liberacoes/consultas",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Rota J5 ainda não implementada em b8fef43 (HTTP 404 esperado; escopo pendente)"
+    },
+    {
+      "etapa": "isolamento_cross_tenant_contratos",
+      "perfil": "admin_beta",
+      "metodo": "GET",
+      "rota": "/contratos/ctr_d3adb52e",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Tenant Beta não enxerga recurso do Tenant Alfa (404)"
+    },
+    {
+      "etapa": "isolamento_cross_terceirizada_contratos",
+      "perfil": "terceirizada_2_alfa",
+      "metodo": "GET",
+      "rota": "/contratos/ctr_d3adb52e",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Terceirizada 2 não enxerga recurso da Terceirizada 1 (404)"
+    },
+    {
+      "etapa": "isolamento_cross_tenant_trabalhadores",
+      "perfil": "admin_beta",
+      "metodo": "GET",
+      "rota": "/trabalhadores/trb_cf5c4abf",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Tenant Beta não enxerga recurso do Tenant Alfa (404)"
+    },
+    {
+      "etapa": "isolamento_cross_terceirizada_trabalhadores",
+      "perfil": "terceirizada_2_alfa",
+      "metodo": "GET",
+      "rota": "/trabalhadores/trb_cf5c4abf",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Terceirizada 2 não enxerga recurso da Terceirizada 1 (404)"
+    },
+    {
+      "etapa": "isolamento_cross_tenant_documentos",
+      "perfil": "admin_beta",
+      "metodo": "GET",
+      "rota": "/documentos/doc_1bf95ce2",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Tenant Beta não enxerga recurso do Tenant Alfa (404)"
+    },
+    {
+      "etapa": "isolamento_cross_terceirizada_documentos",
+      "perfil": "terceirizada_2_alfa",
+      "metodo": "GET",
+      "rota": "/documentos/doc_1bf95ce2",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Terceirizada 2 não enxerga recurso da Terceirizada 1 (404)"
+    },
+    {
+      "etapa": "isolamento_cross_tenant_url_download",
+      "perfil": "admin_beta",
+      "metodo": "POST",
+      "rota": "/documentos/doc_1bf95ce2/url-download",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Tenant Beta bloqueado de gerar signed URL de documento do Tenant Alfa (404)"
+    },
+    {
+      "etapa": "isolamento_cross_terceirizada_url_download",
+      "perfil": "terceirizada_2_alfa",
+      "metodo": "POST",
+      "rota": "/documentos/doc_1bf95ce2/url-download",
+      "status_http": 404,
+      "sucesso": true,
+      "detalhe": "Terceirizada 2 bloqueada de gerar signed URL de outra terceirizada (404)"
+    }
+  ]
+}
