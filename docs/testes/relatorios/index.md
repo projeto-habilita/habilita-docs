@@ -12,7 +12,7 @@ Relatórios de validação, qualidade e conformidade do Habilita organizados por
 
 ## Relatórios Disponíveis
 
-- **[Checkpoint 4 — Relatório Consolidado v1](relatorio-v1.md)** e **[Laudo de Execução (`a012ee3`)](../relatorio-a012ee3.md)**: evidência completa sobre `test/hab-cp4-suites-qa` (`a012ee39ad99597315d14dab411220b7e56c564e`), com **345 passed / 85 xfailed (`strict=True`) / 0 failed / 0 skipped**, **98,3%** de cobertura no domínio, **98,0%** global, homologação E2E nos 4 perfis (**38/38**), carga `k6` (`20 VUs × 60 s`) e catálogo `BUG-001`..`BUG-014` (`[PO-15]`).
+- **[Checkpoint 4 — Relatório Consolidado v1](relatorio-v1.md)** e **[Laudo de Execução (`a012ee3`)](../relatorio-a012ee3.md)**: evidência completa sobre `test/hab-cp4-suites-qa` (`a012ee39ad99597315d14dab411220b7e56c564e`), com **345 passed / 85 xfailed (`strict=True`) / 0 failed / 0 skipped**, **98,1%** de cobertura no domínio, **98,0%** global, homologação E2E nos 4 perfis (**38/38**), carga `k6` (`20 VUs × 60 s`) e catálogo `BUG-001`..`BUG-014` (`[PO-15]`).
 - **[Checkpoint 1 — Checklist de QA e Testes de Isolamento Multi-tenant](cp1-checklist-qa.md)**: evidência dos testes `T-ISO-01` a `T-ISO-10` da história `H19` e conformidade arquitetural.
 
 ## Artefatos Exportados (`[QA-10]`)

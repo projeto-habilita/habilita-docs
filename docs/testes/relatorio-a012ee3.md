@@ -15,11 +15,11 @@
 
 ## 1. Sumário Executivo e Parecer de QA
 
-A execução da suíte consolidada do Checkpoint 4 no commit `a012ee3` atingiu **100% de aprovação nos testes automatizados ativos** (**345 passed**, **85 xfailed estritos (`strict=True`)**, **0 failed**, **0 skipped**, além de 1 teste marcado `@pytest.mark.integration` deselecionado na rodada sem emulador live), com **98.3% de cobertura no domínio** (meta `>= 80%`) e **98% de cobertura global** (meta `>= 60%`).
+A execução da suíte consolidada do Checkpoint 4 no commit `a012ee3` atingiu **100% de aprovação nos testes automatizados ativos** (**345 passed**, **85 xfailed estritos (`strict=True`)**, **0 failed**, **0 skipped**, além de 1 teste marcado `@pytest.mark.integration` deselecionado na rodada sem emulador live), com **98,1% de cobertura no domínio** (`1.007/1.026` stmts, `98,15%`, meta `>= 80%`) e **98,0% de cobertura global** (meta `>= 60%`).
 
 No ambiente Docker Compose completo (API + Firebase Auth/Firestore Emulators + Supabase Storage local), a homologação E2E via API nos 4 perfis canônicos (`[QA-05]`) aprovou **38/38 verificações** sem falhas, e o teste de carga `k6` (`20 VUs × 60 s`) processou **2.509 requisições com 0,00% de erro**, aprovando o `p95` de escrita (**1.063,27 ms** `<= 1.500 ms`), mas identificando **violação do `p95` de leitura** (**1.507,45 ms** `> 800 ms`) devido a consultas `.stream()` sem `.limit()` sob container limitado a `0.5` CPU.
 
-Para a triagem `[PO-15]` (#28), há **0 defeitos de severidade Crítica abertos**, **5 defeitos de severidade Alta abertos** (`#112`, `#113`, divergência RBAC `analista_sst` e pendências de contrato/rotas), além de **escopo pendente dependente de terceiros** (telas Web `PR #55`, 8 operações J4/J5/Auditoria/Interno na API e URL pública Cloud Run para smoke `[QA-08]`).
+Para a triagem `[PO-15]` (#28), há **0 defeitos de severidade Crítica abertos**, **3 defeitos de severidade Alta abertos** (`#112`, `#113` e divergência RBAC `analista_sst`, além de 5 Médios e 1 Baixo), bem como **escopo pendente dependente de terceiros** (telas Web `PR #55`, 8 operações J4/J5/Auditoria/Interno na API e URL pública Cloud Run para smoke `[QA-08]`).
 
 ---
 
@@ -73,7 +73,7 @@ Para a triagem `[PO-15]` (#28), há **0 defeitos de severidade Crítica abertos*
 | `src/habilita/trabalhadores/repositorio.py` | 397 | 16 | 96% |
 | `src/habilita/trabalhadores/rotas.py` | 112 | 1 | 99% |
 | `src/habilita/trabalhadores/schemas.py` | 92 | 1 | 99% |
-| **Domínio (`cadastros/*` + `trabalhadores/*` + `armazenamento/porta.py`)** | **1.126** | **19** | **98,3%** *(meta >= 80%)* |
+| **Domínio (`cadastros/*` + `trabalhadores/*` + `armazenamento/porta.py`)** | **1.026** | **19** | **98,1%** *(98,15%, meta >= 80%)* |
 | **Global (`TOTAL`)** | **1.409** | **27** | **98,0%** *(98,08%, meta >= 60%)* |
 
 ---

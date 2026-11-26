@@ -15,7 +15,7 @@
 
 | Categoria | Suíte / Ferramenta | Resultado Real | Meta CP4 | Status |
 |---|---|---|---|:---:|
-| **1. Unidade, Integração & Limites** | `pytest` (`-m "not integration"`) + `pytest-cov` (`[QA-11]`, `[QA-13]`, `[QA-14]`, `[QA-15]`) | **345 passed**, **85 xfailed (`strict=True`)**, **0 failed**, **0 skipped** (`1 deselected`) · Domínio: **98,3%** (`1126` stmts, `19` miss) · Global: **98,0%** (`1409` stmts, `27` miss) | Domínio `>= 80%`, Global `>= 60%` | ✅ |
+| **1. Unidade, Integração & Limites** | `pytest` (`-m "not integration"`) + `pytest-cov` (`[QA-11]`, `[QA-13]`, `[QA-14]`, `[QA-15]`) | **345 passed**, **85 xfailed (`strict=True`)**, **0 failed**, **0 skipped** (`1 deselected`) · Domínio: **98,1%** (`1.026` stmts, `19` miss) · Global: **98,0%** (`1.409` stmts, `27` miss) | Domínio `>= 80%`, Global `>= 60%` | ✅ |
 | **2. Contrato OpenAPI & RFC 9457** | `test_contrato_openapi.py` (`29` operações / `25` caminhos) | **27 passed**, **10 xfailed (`strict=True`)** (`8` ops J4/J5/Auditoria/Interno ausentes + `Pendencia.tipoNome` + `statusRevisao`) | Contrato sincronizado e RFC 9457 | ⚠️ |
 | **3. Autorização & Multi-tenant (100% rotas)** | `test_autorizacao_rotas.py` + `test_h19_isolamento_tenant.py` (`[QA-09]` / `[QA-08]`) | **155 passed**, **68 xfailed (`strict=True`)** (`4` eixos: sem token `401`, inválido `401`, RBAC `403`, cross-tenant/terceirizada `404`; divergência `analista_sst` registrada) | 100% rotas testadas | ✅ |
 | **4. Falhas e Timeouts** | `test_falhas_e_timeouts.py` | **30 passed**, **2 xfailed (`strict=True`)** (Firestore `503`, timeouts/erros Supabase Storage, payloads inválidos, regressões `#112` e `#114`) | Tratamento resiliente sem vazar stack trace | ✅ |
@@ -41,7 +41,7 @@
 | `src/habilita/comum/firestore.py` | 49 | 0 | 100% |
 | `src/habilita/config.py` / `main.py` / `saude` / `sessao` | 132 | 0 | 100% |
 | `src/habilita/__main__.py` | 7 | 7 | 0% |
-| **Total Domínio** (`cadastros/*` + `trabalhadores/*` + `armazenamento/porta.py`) | **1.126** | **19** | **98,3%** |
+| **Total Domínio** (`cadastros/*` + `trabalhadores/*` + `armazenamento/porta.py`) | **1.026** | **19** | **98,1%** *(98,15%)* |
 | **Total Global** | **1.409** | **27** | **98,0%** *(98,08%)* |
 
 ---
