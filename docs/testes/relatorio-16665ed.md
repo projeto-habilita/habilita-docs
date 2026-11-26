@@ -1,12 +1,12 @@
-# Relatório de Execução e Laudo de QA — CP4 (`ef25c03`)
+# Relatório de Execução e Laudo de QA — CP4 (`16665ed`)
 
 | Campo | Valor |
 |---|---|
 | **Marco / Gate** | Checkpoint 4 — Qualidade, Segurança, Carga e Homologação E2E |
 | **Data da Execução** | 26/11/2026 (`2026-11-26T00:26:21-03:00`) |
 | **Repositório Alvo** | `projeto-habilita/Habilita` (`apps/api`) |
-| **Branch das Suítes QA** | `test/hab-cp4-suites-qa` (base `origin/feat/hab-cp2-nucleo-backend` @ `b8fef43`) |
-| **Commit Curto / Completo** | `ef25c03` / `ef25c03e3e5d192306cb0355ad92163afb5fd3ed` |
+| **Branch das Suítes QA** | `test/hab-cp4-suites-qa` (base `origin/main` @ `4a6dd7a` (PR #32 mesclado)) |
+| **Commit Curto / Completo** | `16665ed` / `16665ed30426f6c9668be38c2009fff14593fb6f` |
 | **Entregas Vinculadas** | `[QA-05]` (#83), `[QA-06]` (#34), `[QA-07]` (#35), `[QA-08]` (#84), `[QA-09]` (#85), `[QA-10]` (#36), `[QA-11]` (#86/#115), `[QA-13]` (#88), `[QA-14]` (#89), `[QA-15]` (#90), `[PO-15]` (#28) |
 | **Relatório Consolidado** | [Relatório v1 (CP4)](relatorios/relatorio-v1.md) |
 | **Matriz de Rastreabilidade** | [Matriz 100% Must (78 CAs)](matriz.md) |
@@ -15,7 +15,7 @@
 
 ## 1. Sumário Executivo e Parecer de QA
 
-A execução da suíte consolidada do Checkpoint 4 no commit `ef25c03` atingiu **100% de aprovação nos testes automatizados ativos** (**345 passed**, **85 xfailed estritos (`strict=True`)**, **0 failed**, **0 skipped**, além de 1 teste marcado `@pytest.mark.integration` deselecionado na rodada sem emulador live), com **98,1% de cobertura no domínio** (`1.007/1.026` stmts, `98,15%`, meta `>= 80%`) e **98,0% de cobertura global** (meta `>= 60%`).
+A execução da suíte consolidada do Checkpoint 4 no commit `16665ed` atingiu **100% de aprovação nos testes automatizados ativos** (**345 passed**, **85 xfailed estritos (`strict=True`)**, **0 failed**, **0 skipped**, além de 1 teste marcado `@pytest.mark.integration` deselecionado na rodada sem emulador live), com **98,1% de cobertura no domínio** (`1.007/1.026` stmts, `98,15%`, meta `>= 80%`) e **98,0% de cobertura global** (meta `>= 60%`).
 
 No ambiente Docker Compose completo (API + Firebase Auth/Firestore Emulators + Supabase Storage local), a homologação E2E via API nos 4 perfis canônicos (`[QA-05]`) aprovou **38/38 verificações** sem falhas, e o teste de carga `k6` (`20 VUs × 60 s`) processou **2.509 requisições com 0,00% de erro**, aprovando o `p95` de escrita (**1.063,27 ms** `<= 1.500 ms`), mas identificando **violação do `p95` de leitura** (**1.507,45 ms** `> 800 ms`) devido a consultas `.stream()` sem `.limit()` sob container limitado a `0.5` CPU.
 
@@ -209,4 +209,4 @@ Severidades classificadas conforme [Estratégia de Testes §11](estrategia.md#11
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
-| 1.0 | 26/11/2026 | @CauaRVeloso | Laudo completo do Checkpoint 4 sobre o commit `ef25c03` (`test/hab-cp4-suites-qa`), cobrindo as 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e links dos artefatos (`[QA-10]`). |
+| 1.0 | 26/11/2026 | @CauaRVeloso | Laudo completo do Checkpoint 4 sobre o commit `16665ed` (`test/hab-cp4-suites-qa`), cobrindo as 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e links dos artefatos (`[QA-10]`). |

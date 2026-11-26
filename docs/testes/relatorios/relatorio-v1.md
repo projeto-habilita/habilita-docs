@@ -3,9 +3,9 @@
 | Campo | Valor |
 |---|---|
 | **Versão do Relatório** | `v1` — Checkpoint 4 (26/11/2026) |
-| **Laudo por SHA** | [relatorio-ef25c03.md](../relatorio-ef25c03.md) |
-| **Repositório / Branch** | `projeto-habilita/Habilita` · `test/hab-cp4-suites-qa` (`ef25c03e3e5d192306cb0355ad92163afb5fd3ed`) |
-| **Base de Código Auditada** | `origin/feat/hab-cp2-nucleo-backend` (`b8fef43`) + suítes QA CP3/CP4 em `apps/api/tests/` |
+| **Laudo por SHA** | [relatorio-16665ed.md](../relatorio-16665ed.md) |
+| **Repositório / Branch** | `projeto-habilita/Habilita` · `test/hab-cp4-suites-qa` (`16665ed30426f6c9668be38c2009fff14593fb6f`) |
+| **Base de Código Auditada** | `origin/main` (`b8fef43`) + suítes QA CP3/CP4 em `apps/api/tests/` |
 | **Matriz de Rastreabilidade** | [Matriz de Rastreabilidade — 100% Must (78 CAs)](../matriz.md) |
 | **Artefatos Exportados (`[QA-10]`)** | [JUnit XML](junit-cp4.xml) · [Coverage XML](coverage-cp4.xml) · [k6 JSON](k6-resumo-cp4.json) · [Homologação E2E JSON](homologacao-e2e-cp4.json) |
 
@@ -76,10 +76,10 @@ Classificação de severidade conforme [Estratégia de Testes §11](../estrategi
 - **Cloud Run (`[QA-08]` #84):** execução de `test_autorizacao_rotas.py` com `HABILITA_BASE_URL` e smoke de carga conforme [ADR 0012](../../arquitetura/adr/0012-teto-teste-carga-producao.md) após publicação da URL.
 - **Artefatos brutos (`[QA-10]`):** [junit-cp4.xml](junit-cp4.xml) · [coverage-cp4.xml](coverage-cp4.xml) · [k6-resumo-cp4.json](k6-resumo-cp4.json) · [homologacao-e2e-cp4.json](homologacao-e2e-cp4.json).
 
-> Veja a análise detalhada e os passos completos de reprodução de cada defeito em [relatorio-ef25c03.md](../relatorio-ef25c03.md).
+> Veja a análise detalhada e os passos completos de reprodução de cada defeito em [relatorio-16665ed.md](../relatorio-16665ed.md).
 
 ## Histórico de versões
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
-| 1.0 | 26/11/2026 | @CauaRVeloso | Consolidação v1 do Checkpoint 4 (`ef25c03`) com métricas das 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e artefatos exportados (`[QA-10]`). |
+| 1.0 | 26/11/2026 | @CauaRVeloso | Consolidação v1 do Checkpoint 4 (`16665ed`) com métricas das 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e artefatos exportados (`[QA-10]`). |
