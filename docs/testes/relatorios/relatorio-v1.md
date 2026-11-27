@@ -3,8 +3,8 @@
 | Campo | Valor |
 |---|---|
 | **Versão do Relatório** | `v1` — Checkpoint 4 (26/11/2026) |
-| **Laudo por SHA** | [relatorio-16665ed.md](../relatorio-16665ed.md) |
-| **Repositório / Branch** | `projeto-habilita/Habilita` · `test/hab-cp4-suites-qa` (`16665ed30426f6c9668be38c2009fff14593fb6f`) |
+| **Laudo por SHA** | [relatorio-e0d71ce.md](../relatorio-e0d71ce.md) |
+| **Repositório / Branch** | `projeto-habilita/Habilita` · `test/hab-cp4-suites-qa` (`e0d71ce32cf2145dce56eff301e35af3e5331767`) |
 | **Base de Código Auditada** | `origin/main` (`b8fef43`) + suítes QA CP3/CP4 em `apps/api/tests/` |
 | **Matriz de Rastreabilidade** | [Matriz de Rastreabilidade — 100% Must (78 CAs)](../matriz.md) |
 | **Artefatos Exportados (`[QA-10]`)** | [JUnit XML](junit-cp4.xml) · [Coverage XML](coverage-cp4.xml) · [k6 JSON](k6-resumo-cp4.json) · [Homologação E2E JSON](homologacao-e2e-cp4.json) |
@@ -61,11 +61,11 @@ Classificação de severidade conforme [Estratégia de Testes §11](../estrategi
 | `BUG-007` | **Alta** | `trabalhadores/repositorio.py` · J3 (`H13`, `H03`) | Aprovação/rejeição e recálculo de semáforo sem `WriteBatch` atômico | Análise de código / Issue `#113` | 🔴 **Aberto (`#113`)** |
 | `BUG-008` | **Média** | `comum/auth.py:59-60` · Transversal (`H07.CA3`) | `extrair_usuario` expõe mensagem crua de exceção Firebase no `detail` do HTTP `401` | `test_regressao_114_auth_401_nao_expoe_mensagem_crua_de_excecao_firebase` (`xfail`) | 🔴 **Aberto (`#114`)** |
 | `BUG-009` | **Média** | `.github/workflows/job-diario.yml` · J4 (`H15`) | Timeout/keep-alive ausente no workflow diário contra cold start / pausa Supabase | Issue `#116` | 🔴 **Aberto (`#116`)** |
-| `BUG-010` | **Alta** | `trabalhadores/rotas.py:95,211` · RBAC (`H19.CA2`) | `POST /trabalhadores` e `POST /trabalhadores/{id}/documentos` aceitam `analista_sst` (diverge de `x-papeis` no `openapi.yaml`) | `test_autorizacao_rotas.py` (`xfail strict=True`) | 🔴 **Aberto (CP4 Cat. 3)** |
-| `BUG-011` | **Média** | `trabalhadores/schemas.py:68` · Contrato J2/J3 | `Pendencia` retorna `tipoNome` em vez de `tipoDocumentoNome` do `openapi.yaml` | `test_contrato_schema_pendencia_usa_tipo_documento_nome` (`xfail`) | 🔴 **Aberto (CP4 Cat. 2)** |
-| `BUG-012` | **Média** | `trabalhadores/rotas.py:289` · Contrato J3 | `GET /documentos` usa query param `statusRevisao` em vez de `status` do `openapi.yaml` | `test_contrato_get_documentos_filtra_por_query_param_status` (`xfail`) | 🔴 **Aberto (CP4 Cat. 2)** |
-| `BUG-013` | **Média** | `trabalhadores/repositorio.py` · Carga (`RNF04`) | `p95` leitura `1.507,45 ms` (`> 800 ms`) com 20 VUs por `.stream()` sem `.limit()` sob `cpus: 0.5` | [k6-resumo-cp4.json](k6-resumo-cp4.json) | 🔴 **Aberto (CP4 Cat. 5)** |
-| `BUG-014` | **Baixa** | `trabalhadores/repositorio.py` · J3 (`H12.CA1`, `H12.CA3`) | Fila ordena por `id` em vez de `enviadoEm`; fallback em memória usa 15 min (Supabase usa `<= 300 s`) | `test_h03_ca1_analista_revisa_fila_e_gera_url_download` | 🔴 **Aberto (CP3/J3)** |
+| `BUG-010` | **Alta** | `trabalhadores/rotas.py:95,211` · RBAC (`H19.CA2`) | `POST /trabalhadores` e `POST /trabalhadores/{id}/documentos` aceitam `analista_sst` (diverge de `x-papeis` no `openapi.yaml`) | `test_autorizacao_rotas.py` (`xfail strict=True`) | 🔴 **Aberto (`#119`)** |
+| `BUG-011` | **Média** | `trabalhadores/schemas.py:68` · Contrato J2/J3 | `Pendencia` retorna `tipoNome` em vez de `tipoDocumentoNome` do `openapi.yaml` | `test_contrato_schema_pendencia_usa_tipo_documento_nome` (`xfail`) | 🔴 **Aberto (`#120`)** |
+| `BUG-012` | **Média** | `trabalhadores/rotas.py:289` · Contrato J3 | `GET /documentos` usa query param `statusRevisao` em vez de `status` do `openapi.yaml` | `test_contrato_get_documentos_filtra_por_query_param_status` (`xfail`) | 🔴 **Aberto (`#121`)** |
+| `BUG-013` | **Média** | `trabalhadores/repositorio.py` · Carga (`RNF04`) | `p95` leitura `1.507,45 ms` (`> 800 ms`) com 20 VUs por `.stream()` sem `.limit()` sob `cpus: 0.5` | [k6-resumo-cp4.json](k6-resumo-cp4.json) | 🔴 **Aberto (`#122`)** |
+| `BUG-014` | **Baixa** | `trabalhadores/repositorio.py` · J3 (`H12.CA1`, `H12.CA3`) | Fila ordena por `id` em vez de `enviadoEm`; fallback em memória usa 15 min (Supabase usa `<= 300 s`) | `test_h03_ca1_analista_revisa_fila_e_gera_url_download` | 🔴 **Aberto (`#123`)** |
 
 ---
 
@@ -76,10 +76,10 @@ Classificação de severidade conforme [Estratégia de Testes §11](../estrategi
 - **Cloud Run (`[QA-08]` #84):** execução de `test_autorizacao_rotas.py` com `HABILITA_BASE_URL` e smoke de carga conforme [ADR 0012](../../arquitetura/adr/0012-teto-teste-carga-producao.md) após publicação da URL.
 - **Artefatos brutos (`[QA-10]`):** [junit-cp4.xml](junit-cp4.xml) · [coverage-cp4.xml](coverage-cp4.xml) · [k6-resumo-cp4.json](k6-resumo-cp4.json) · [homologacao-e2e-cp4.json](homologacao-e2e-cp4.json).
 
-> Veja a análise detalhada e os passos completos de reprodução de cada defeito em [relatorio-16665ed.md](../relatorio-16665ed.md).
+> Veja a análise detalhada e os passos completos de reprodução de cada defeito em [relatorio-e0d71ce.md](../relatorio-e0d71ce.md).
 
 ## Histórico de versões
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
-| 1.0 | 26/11/2026 | @CauaRVeloso | Consolidação v1 do Checkpoint 4 (`16665ed`) com métricas das 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e artefatos exportados (`[QA-10]`). |
+| 1.0 | 26/11/2026 | @CauaRVeloso | Consolidação v1 do Checkpoint 4 (`e0d71ce`) com métricas das 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e artefatos exportados (`[QA-10]`). |

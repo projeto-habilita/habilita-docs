@@ -21,7 +21,7 @@ A matriz rastreia **100% das 19 histórias Must** do [Backlog](produto/requisito
 ## Relatórios de execução
 
 - [Visão geral dos relatórios](testes/relatorios/index.md)
-- [Checkpoint 4 — Laudo de QA (`16665ed`)](testes/relatorio-16665ed.md) e [Relatório Consolidado v1](testes/relatorios/relatorio-v1.md)
+- [Checkpoint 4 — Laudo de QA (`e0d71ce`)](testes/relatorio-e0d71ce.md) e [Relatório Consolidado v1](testes/relatorios/relatorio-v1.md)
 - [Checklist do Checkpoint 1 — Isolamento Multi-tenant](testes/relatorios/cp1-checklist-qa.md)
 
 ## Histórico de versões
@@ -29,4 +29,4 @@ A matriz rastreia **100% das 19 histórias Must** do [Backlog](produto/requisito
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
 | 1.0 | 01/11/2026 | @Lelafeta | Página criada no caminho pedido pelo Caderno, apontando para a matriz. |
-| 1.1 | 26/11/2026 | @CauaRVeloso | Inclusão do resumo de cobertura 100% dos 78 critérios Must (19 histórias, J1–J5 e transversais) e links para os relatórios e laudo do CP4 (`16665ed`). |
+| 1.1 | 26/11/2026 | @CauaRVeloso | Inclusão do resumo de cobertura 100% dos 78 critérios Must (19 histórias, J1–J5 e transversais) e links para os relatórios e laudo do CP4 (`e0d71ce`). |

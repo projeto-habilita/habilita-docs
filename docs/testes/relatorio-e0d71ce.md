@@ -1,4 +1,4 @@
-# Relatório de Execução e Laudo de QA — CP4 (`16665ed`)
+# Relatório de Execução e Laudo de QA — CP4 (`e0d71ce`)
 
 | Campo | Valor |
 |---|---|
@@ -6,7 +6,7 @@
 | **Data da Execução** | 26/11/2026 (`2026-11-26T00:26:21-03:00`) |
 | **Repositório Alvo** | `projeto-habilita/Habilita` (`apps/api`) |
 | **Branch das Suítes QA** | `test/hab-cp4-suites-qa` (base `origin/main` @ `4a6dd7a` (PR #32 mesclado)) |
-| **Commit Curto / Completo** | `16665ed` / `16665ed30426f6c9668be38c2009fff14593fb6f` |
+| **Commit Curto / Completo** | `e0d71ce` / `e0d71ce32cf2145dce56eff301e35af3e5331767` |
 | **Entregas Vinculadas** | `[QA-05]` (#83), `[QA-06]` (#34), `[QA-07]` (#35), `[QA-08]` (#84), `[QA-09]` (#85), `[QA-10]` (#36), `[QA-11]` (#86/#115), `[QA-13]` (#88), `[QA-14]` (#89), `[QA-15]` (#90), `[PO-15]` (#28) |
 | **Relatório Consolidado** | [Relatório v1 (CP4)](relatorios/relatorio-v1.md) |
 | **Matriz de Rastreabilidade** | [Matriz 100% Must (78 CAs)](matriz.md) |
@@ -15,7 +15,7 @@
 
 ## 1. Sumário Executivo e Parecer de QA
 
-A execução da suíte consolidada do Checkpoint 4 no commit `16665ed` atingiu **100% de aprovação nos testes automatizados ativos** (**345 passed**, **85 xfailed estritos (`strict=True`)**, **0 failed**, **0 skipped**, além de 1 teste marcado `@pytest.mark.integration` deselecionado na rodada sem emulador live), com **98,1% de cobertura no domínio** (`1.007/1.026` stmts, `98,15%`, meta `>= 80%`) e **98,0% de cobertura global** (meta `>= 60%`).
+A execução da suíte consolidada do Checkpoint 4 no commit `e0d71ce` atingiu **100% de aprovação nos testes automatizados ativos** (**345 passed**, **85 xfailed estritos (`strict=True`)**, **0 failed**, **0 skipped**, além de 1 teste marcado `@pytest.mark.integration` deselecionado na rodada sem emulador live), com **98,1% de cobertura no domínio** (`1.007/1.026` stmts, `98,15%`, meta `>= 80%`) e **98,0% de cobertura global** (meta `>= 60%`).
 
 No ambiente Docker Compose completo (API + Firebase Auth/Firestore Emulators + Supabase Storage local), a homologação E2E via API nos 4 perfis canônicos (`[QA-05]`) aprovou **38/38 verificações** sem falhas, e o teste de carga `k6` (`20 VUs × 60 s`) processou **2.509 requisições com 0,00% de erro**, aprovando o `p95` de escrita (**1.063,27 ms** `<= 1.500 ms`), mas identificando **violação do `p95` de leitura** (**1.507,45 ms** `> 800 ms`) devido a consultas `.stream()` sem `.limit()` sob container limitado a `0.5` CPU.
 
@@ -146,9 +146,9 @@ Severidades classificadas conforme [Estratégia de Testes §11](estrategia.md#11
 | Severidade | Resolvidos | Abertos | Bloqueia Demo Day / Deploy? |
 |---|---:|---:|---|
 | **Crítica** | 0 | **0** | Não há defeito crítico aberto (isolamento multi-tenant, upload privado e CPF protegidos) |
-| **Alta** | 3 | **3** | **Atenção prioritária na sprint:** `#112` (`BUG-006`), `#113` (`BUG-007`) e RBAC `analista_sst` (`BUG-010`) |
-| **Média** | 2 | **5** | Priorizar: `#114` (`BUG-008`), `#116` (`BUG-009`), contrato `Pendencia`/`status` (`BUG-011`, `BUG-012`) e `p95` leitura `k6` (`BUG-013`) |
-| **Baixa** | 0 | **1** | Backlog: ordenação fila por `id` / fallback local 15 min (`BUG-014`) |
+| **Alta** | 3 | **3** | **Atenção prioritária na sprint:** `#112` (`BUG-006`), `#113` (`BUG-007`) e RBAC `analista_sst` (`BUG-010` / `#119`) |
+| **Média** | 2 | **5** | Priorizar: `#114` (`BUG-008`), `#116` (`BUG-009`), contrato `Pendencia`/`status` (`BUG-011` / `#120`, `BUG-012` / `#121`) e `p95` leitura `k6` (`BUG-013` / `#122`) |
+| **Baixa** | 0 | **1** | Backlog: ordenação fila por `id` / fallback local 15 min (`BUG-014` / `#123`) |
 | **Total** | **5** | **9** | **14 registros catalogados (`BUG-001`..`BUG-014`)** |
 
 ### 4.2 Tabela Consolidada (`BUG-001`..`BUG-014`)
@@ -164,11 +164,11 @@ Severidades classificadas conforme [Estratégia de Testes §11](estrategia.md#11
 | `BUG-007` | **Alta** | `trabalhadores/repositorio.py` · J3 (`H13`, `H03`) | Aprovação/rejeição e recálculo de semáforo sem transação atômica (`WriteBatch`) | 🔴 **Aberto** | Issue `#113` · risco de inconsistência parcial documento × alocação |
 | `BUG-008` | **Média** | `comum/auth.py` · Transversal (`H07.CA3`) | `extrair_usuario` expõe mensagem crua de exceção Firebase no campo `detail` do HTTP `401` | 🔴 **Aberto** | Issue `#114` · `test_regressao_114_auth_401_nao_expoe_mensagem_crua_de_excecao_firebase` (`xfail`) |
 | `BUG-009` | **Média** | `.github/workflows/job-diario.yml` · J4 (`H15`) | Timeout/keep-alive ausente no workflow diário (risco com cold start / pausa Supabase) | 🔴 **Aberto** | Issue `#116` · mitigado por `workflow_dispatch` |
-| `BUG-010` | **Alta** | `trabalhadores/rotas.py` · RBAC (`H19.CA2`) | `POST /trabalhadores` e `POST /trabalhadores/{id}/documentos` aceitam `analista_sst`, divergindo do `openapi.yaml` | 🔴 **Aberto** | `test_eixo3_perfil_nao_autorizado_retorna_403[...negado_analista_sst]` (`xfail`) |
-| `BUG-011` | **Média** | `trabalhadores/schemas.py` · Contrato J2/J3 | Schema `Pendencia` retorna `tipoNome` em vez de `tipoDocumentoNome` (`openapi.yaml`) | 🔴 **Aberto** | `test_contrato_schema_pendencia_usa_tipo_documento_nome` (`xfail`) |
-| `BUG-012` | **Média** | `trabalhadores/rotas.py` · Contrato J3 | `GET /documentos` usa query param `statusRevisao` em vez de `status` (`openapi.yaml`) | 🔴 **Aberto** | `test_contrato_get_documentos_filtra_por_query_param_status` (`xfail`) |
-| `BUG-013` | **Média** | `trabalhadores/repositorio.py` · Desempenho (`RNF04`) | `p95` leitura em `k6` atingiu `1.507,45 ms` (`> 800 ms`) por `.stream()` sem `.limit()` sob `cpus: 0.5` | 🔴 **Aberto** | Evidência `k6-resumo-cp4.json` (0% erros HTTP; escrita OK `1.063,27 ms`) |
-| `BUG-014` | **Baixa** | `trabalhadores/repositorio.py` · J3 (`H12.CA1`, `H12.CA3`) | Fila ordena por `id` em vez de `enviadoEm`; fallback local assina por 15 min (Supabase usa `<= 300 s`) | 🔴 **Aberto** | Evidência `test_h03_ca1_analista_revisa_fila_e_gera_url_download` |
+| `BUG-010` | **Alta** | `trabalhadores/rotas.py` · RBAC (`H19.CA2`) | `POST /trabalhadores` e `POST /trabalhadores/{id}/documentos` aceitam `analista_sst`, divergindo do `openapi.yaml` | 🔴 **Aberto** | Issue `#119` · `test_eixo3_perfil_nao_autorizado_retorna_403[...negado_analista_sst]` (`xfail`) |
+| `BUG-011` | **Média** | `trabalhadores/schemas.py` · Contrato J2/J3 | Schema `Pendencia` retorna `tipoNome` em vez de `tipoDocumentoNome` (`openapi.yaml`) | 🔴 **Aberto** | Issue `#120` · `test_contrato_schema_pendencia_usa_tipo_documento_nome` (`xfail`) |
+| `BUG-012` | **Média** | `trabalhadores/rotas.py` · Contrato J3 | `GET /documentos` usa query param `statusRevisao` em vez de `status` (`openapi.yaml`) | 🔴 **Aberto** | Issue `#121` · `test_contrato_get_documentos_filtra_por_query_param_status` (`xfail`) |
+| `BUG-013` | **Média** | `trabalhadores/repositorio.py` · Desempenho (`RNF04`) | `p95` leitura em `k6` atingiu `1.507,45 ms` (`> 800 ms`) por `.stream()` sem `.limit()` sob `cpus: 0.5` | 🔴 **Aberto** | Issue `#122` · evidência `k6-resumo-cp4.json` (0% erros HTTP; escrita OK `1.063,27 ms`) |
+| `BUG-014` | **Baixa** | `trabalhadores/repositorio.py` · J3 (`H12.CA1`, `H12.CA3`) | Fila ordena por `id` em vez de `enviadoEm`; fallback local assina por 15 min (Supabase usa `<= 300 s`) | 🔴 **Aberto** | Issue `#123` · evidência `test_h03_ca1_analista_revisa_fila_e_gera_url_download` |
 
 ### 4.3 Detalhamento Técnico dos Defeitos (`BUG-001`..`BUG-014`)
 
@@ -181,11 +181,11 @@ Severidades classificadas conforme [Estratégia de Testes §11](estrategia.md#11
 - **`BUG-007` [Alta · Aberto (`#113`)]:** Em `trabalhadores/repositorio.py` (J3), aprovação/rejeição atualiza o documento e recalcula alocações em chamadas separadas sem `WriteBatch`/transação atômica. Falha intermediária deixa o semáforo divergente do status do documento.
 - **`BUG-008` [Média · Aberto (`#114`)]:** Em `src/habilita/comum/auth.py:59-60` (Transversal), `extrair_usuario` concatena `str(exc)` da exceção do Firebase Admin SDK no campo `detail` do HTTP `401`. Esperado: mensagem genérica segura sem detalhes internos de infraestrutura. Regressão: `test_regressao_114_auth_401_nao_expoe_mensagem_crua_de_excecao_firebase` (`xfail strict=True`).
 - **`BUG-009` [Média · Aberto (`#116`)]:** Em `.github/workflows/job-diario.yml` (J4), falta configuração explícita de timeout/retry/keep-alive para evitar falha por cold start ou suspensão gratuita do Supabase.
-- **`BUG-010` [Alta · Aberto (CP4 Cat. 3)]:** Em `src/habilita/trabalhadores/rotas.py:95,211`, as rotas `POST /trabalhadores` e `POST /trabalhadores/{trabalhadorId}/documentos` permitem `analista_sst`, enquanto `openapi.yaml` (`x-papeis`) restringe ambas a `["admin_contratante", "terceirizada"]`. Regressão: `test_autorizacao_rotas.py` (`xfail strict=True`).
-- **`BUG-011` [Média · Aberto (CP4 Cat. 2)]:** Em `src/habilita/trabalhadores/schemas.py:68`, `Pendencia` expõe `tipoNome` em vez de `tipoDocumentoNome` definido no `openapi.yaml`. Regressão: `test_contrato_schema_pendencia_usa_tipo_documento_nome` (`xfail strict=True`).
-- **`BUG-012` [Média · Aberto (CP4 Cat. 2)]:** Em `src/habilita/trabalhadores/rotas.py:289`, `GET /documentos` declara query param `statusRevisao` em vez de `status` definido no `openapi.yaml`. Regressão: `test_contrato_get_documentos_filtra_por_query_param_status` (`xfail strict=True`).
-- **`BUG-013` [Média · Aberto (CP4 Cat. 5)]:** Sob 20 VUs × 60 s no Compose (`cpus: 0.5`), `GET /documentos` e `GET /trabalhadores/{id}` usam `.stream()` sem `.limit()`/`select` no Firestore, elevando `p95` de leitura para `1.507,45 ms` (`> 800 ms`, `k6` exit code 99).
-- **`BUG-014` [Baixa · Aberto (CP3/J3)]:** Fila de pendentes ordena em memória por `id` e não por `enviadoEm` (`H12.CA1`), e o adapter local em memória gera URL simulada de 15 min enquanto `SupabaseArmazenamento` respeita `<= 300 s` (`H12.CA3`).
+- **`BUG-010` [Alta · Aberto (`#119`)]:** Em `src/habilita/trabalhadores/rotas.py:95,211`, as rotas `POST /trabalhadores` e `POST /trabalhadores/{trabalhadorId}/documentos` permitem `analista_sst`, enquanto `openapi.yaml` (`x-papeis`) restringe ambas a `["admin_contratante", "terceirizada"]`. Regressão: `test_autorizacao_rotas.py` (`xfail strict=True`).
+- **`BUG-011` [Média · Aberto (`#120`)]:** Em `src/habilita/trabalhadores/schemas.py:68`, `Pendencia` expõe `tipoNome` em vez de `tipoDocumentoNome` definido no `openapi.yaml`. Regressão: `test_contrato_schema_pendencia_usa_tipo_documento_nome` (`xfail strict=True`).
+- **`BUG-012` [Média · Aberto (`#121`)]:** Em `src/habilita/trabalhadores/rotas.py:289`, `GET /documentos` declara query param `statusRevisao` em vez de `status` definido no `openapi.yaml`. Regressão: `test_contrato_get_documentos_filtra_por_query_param_status` (`xfail strict=True`).
+- **`BUG-013` [Média · Aberto (`#122`)]:** Sob 20 VUs × 60 s no Compose (`cpus: 0.5`), `GET /documentos` e `GET /trabalhadores/{id}` usam `.stream()` sem `.limit()`/`select` no Firestore, elevando `p95` de leitura para `1.507,45 ms` (`> 800 ms`, `k6` exit code 99).
+- **`BUG-014` [Baixa · Aberto (`#123`)]:** Fila de pendentes ordena em memória por `id` e não por `enviadoEm` (`H12.CA1`), e o adapter local em memória gera URL simulada de 15 min enquanto `SupabaseArmazenamento` respeita `<= 300 s` (`H12.CA3`).
 
 ---
 
@@ -209,4 +209,4 @@ Severidades classificadas conforme [Estratégia de Testes §11](estrategia.md#11
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
-| 1.0 | 26/11/2026 | @CauaRVeloso | Laudo completo do Checkpoint 4 sobre o commit `16665ed` (`test/hab-cp4-suites-qa`), cobrindo as 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e links dos artefatos (`[QA-10]`). |
+| 1.0 | 26/11/2026 | @CauaRVeloso | Laudo completo do Checkpoint 4 sobre o commit `e0d71ce` (`test/hab-cp4-suites-qa`), cobrindo as 5 categorias, homologação E2E `[QA-05]`, catálogo `BUG-001`..`BUG-014` (`[PO-15]`) e links dos artefatos (`[QA-10]`). |
